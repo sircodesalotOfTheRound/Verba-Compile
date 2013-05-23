@@ -55,8 +55,19 @@
     <Compile Include="Tokens\Primitives\Numeric\Int32Token.cs" />
     <Compile Include="Tokens\Primitives\Numeric\NumericToken.cs" />
     <Compile Include="Tokens\Primitives\PrimitiveToken.cs" />
+    <Compile Include="Tokens\Range\Markers\BraceToken.cs" />
+    <Compile Include="Tokens\Range\Markers\BracketToken.cs" />
+    <Compile Include="Tokens\Range\Markers\ParentasisToken.cs" />
+    <Compile Include="Tokens\Range\Markers\QuotationToken.cs" />
+    <Compile Include="Tokens\Range\Markers\RangeMarkerToken.cs" />
+    <Compile Include="Tokens\Range\QuotationRangeToken.cs" />
+    <Compile Include="Tokens\Range\RangeToken.cs" />
     <Compile Include="Tokens\Token.cs" />
-    <Compile Include="Tokens\Tokenizer.cs" />
+    <Compile Include="Tokens\Tokenizing\Parsers\BasicTokenParser.cs" />
+    <Compile Include="Tokens\Tokenizing\Parsers\QuotationRangeParser.cs" />
+    <Compile Include="Tokens\Tokenizing\TokenizedSource.cs" />
+    <Compile Include="Tokens\Tokenizing\Tokenizer.cs" />
+    <Compile Include="Tokens\TokenRange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

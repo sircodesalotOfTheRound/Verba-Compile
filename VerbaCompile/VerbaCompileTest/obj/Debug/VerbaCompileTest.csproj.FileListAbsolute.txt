@@ -12,3 +12,10 @@ C:\Users\Excalibur\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\
 C:\Users\Excalibur\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\obj\Debug\VerbaCompileTest.csprojResolveAssemblyReference.cache
 C:\Users\Excalibur\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\obj\Debug\VerbaCompileTest.dll
 C:\Users\Excalibur\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\obj\Debug\VerbaCompileTest.pdb
+C:\Users\rkuhnert\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\bin\Debug\VerbaCompileTest.dll
+C:\Users\rkuhnert\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\bin\Debug\VerbaCompileTest.pdb
+C:\Users\rkuhnert\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\bin\Debug\VerbaCompile.exe
+C:\Users\rkuhnert\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\bin\Debug\VerbaCompile.pdb
+C:\Users\rkuhnert\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\obj\Debug\VerbaCompileTest.csprojResolveAssemblyReference.cache
+C:\Users\rkuhnert\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\obj\Debug\VerbaCompileTest.dll
+C:\Users\rkuhnert\Documents\GitHub\Verba-Compile\VerbaCompile\VerbaCompileTest\obj\Debug\VerbaCompileTest.pdb

@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 
 namespace VerbaCompile.Tokens.Primitives.Numeric
 {
-    public abstract class NumericToken : PrimitiveToken
+    internal abstract class NumericToken : PrimitiveToken
     {
-        public NumericToken(String textValue)
-            : base(textValue)
+        public NumericToken(String textValue, Int32 index)
+            : base(textValue, index)
         {
 
         }
 
-        public static NumericToken Parse(String text)
+        public static NumericToken Parse(Match match)
         {
-            if (Regex.Match(text, @"\d+\.\d+").Success)
+            String textValue = match.Value;
+
+            if (Regex.Match(textValue, @"\d+\.\d+").Success)
             {
-                return new DoubleToken(text);
+                return new DoubleToken(match);
             }
 
-            return new Int32Token(text);
+            return new Int32Token(match);
         }
     }
 }

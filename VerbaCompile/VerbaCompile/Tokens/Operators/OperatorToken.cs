@@ -7,33 +7,35 @@ using System.Threading.Tasks;
 
 namespace VerbaCompile.Tokens.Operators
 {
-    public class OperatorToken : Token 
+    internal class OperatorToken : Token 
     {
-        public OperatorToken(String textValue)
-            : base(textValue)
+        public OperatorToken(Match match)
+            : base(match.Value, match.Index)
         {
 
         }
 
-        public static OperatorToken Parse(String textValue)
+        public static OperatorToken Parse(Match match)
         {
+            String textValue = match.Value;
+
             if (textValue.Equals("="))
-                return new AssignmentToken(textValue);
+                return new AssignmentToken(match);
             
             if (textValue.Equals("+"))
-                return new AdditionToken(textValue);
+                return new AdditionToken(match);
 
             if (textValue.Equals("-"))
-                return new SubtractionToken(textValue);
+                return new SubtractionToken(match);
 
             if (textValue.Equals("*"))
-                return new MultiplicationToken(textValue);
+                return new MultiplicationToken(match);
 
             if (textValue.Equals("/"))
-                return new DivisionToken(textValue);
+                return new DivisionToken(match);
 
             if (textValue.Equals("%"))
-                return new ModulusToken(textValue);
+                return new ModulusToken(match);
 
             throw new NotImplementedException();
         }

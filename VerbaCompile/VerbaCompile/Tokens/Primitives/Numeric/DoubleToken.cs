@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VerbaCompile.Tokens.Primitives.Numeric
 {
-    public class DoubleToken : NumericToken
+    internal class DoubleToken : NumericToken
     {
-        public DoubleToken(String textValue)
-            : base(textValue)
+        public DoubleToken(Match match)
+            : base(match.Value, match.Index)
         {
 
         }

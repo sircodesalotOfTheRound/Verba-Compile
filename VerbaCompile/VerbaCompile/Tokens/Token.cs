@@ -8,13 +8,18 @@ using VerbaCompile.Tokens.Primitives;
 
 namespace VerbaCompile.Tokens
 {
-    public abstract class Token
+    internal abstract class Token
     {
         public String TextValue { get; private set; }
+        public Int32 Index { get; private set; }
+        public TokenRange Range { get; private set; }
 
-        public Token(String textValue)
+        public Token(String textValue, Int32 index)
         {
             this.TextValue = textValue;
+            this.Index = index;
+
+            this.Range = new TokenRange(this);
         }
     }
 }
