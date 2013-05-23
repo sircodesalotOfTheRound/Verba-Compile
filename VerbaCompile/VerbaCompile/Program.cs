@@ -12,12 +12,6 @@ namespace VerbaCompile
     {
         static void Main(string[] args)
         {
-            var tokens = Tokenizer.Tokenize("A b 1 2 41.13 v 3  4");
-
-            foreach (var token in tokens)
-                Console.WriteLine("{0} {1}", token.GetType(), token.TextValue);
-
-
             Console.ReadLine();
         }
     }

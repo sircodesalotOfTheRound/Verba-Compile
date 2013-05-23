@@ -43,6 +43,13 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokens\Operators\AdditionToken.cs" />
+    <Compile Include="Tokens\Operators\AssignmentToken.cs" />
+    <Compile Include="Tokens\Operators\DivisionToken.cs" />
+    <Compile Include="Tokens\Operators\ModulusToken.cs" />
+    <Compile Include="Tokens\Operators\MultiplicationToken.cs" />
+    <Compile Include="Tokens\Operators\OperatorToken.cs" />
+    <Compile Include="Tokens\Operators\SubtractionToken.cs" />
     <Compile Include="Tokens\Primitives\Numeric\DoubleToken.cs" />
     <Compile Include="Tokens\Primitives\IdentifierToken.cs" />
     <Compile Include="Tokens\Primitives\Numeric\Int32Token.cs" />

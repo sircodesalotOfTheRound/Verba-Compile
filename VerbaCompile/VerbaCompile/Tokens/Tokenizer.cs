@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using VerbaCompile.Tokens.Operators;
 using VerbaCompile.Tokens.Primitives;
 using VerbaCompile.Tokens.Primitives.Numeric;
 
@@ -16,15 +17,19 @@ namespace VerbaCompile.Tokens
             List<Token> tokens = new List<Token>();
 
             // Parse the numeric tokens
-            IEnumerable<Token> numericTokens = ParseTokenset(text, @"\d+(\.\d+)?", match => NumericToken.Parse(match.Value))
+            IEnumerable<Token> numericTokens = ParseTokenset(text, @"\b\d+(\.\d+)?\b", match => NumericToken.Parse(match.Value))
                 .ToArray();
 
             IEnumerable<Token> identifierTokens = ParseTokenset(text, @"\b(?'TOKEN'[a-zA-Z]+([\.\d+])?)\b", match => IdentifierToken.Parse(match.Groups["TOKEN"].Value))
                     .Where(identifierToken => numericTokens.Any(numericToken => numericToken.TextValue == identifierToken.TextValue) == false)
                     .ToArray();
 
+            IEnumerable<Token> operatorTokens = ParseTokenset(text, @"[=\+\-/*%]", match => OperatorToken.Parse(match.Value))
+                    .ToArray();
+            
             tokens.AddRange(numericTokens);
             tokens.AddRange(identifierTokens);
+            tokens.AddRange(operatorTokens);
 
             return tokens;
         }
