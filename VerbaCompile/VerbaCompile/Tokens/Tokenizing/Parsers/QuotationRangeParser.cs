@@ -31,7 +31,7 @@ namespace VerbaCompile.Tokens.Tokenizing.Parsers
                 QuotationMarkerToken beginQuote = quotationMarkers[index];
                 QuotationMarkerToken endQuote = quotationMarkers[index+1];
 
-                String innerText = source.Substring(beginQuote.Index, (endQuote.Index - beginQuote.Index));
+                String innerText = source.Substring(beginQuote.Index + 1, (endQuote.Index - beginQuote.Index - 1));
 
                 QuotationRangeToken quotationRange = new QuotationRangeToken(beginQuote, endQuote, innerText);
                 

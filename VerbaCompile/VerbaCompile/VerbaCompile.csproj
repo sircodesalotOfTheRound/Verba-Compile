@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokens\Modules\AssemblyToken.cs" />
+    <Compile Include="Tokens\Modules\ModuleToken.cs" />
+    <Compile Include="Tokens\Modules\SourceFileToken.cs" />
     <Compile Include="Tokens\Operators\AdditionToken.cs" />
     <Compile Include="Tokens\Operators\AssignmentToken.cs" />
     <Compile Include="Tokens\Operators\DivisionToken.cs" />
@@ -55,8 +58,11 @@
     <Compile Include="Tokens\Primitives\Numeric\Int32Token.cs" />
     <Compile Include="Tokens\Primitives\Numeric\NumericToken.cs" />
     <Compile Include="Tokens\Primitives\PrimitiveToken.cs" />
+    <Compile Include="Tokens\Range\BracketRangeToken.cs" />
+    <Compile Include="Tokens\Range\BraceRangeToken.cs" />
     <Compile Include="Tokens\Range\Markers\BraceToken.cs" />
     <Compile Include="Tokens\Range\Markers\BracketToken.cs" />
+    <Compile Include="Tokens\Range\ParentasisRangeToken.cs" />
     <Compile Include="Tokens\Range\Markers\ParentasisToken.cs" />
     <Compile Include="Tokens\Range\Markers\QuotationToken.cs" />
     <Compile Include="Tokens\Range\Markers\RangeMarkerToken.cs" />
@@ -64,10 +70,16 @@
     <Compile Include="Tokens\Range\RangeToken.cs" />
     <Compile Include="Tokens\Token.cs" />
     <Compile Include="Tokens\Tokenizing\Parsers\BasicTokenParser.cs" />
+    <Compile Include="Tokens\Tokenizing\Parsers\BracketRangeParser.cs" />
+    <Compile Include="Tokens\Tokenizing\Parsers\BraceRangeParser.cs" />
+    <Compile Include="Tokens\Tokenizing\Parsers\ParentasisRangeParser.cs" />
     <Compile Include="Tokens\Tokenizing\Parsers\QuotationRangeParser.cs" />
+    <Compile Include="Tokens\Tokenizing\Parsers\StackBasedRangeParser.cs" />
     <Compile Include="Tokens\Tokenizing\TokenizedSource.cs" />
     <Compile Include="Tokens\Tokenizing\Tokenizer.cs" />
     <Compile Include="Tokens\TokenRange.cs" />
+    <Compile Include="TokenTree\TokenSourceNode.cs" />
+    <Compile Include="TokenTree\TokenSourceTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

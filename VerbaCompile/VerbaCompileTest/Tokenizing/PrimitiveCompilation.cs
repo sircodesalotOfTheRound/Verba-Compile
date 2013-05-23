@@ -8,6 +8,7 @@ using VerbaCompile.Tokens.Primitives;
 using VerbaCompile.Tokens.Primitives.Numeric;
 using VerbaCompile.Tokens.Range.Marker;
 using VerbaCompile.Tokens.Tokenizing;
+using VerbaCompileTest.Tools;
 
 namespace VerbaCompileTest
 {
@@ -17,10 +18,9 @@ namespace VerbaCompileTest
         [TestMethod]
         public void SimpleInt32Test()
         {
-
             TokenizedSource tokenizedSource = Tokenizer.Tokenize("1 2 3 4 5 6 7 8");
 
-            DisplayAllTokens(tokenizedSource.Tokens);
+            Debugger.DisplayTokens<Token>(tokenizedSource.Tokens);
 
             Assert.IsTrue(tokenizedSource.Tokens.Count() == 8);
         }
@@ -32,7 +32,7 @@ namespace VerbaCompileTest
                 .Tokens
                 .OfType<DoubleToken>();
 
-            DisplayAllTokens(tokens);
+            Debugger.DisplayTokens<Token>(tokens);
 
             Assert.IsTrue(tokens.Count() == 4);
         }
@@ -44,7 +44,7 @@ namespace VerbaCompileTest
                 .Tokens
                 .OfType<IdentifierToken>();
 
-            DisplayAllTokens(tokens);
+            Debugger.DisplayTokens<Token>(tokens);
 
             Assert.IsTrue(tokens.Count() == 5);
         }
@@ -54,7 +54,7 @@ namespace VerbaCompileTest
         {
             IEnumerable<Token> tokens = Tokenizer.Tokenize("1 a *=+-/= 3").Tokens;
 
-            DisplayAllTokens(tokens);
+            Debugger.DisplayTokens<Token>(tokens);
 
             Assert.IsTrue(tokens.OfType<OperatorToken>().Count() == 6);
             Assert.IsTrue(tokens.OfType<Int32Token>().Count() == 2);
@@ -66,7 +66,7 @@ namespace VerbaCompileTest
             // Three qutotations
             IEnumerable<Token> tokens = Tokenizer.Tokenize(@" [brackets] ""quotes"" {braces} (parentasis)").Tokens;
 
-            DisplayAllTokens(tokens);
+            Debugger.DisplayTokens<Token>(tokens);
 
             Assert.IsTrue(tokens.OfType<RangeMarkerToken>().Count() == 8);
         }
@@ -79,11 +79,11 @@ namespace VerbaCompileTest
                 .Tokens;
 
             Console.WriteLine("All Tokens");
-            DisplayAllTokens(tokens);
+            Debugger.DisplayTokens<Token>(tokens);
 
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("Primitive Tokens");
-            DisplayAllTokens(tokens.OfType<PrimitiveToken>());
+            Debugger.DisplayTokens<Token>(tokens.OfType<PrimitiveToken>());
 
             // There should only be one range token [...]
             OpenBracketToken openBrace = tokens.OfType<OpenBracketToken>().First();
@@ -107,19 +107,19 @@ namespace VerbaCompileTest
 
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("Contained Primitive Tokens");
-            DisplayAllTokens(containedPrimitiveTokens);
+            Debugger.DisplayTokens<Token>(containedPrimitiveTokens);
 
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("Uncontained Primitive Tokens");
-            DisplayAllTokens(uncontainedPrimitiveTokens);
+            Debugger.DisplayTokens<Token>(uncontainedPrimitiveTokens);
             
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("Contained Identifiers");
-            DisplayAllTokens(containedIdentifierTokens);
+            Debugger.DisplayTokens<Token>(containedIdentifierTokens);
 
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("Uncontained Identifiers");
-            DisplayAllTokens(uncontainedIdentifierTokens);
+            Debugger.DisplayTokens<Token>(uncontainedIdentifierTokens);
 
             Assert.IsTrue(containedPrimitiveTokens.Count() == 1);
             Assert.IsTrue(uncontainedPrimitiveTokens.Count() == 1);
@@ -135,20 +135,11 @@ namespace VerbaCompileTest
                 .Tokens
                 .OfType<NumericToken>();
 
-            DisplayAllTokens(tokens);
+            Debugger.DisplayTokens<Token>(tokens);
 
             Assert.IsTrue(tokens.OfType<NumericToken>().Count() == 5);
             Assert.IsTrue(tokens.OfType<Int32Token>().Count() == 2);
             Assert.IsTrue(tokens.OfType<DoubleToken>().Count() == 3);
-        }
-
-
-        private void DisplayAllTokens(IEnumerable<Token> tokens)
-        {
-            foreach (Token token in tokens)
-            {
-                Console.WriteLine("{0} \t\t\t ({1} - {2}) : ({3})", token.TextValue, token.Range.Start, token.Range.End, token.GetType().Name);
-            }
         }
     }
 }
