@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VerbaCompile.Tokens.Tokenizing;
 using VerbaCompile.TokenTree;
+using VerbaCompileTest.Tools;
 
 namespace VerbaCompileTest.TokenTree
 {
@@ -15,8 +16,13 @@ namespace VerbaCompileTest.TokenTree
         [TestMethod]
         public void TokenTreeConstruction()
         {
-            TokenizedSource tokenizedSource = Tokenizer.Tokenize(" { 123 [ 456 ( 789 ) A ] B } C");
+            String source = "1.0{123[456(789)A]B}C";
+            TokenizedSource tokenizedSource = Tokenizer.Tokenize(source);
             TokenSourceTree tree = TokenSourceTree.Build(tokenizedSource);
+
+            Console.WriteLine(source);
+            
+            Debugger.DisplayTree(tree);
         }
 
 

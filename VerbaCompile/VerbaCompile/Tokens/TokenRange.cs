@@ -10,6 +10,7 @@ namespace VerbaCompile.Tokens
     {
         public Int32 Start { get; private set; }
         public Int32 End { get; private set; }
+        public Int32 Length { get { return (this.End - this.Start); } }
 
         public TokenRange(Token token)
         {
@@ -25,14 +26,14 @@ namespace VerbaCompile.Tokens
 
         public Boolean Contains(Int32 index)
         {
-            return (index >= this.Start)
-                && (index <= this.End);
+            return (index > this.Start)
+                && (index < this.End);
         }
 
         public Boolean Contains(Int32 start, Int32 end)
         {
-            return (start >= this.Start)
-                && (end <= this.End);
+            return (start > this.Start)
+                && (end < this.End);
         }
 
         public Boolean Contains(TokenRange range)

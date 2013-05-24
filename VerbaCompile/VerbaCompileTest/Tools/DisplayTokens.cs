@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VerbaCompile.Tokens;
 using VerbaCompile.Tokens.Range;
+using VerbaCompile.TokenTree;
 
 namespace VerbaCompileTest.Tools
 {
@@ -28,6 +29,25 @@ namespace VerbaCompileTest.Tools
                     quotationRange.TextValue,
                     quotationRange.Range.Start,
                     quotationRange.Range.End);
+            }
+        }
+
+        public static void DisplayTree(TokenSourceTree tree)
+        {
+            TokenSourceNode root = tree.Root;
+            Debugger.DisplayTreeNode(0, root);
+        }
+
+        private static void DisplayTreeNode(Int32 depth, TokenSourceNode node)
+        {
+            String tabs = new String('*', depth * 2);
+            Console.WriteLine("{0}{1}: ({2})", tabs, 
+                node.Token.GetType().Name,
+                node.Token.TextValue);
+
+            foreach (TokenSourceNode child in node.Children)
+            {
+                DisplayTreeNode(depth + 1, child);
             }
         }
 

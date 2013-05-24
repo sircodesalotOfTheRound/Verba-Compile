@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VerbaCompile.Tokens;
 using VerbaCompile.Tokens.Modules;
 using VerbaCompile.Tokens.Range;
+using VerbaCompile.Tokens.Range.Marker;
 using VerbaCompile.Tokens.Tokenizing;
 
 namespace VerbaCompile.TokenTree
@@ -19,40 +20,36 @@ namespace VerbaCompile.TokenTree
             AssemblyToken asmToken = new AssemblyToken();
             TokenSourceNode root = new TokenSourceNode(asmToken);
 
-            // Put the tokens in order
-            IEnumerable<Token> orderedTokens = tokens.OrderBy(token => token.Index);
+            // (1) Filter marking tokens
+            // (2) Order tokens by if they are range tokens
+            // (3) Order tokens by their range length
+            // (3) Then by index
+            IEnumerable<TokenSourceNode> orderedTokens = tokens
+                .Where(token => (token is RangeMarkerToken) == false)
+                .OrderBy(token => token.Index)
+                .Select(token => new TokenSourceNode(token))
+                .ToList();
 
-            this.Root = BuildNode(root, tokens);
+            this.Root = BuildNode(root, orderedTokens);
         }
 
-        private TokenSourceNode BuildNode(TokenSourceNode parent, IEnumerable<Token> tokens)
+        private TokenSourceNode BuildNode(TokenSourceNode parent, IEnumerable<TokenSourceNode> nodes)
         {
-            IEnumerable<TokenSourceNode> nodes = tokens.Select(token =>
-            {
-                if (token is RangeToken)
-                {
-                    RangeToken rangeToken = (RangeToken)token;
-                    TokenSourceNode rangeTokenNode = new TokenSourceNode(rangeToken);
-
-                    // Take the following subset where the tokens are in range
-                    IEnumerable<Token> tokensWithinRange = tokens
-                        .SkipWhile(nextToken => rangeToken.Range.Contains(nextToken) == false )
-                        .TakeWhile(nextToken => rangeToken.Range.Contains(nextToken))
-                        .ToList();
-
-                    return BuildNode(rangeTokenNode, tokensWithinRange); 
-                }
-
-                return new TokenSourceNode(token);
-            });
-
             foreach (TokenSourceNode node in nodes)
             {
-                // If this node is not already part of a tree
-                if (node.Parent == null)
+                List<TokenSourceNode> childNodes = nodes
+                    .SkipWhile(tokenNode => node.Token.Range.Contains(tokenNode.Token) == false)
+                    .TakeWhile(tokenNode => node.Token.Range.Contains(tokenNode.Token))
+                    .OrderBy(tokenNode => tokenNode.Token.Index)
+                    .ToList();
+
+                if (childNodes.Count > 0)
                 {
-                    parent.AddChild(node);
+                    BuildNode(node, childNodes);
                 }
+
+                if (node.Parent == null)
+                    parent.AddChild(node);
             }
 
             return parent;

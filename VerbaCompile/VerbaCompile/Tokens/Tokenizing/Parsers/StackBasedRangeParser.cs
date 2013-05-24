@@ -38,7 +38,7 @@ namespace VerbaCompile.Tokens.Tokenizing.Parsers
                     TMarkerCloseType closeParentasis = (TMarkerCloseType)marker;
 
                     String innerText = source
-                        .Substring(openParentasis.Index + 1, (closeParentasis.Index - openParentasis.Index - 1));
+                        .Substring(openParentasis.Index, (closeParentasis.Index - openParentasis.Index + 1));
 
                     TRangeType parentasisRange = (TRangeType)Activator
                         .CreateInstance(typeof(TRangeType), new Object[] { openParentasis, closeParentasis, innerText });

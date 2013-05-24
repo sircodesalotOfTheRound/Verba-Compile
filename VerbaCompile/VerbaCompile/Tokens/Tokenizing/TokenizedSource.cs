@@ -15,7 +15,7 @@ namespace VerbaCompile.Tokens.Tokenizing
         public TokenizedSource(IEnumerable<Token> tokens)
         {
             this.Tokens = tokens.ToList();
-            this.RangeTokens = tokens.OfType<RangeToken>();
+            this.RangeTokens = tokens.OfType<RangeToken>().ToList();
         }
     }
 }

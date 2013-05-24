@@ -22,7 +22,7 @@ namespace VerbaCompile.TokenTree
 
         public TokenSourceNode AddChild(TokenSourceNode child)
         {
-            child.Parent = child;
+            child.Parent = this;
             ((List<TokenSourceNode>)this.Children).Add(child);
 
             return child;
@@ -31,7 +31,6 @@ namespace VerbaCompile.TokenTree
         public TokenSourceNode AddChild(Token token)
         {
             TokenSourceNode childNode = new TokenSourceNode(token);
-            
             return AddChild(childNode);
         }
     }
