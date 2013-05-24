@@ -41,6 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpressionTrees\Builder\ExpressionBuilders\ExpressionBuilder.cs" />
+    <Compile Include="ExpressionTrees\Builder\ExpressionBuilders\NumericExpressionBuilder.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Expression.cs" />
+    <Compile Include="ExpressionTrees\ExpressionTree.cs" />
+    <Compile Include="ExpressionTrees\Builder\ExpressionTreeBuilder.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Operator\Binary\BinaryExpression.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Operator\Unary\UnaryExpression.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Primitives\Numeric\DoubleExpression.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Primitives\Numeric\Int32Expression.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Primitives\Numeric\NumericExpression.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Operator\OperatorExpression.cs" />
+    <Compile Include="ExpressionTrees\Expressions\Primitives\PrimitiveExpression.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokens\Modules\AssemblyToken.cs" />
@@ -84,6 +96,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

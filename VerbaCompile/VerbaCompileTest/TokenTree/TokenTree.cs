@@ -22,7 +22,7 @@ namespace VerbaCompileTest.TokenTree
 
             Console.WriteLine(source);
             
-            Debugger.DisplayTree(tree);
+            Debugging.DisplayTree(tree);
         }
 
 

@@ -17,7 +17,7 @@ namespace VerbaCompileTest.Tokenizing
             TokenizedSource source = Tokenizer.Tokenize(@" Out {One[Two{Three[4.0(5 + 0)]}]}");
             IEnumerable<BraceRangeToken> parentasisRanges = source.Tokens.OfType<BraceRangeToken>();
 
-            Debugger.DisplayRanges<BraceRangeToken>(parentasisRanges);
+            Debugging.DisplayRanges<BraceRangeToken>(parentasisRanges);
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace VerbaCompileTest.Tokenizing
             TokenizedSource source = Tokenizer.Tokenize(@" Out [One[Two[Three[4.0(5 + 0)]]]]");
             IEnumerable<BracketRangeToken> parentasisRanges = source.Tokens.OfType<BracketRangeToken>();
 
-            Debugger.DisplayRanges<BracketRangeToken>(parentasisRanges);
+            Debugging.DisplayRanges<BracketRangeToken>(parentasisRanges);
         }
 
 
@@ -36,7 +36,7 @@ namespace VerbaCompileTest.Tokenizing
             TokenizedSource source = Tokenizer.Tokenize(@" Out (One(Two(Three(4.0(5 + 0)))))");
             IEnumerable<ParentasisRangeToken> parentasisRanges = source.Tokens.OfType<ParentasisRangeToken>();
 
-            Debugger.DisplayRanges<ParentasisRangeToken>(parentasisRanges);
+            Debugging.DisplayRanges<ParentasisRangeToken>(parentasisRanges);
         }
 
 
@@ -46,7 +46,7 @@ namespace VerbaCompileTest.Tokenizing
             TokenizedSource source = Tokenizer.Tokenize(@" Block 1: ""Quoted text 123"" Block 2: ""Second Region 1.5"" End");
             IEnumerable<QuotationRangeToken> quotationRanges = source.Tokens.OfType<QuotationRangeToken>();
 
-            Debugger.DisplayRanges<QuotationRangeToken>(quotationRanges);
+            Debugging.DisplayRanges<QuotationRangeToken>(quotationRanges);
         }
     }
 }
