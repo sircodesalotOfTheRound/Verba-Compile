@@ -54,6 +54,7 @@
     <Compile Include="Tokenizing\PrimitiveCompilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokenizing\RangeCompilation.cs" />
+    <Compile Include="Tokenizing\BasicTokenTesting.cs" />
     <Compile Include="TokenTree\TokenTree.cs" />
     <Compile Include="Tools\Debugging.cs" />
   </ItemGroup>

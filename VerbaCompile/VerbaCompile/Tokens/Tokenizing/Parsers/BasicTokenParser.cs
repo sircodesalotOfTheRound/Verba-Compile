@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using VerbaCompile.Tokens.Keywords;
 using VerbaCompile.Tokens.Operators;
 using VerbaCompile.Tokens.Primitives;
 using VerbaCompile.Tokens.Primitives.Numeric;
@@ -19,6 +20,16 @@ namespace VerbaCompile.Tokens.Tokenizing.Parsers
         {
             List<Token> tokens = new List<Token>();
 
+            // Parse keywords
+            IEnumerable<String> keywordsList = KeywordToken.Keywords
+                .Select(keyword => String.Format("({0})", keyword));
+
+            String keywordList = String.Format(@"\b({0})\b",
+                String.Join("|", keywordsList));
+
+            IEnumerable<Token> keywordTokens = ParseTokenset(source, keywordList, match => KeywordToken.Parse(match))
+                    .ToArray();
+
             // Parse range tokens
             IEnumerable<Token> rangeTokens = ParseTokenset(source, @"[""{}()\[\]]", match => RangeMarkerToken.Parse(match))
                     .ToArray();
@@ -30,6 +41,7 @@ namespace VerbaCompile.Tokens.Tokenizing.Parsers
             // Parse identifier tokens
             IEnumerable<Token> identifierTokens = ParseTokenset(source, @"\b[a-zA-Z]+([\.\d+])?\b", match => IdentifierToken.Parse(match))
                     .Where(identifierToken => numericTokens.Any(numericToken => numericToken.TextValue == identifierToken.TextValue) == false)
+                    .Where(identifierToken => KeywordToken.Keywords.Contains(identifierToken.TextValue) == false)
                     .ToArray();
 
             // Parse operator tokens
@@ -37,6 +49,7 @@ namespace VerbaCompile.Tokens.Tokenizing.Parsers
                     .ToArray();
 
 
+            tokens.AddRange(keywordTokens);
             tokens.AddRange(numericTokens);
             tokens.AddRange(identifierTokens);
             tokens.AddRange(operatorTokens);

@@ -55,6 +55,10 @@
     <Compile Include="ExpressionTrees\Expressions\Primitives\PrimitiveExpression.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokens\Keywords\ProtectedKeywordToken.cs" />
+    <Compile Include="Tokens\Keywords\PrivateKeywordToken.cs" />
+    <Compile Include="Tokens\Keywords\KeywordToken.cs" />
+    <Compile Include="Tokens\Keywords\PublicKeywordToken.cs" />
     <Compile Include="Tokens\Modules\AssemblyToken.cs" />
     <Compile Include="Tokens\Modules\ModuleToken.cs" />
     <Compile Include="Tokens\Modules\SourceFileToken.cs" />

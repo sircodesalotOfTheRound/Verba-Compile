@@ -24,6 +24,11 @@ namespace VerbaCompileTest.Tools
             }
         }
 
+        public static void DisplayTokens(IEnumerable<Token> tokens)
+        {
+            DisplayTokens<Token>(tokens);
+        }
+
         public static void DisplayRanges<T>(IEnumerable<Token> tokens)
             where T : RangeToken
         {
