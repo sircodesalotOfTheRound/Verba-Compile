@@ -10,7 +10,7 @@ public class KeywordToken extends IdentifierToken {
             "public", "private", "protect", "internal",
             "static", "operator", "override", "segment", "virtual", "injected",
             "to", "in", "until", "friendly", "grab", "hashcode", "vnum", "trait",
-            "options", "option", "enum", "get", "set",
+            "options", "option", "enum", "get", "set", "inline",
             "namespace", "class", "abstract", "extend", "sql", "environment", "native",
             "signature", "fn", "task", "meta", "service", "event", "proxy",
             "val", "muta", "yield",
