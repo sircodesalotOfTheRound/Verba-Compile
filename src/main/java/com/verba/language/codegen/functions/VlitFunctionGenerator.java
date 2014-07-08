@@ -55,8 +55,8 @@ public class VlitFunctionGenerator implements VLitEmitter {
         return this.header;
     }
 
-    public void emit(DataSegment segment) {
-        this.header.emit(segment);
+    public void emitTo(DataSegment segment) {
+        this.header.emitTo(segment);
 
         DataSegment opcodes = new DataSegment();
         for (OpEmitter emitter : this.opcodeEmitters) {

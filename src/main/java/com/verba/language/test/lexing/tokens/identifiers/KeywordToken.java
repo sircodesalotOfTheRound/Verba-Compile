@@ -15,7 +15,7 @@ public class KeywordToken extends IdentifierToken {
             "signature", "fn", "task", "meta", "service", "event", "proxy",
             "val", "muta", "yield",
             "new", "inject", "injected", "async",
-            "ret",
+            "return",
             "if", "then", "else", "for", "while", "do", "break", "continue", "parallel",
             "isa", "hasa",
             "try", "catch", "finally", "throw",

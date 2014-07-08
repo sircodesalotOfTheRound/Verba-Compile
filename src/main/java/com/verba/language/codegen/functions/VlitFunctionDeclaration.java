@@ -39,7 +39,7 @@ public class VlitFunctionDeclaration implements VLitEmitter {
     }
 
     @Override
-    public void emit(DataSegment segment) {
+    public void emitTo(DataSegment segment) {
         writeHeader(segment);
     }
 }

@@ -4,6 +4,7 @@ import com.javalinq.interfaces.QIterable;
 import com.javalinq.tools.Partition;
 import com.verba.language.codegen.classes.VlitClassGenerator;
 import com.verba.language.codegen.functions.VlitFunctionGenerator;
+import com.verba.language.codegen.opcodes.datasegments.DataSegment;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
@@ -99,5 +100,14 @@ public class VlitFileGenerator {
 
     public QIterable<VlitFunctionGenerator> functions() {
         return this.functions;
+    }
+
+    public void save(String outputPath) {
+        DataSegment segment = new DataSegment();
+        for (VlitFunctionGenerator function : this.functions()) {
+            function.emitTo(segment);
+        }
+
+        segment.save(outputPath);
     }
 }

@@ -22,7 +22,7 @@ public class Program {
 
         DataSegment segment = new DataSegment();
         for (VlitFunctionGenerator function : vlitFile.functions()) {
-            function.emit(segment);
+            function.emitTo(segment);
         }
 
         segment.debugPrint();
