@@ -9,12 +9,12 @@ public class KeywordToken extends IdentifierToken {
         String[] basicKeywords = new String[]{
             "public", "private", "protect", "internal",
             "static", "operator", "override", "segment", "virtual", "injected",
-            "to", "in", "until", "friendly", "grab", "hashcode", "vnum", "trait",
+            "to", "in", "until", "friendly", "grab", "hashcode", "enum", "trait",
             "options", "option", "enum", "get", "set", "inline",
             "namespace", "class", "abstract", "extend", "sql", "environment", "native",
             "signature", "fn", "task", "meta", "service", "event", "proxy",
             "val", "muta", "yield",
-            "new", "inject", "injected", "async",
+            "new", "inject",
             "return",
             "if", "then", "else", "for", "while", "do", "break", "continue", "parallel",
             "isa", "hasa",
@@ -24,7 +24,14 @@ public class KeywordToken extends IdentifierToken {
             "def", "json",
             "match", "case",
             "true", "false",
-            "sync", "sensitive"
+            "sync",
+
+            // System types
+            "byte", "numeric",
+            "int8", "int16", "int32", "int64",
+            "uint8", "uint16", "uint32", "uint64",
+            "char", "string",
+            "sensitive"
         };
 
         Set<String> keywordSet = new HashSet<String>();
