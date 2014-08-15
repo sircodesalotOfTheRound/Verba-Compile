@@ -21,7 +21,7 @@ public class KeywordToken extends IdentifierToken {
             "try", "catch", "finally", "throw",
             "this", "base",
             "none", "some", "is", "isnt",
-            "def", "json",
+            "def", "dynamic",
             "match", "case",
             "true", "false",
             "sync",
