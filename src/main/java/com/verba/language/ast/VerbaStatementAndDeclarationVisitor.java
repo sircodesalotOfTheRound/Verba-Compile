@@ -16,6 +16,7 @@ import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.rvalue.simple.IdentifierExpression;
 import com.verba.language.expressions.rvalue.simple.MathOpExpression;
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
+import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
@@ -76,6 +77,7 @@ public class VerbaStatementAndDeclarationVisitor {
         else if (node instanceof NumericExpression) return;
         else if (node instanceof MathOpExpression) return;
         else if (node instanceof IdentifierExpression) return;
+        //else if (node instanceof QuoteExpression) return;
 
         else throw new CompilerException("Invalid Node-type: %s", node.getClass());
     }
