@@ -21,13 +21,13 @@ public class KeywordToken extends IdentifierToken {
             "try", "catch", "finally", "throw",
             "this", "base",
             "none", "some", "is", "isnt",
-            "def", "dynamic",
+            "def",
             "match", "case",
             "true", "false",
             "sync",
 
             // System types
-            "byte", "numeric",
+            "byte", "numeric", "dynamic",
             "int8", "int16", "int32", "int64",
             "uint8", "uint16", "uint32", "uint64",
             "char", "string",
