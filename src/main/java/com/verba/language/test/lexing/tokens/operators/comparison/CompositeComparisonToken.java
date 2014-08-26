@@ -33,6 +33,13 @@ public abstract class CompositeComparisonToken extends OperatorToken {
         if (firstToken == '=' && stream.peek() == '=') {
             stream.read();
             return new CompareEqualsToken();
+        } else if (firstToken == '!' && stream.peek() == '>') {
+            stream.read();
+            return new NotGreaterThanToken();
+        } else if (firstToken == '!' && stream.peek() == '<') {
+            stream.read();
+
+            return new NotLessThanToken();
         } else if (firstToken == '!' && stream.peek() == '=') {
             stream.read();
             return new NotEqualsToken();
