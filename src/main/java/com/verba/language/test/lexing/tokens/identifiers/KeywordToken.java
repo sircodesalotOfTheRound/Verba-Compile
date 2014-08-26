@@ -16,7 +16,7 @@ public class KeywordToken extends IdentifierToken {
             "val", "muta", "yield",
             "new", "inject",
             "return",
-            "if", "then", "else", "unless", "until", "for", "while", "do", "break", "continue", "parallel",
+            "if", "then", "elif", "else", "unless", "until", "for", "while", "do", "break", "continue", "parallel",
             "isa", "hasa",
             "try", "catch", "finally", "throw",
             "this", "base",
