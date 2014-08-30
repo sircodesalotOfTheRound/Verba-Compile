@@ -4,6 +4,7 @@ import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.tools.EnvironmentHelpers;
 import com.verba.tools.tasks.Task;
+import com.verba.vblz.build.objectfile.SourceFilePathInfo;
 
 import java.io.File;
 
@@ -11,30 +12,28 @@ import java.io.File;
  * Created by sircodesalot on 14/8/30.
  */
 public class CreateCompilationListTask implements Task {
-    private final QList<File> files = new QList<>();
+    private QIterable<SourceFilePathInfo> files;
 
-    public QIterable<File> listFiles() {
+    public QIterable<SourceFilePathInfo> listFiles() {
         File file = new File(EnvironmentHelpers.getCurrentFolderPath());
         return getVerbaCompilableFiles(file, new QList<>());
     }
 
-    public QList<File> getVerbaCompilableFiles(File directory, QList<File> fileList) {
-        QIterable<String> paths = new QList<String>(directory.list());
+    public QIterable<SourceFilePathInfo> getVerbaCompilableFiles(File directory, QList<SourceFilePathInfo> fileList) {
+        QIterable<File> paths = new QList<>(directory.listFiles());
 
         // If there isn't anything to process, exit
         if (!paths.any()) {
             return fileList;
         }
 
-        QIterable<File> pathsAsFiles = paths.map(File::new);
-
-        for (File file : pathsAsFiles) {
+        for (File file : paths) {
             if (file.isDirectory()) {
                 getVerbaCompilableFiles(file, fileList);
             }
 
             if (file.getAbsolutePath().endsWith(".v")) {
-                fileList.add(file);
+                fileList.add(new SourceFilePathInfo(file));
             }
         }
 
@@ -43,8 +42,8 @@ public class CreateCompilationListTask implements Task {
 
     @Override
     public void perform() {
-        for (File file : listFiles()) {
-            System.out.println(file.getAbsolutePath());
-        }
+        this.files = listFiles();
     }
+
+    public QIterable<SourceFilePathInfo> files() { return this.files; }
 }
