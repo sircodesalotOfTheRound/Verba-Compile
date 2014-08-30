@@ -11,6 +11,7 @@ public class SourceFilePathInfo {
     private final String absolutePath;
     private final String relativeFolder;
     private final String buildPath;
+    private final String codePath;
     private final String filename;
     private final String filenameWithoutExtension;
     private final String outputPath;
@@ -18,10 +19,15 @@ public class SourceFilePathInfo {
     public SourceFilePathInfo(String absolutePath) {
         this.absolutePath = absolutePath;
         this.buildPath = determineBuildPath();
+        this.codePath = determineCodePath();
         this.relativeFolder = determineRelativeFolder(absolutePath);
         this.filename = determineFilename(absolutePath);
         this.filenameWithoutExtension = determineFilenameWithoutExtension(absolutePath);
         this.outputPath = determineOutputPath(absolutePath);
+    }
+
+    private String determineCodePath() {
+        return String.format("%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "code");
     }
 
     private String determineFilenameWithoutExtension(String absolutePath) {
@@ -50,7 +56,7 @@ public class SourceFilePathInfo {
     }
 
     private String determineRelativeFolder(String absolutePath) {
-        String relativePath = absolutePath.replace(this.buildPath, "");
+        String relativePath = absolutePath.replace(this.codePath, "");
 
         int indexOfLastSlash = relativePath.lastIndexOf("/");
 
@@ -70,6 +76,7 @@ public class SourceFilePathInfo {
     public String buildPath() { return this.buildPath; }
     public String filename() { return this.filename; }
     public String filenameWithoutExtension() { return this.filenameWithoutExtension; }
+    public String outputPath() { return this.outputPath; }
 
     @Override
     public String toString() {

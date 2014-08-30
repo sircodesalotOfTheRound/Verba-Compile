@@ -2,6 +2,7 @@ package com.verba.vblz.build.subtasks;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.symbols.resolution.interfaces.SymbolResolutionInfo;
 import com.verba.tools.EnvironmentHelpers;
 import com.verba.tools.tasks.Task;
 import com.verba.vblz.build.objectfile.SourceFilePathInfo;
@@ -43,6 +44,11 @@ public class CreateCompilationListTask implements Task {
     @Override
     public void perform() {
         this.files = listFiles();
+
+        for (SourceFilePathInfo file : files) {
+            System.out.println(file);
+            System.out.println("output path: " + file.outputPath());
+        }
     }
 
     public QIterable<SourceFilePathInfo> files() { return this.files; }

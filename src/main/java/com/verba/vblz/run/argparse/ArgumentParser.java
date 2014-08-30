@@ -18,10 +18,6 @@ public class ArgumentParser {
     public void runApplication() {
         Task task = null;
 
-        if (args.length < 1) {
-            task = new PrintUsageTask();
-        }
-
         if (contains("new")) {
             task = new CreateNewProjectTask(args);
         }
@@ -30,6 +26,10 @@ public class ArgumentParser {
         }
 
         // Perform the task
+        if (task == null) {
+            task = new PrintUsageTask();
+        }
+
         task.perform();
     }
 
