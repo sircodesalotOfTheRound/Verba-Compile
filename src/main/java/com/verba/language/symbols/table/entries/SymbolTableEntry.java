@@ -6,10 +6,12 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.symbols.meta.interfaces.SymbolTableMetadata;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 
+import java.io.Serializable;
+
 /**
  * Created by sircodesalot on 14-3-9.
  */
-public class SymbolTableEntry {
+public class SymbolTableEntry implements Serializable {
     private final String name;
     private final ScopedSymbolTable table;
     private final VerbaExpression object;

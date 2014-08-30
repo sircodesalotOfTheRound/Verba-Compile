@@ -25,11 +25,13 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.entries.SymbolTableEntrySet;
 import com.verba.language.test.validation.violations.ValidationViolation;
 
+import java.io.Serializable;
+
 
 /**
  * Created by sircodesalot on 14-3-9.
  */
-public class ScopedSymbolTable {
+public class ScopedSymbolTable implements Serializable {
     private final String fqn;
     private final String name;
     private final ScopedSymbolTable parent;

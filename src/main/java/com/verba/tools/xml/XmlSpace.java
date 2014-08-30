@@ -1,6 +1,6 @@
-package com.verba.vblz.helpers.xml;
+package com.verba.tools.xml;
 
-import com.verba.vblz.helpers.display.StringTools;
+import com.verba.tools.display.StringTools;
 
 /**
  * Created by sircodesalot on 14/8/30.

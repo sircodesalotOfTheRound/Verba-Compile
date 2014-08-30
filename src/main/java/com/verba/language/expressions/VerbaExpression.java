@@ -5,10 +5,12 @@ import com.verba.language.expressions.backtracking.rules.*;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.info.LexInfo;
 
+import java.io.Serializable;
+
 /**
  * Created by sircodesalot on 14-2-19.
  */
-public class VerbaExpression {
+public class VerbaExpression implements Serializable {
     private static BacktrackRuleSet<VerbaExpression> rules
         = new BacktrackRuleSet<VerbaExpression>()
         .addRule(new RpnBacktrackRule())

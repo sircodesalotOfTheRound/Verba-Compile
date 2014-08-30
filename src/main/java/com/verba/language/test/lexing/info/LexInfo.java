@@ -1,15 +1,18 @@
 package com.verba.language.test.lexing.info;
 
+import com.verba.language.exceptions.CompilerException;
 import com.verba.language.test.lexing.tokenization.Token;
+
+import java.io.Serializable;
 
 /**
  * Created by sircodesalot on 14-2-20.
  */
-public class LexInfo {
+public class LexInfo implements Serializable {
     private Token token;
     private final String filename;
     private final int absolutePosition;
-    private final Class type;
+    private String typeName;
     private final int line;
     private final int column;
 
@@ -23,7 +26,9 @@ public class LexInfo {
         this.absolutePosition = absolutePosition;
         this.column = column;
         this.filename = filename;
-        this.type = token.getClass();
+
+        // This type needs to be serializable. Can't serialize classes.
+        this.typeName = token.getClass().getTypeName();
     }
 
     public Token getToken() {
@@ -39,7 +44,11 @@ public class LexInfo {
     }
 
     public Class type() {
-        return this.type;
+        try {
+            return Class.forName(this.typeName);
+        } catch (ClassNotFoundException e) {
+            throw new CompilerException("Unable to instantiate class");
+        }
     }
 
     public int getLength() {
@@ -59,7 +68,7 @@ public class LexInfo {
     }
 
     public <T> boolean is(Class<T> type) {
-        return type.isAssignableFrom(this.type);
+        return type.isAssignableFrom(this.type());
     }
 
     public <T> boolean is(String representation) {
@@ -67,7 +76,7 @@ public class LexInfo {
     }
 
     public <T> boolean is(Class<T> type, String representation) {
-        return type.isAssignableFrom(this.type) && this.token.toString().equals(representation);
+        return type.isAssignableFrom(this.type()) && this.token.toString().equals(representation);
     }
 
     public String toString() {
@@ -75,6 +84,6 @@ public class LexInfo {
     }
 
     public String toVerboseString() {
-        return String.format("%s (%s %s:%s)", this.token, this.type, this.line, this.column);
+        return String.format("%s (%s %s:%s)", this.token, this.typeName, this.line, this.column);
     }
 }

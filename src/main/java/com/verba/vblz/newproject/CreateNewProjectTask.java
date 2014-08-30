@@ -1,9 +1,9 @@
 package com.verba.vblz.newproject;
 
-import com.verba.vblz.helpers.EnvironmentHelpers;
-import com.verba.vblz.helpers.display.ConsoleOutput;
-import com.verba.vblz.helpers.tasks.Task;
-import com.verba.vblz.helpers.tasks.TaskList;
+import com.verba.tools.EnvironmentHelpers;
+import com.verba.tools.display.ConsoleOutput;
+import com.verba.tools.tasks.Task;
+import com.verba.tools.tasks.TaskList;
 import com.verba.vblz.newproject.subtasks.CreateBuildEnvironmentTask;
 import com.verba.vblz.newproject.subtasks.CreateBuildScriptTask;
 

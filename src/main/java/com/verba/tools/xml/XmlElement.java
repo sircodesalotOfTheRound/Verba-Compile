@@ -1,7 +1,6 @@
-package com.verba.vblz.helpers.xml;
+package com.verba.tools.xml;
 
-import com.javalinq.implementations.QList;
-import com.verba.vblz.helpers.display.StringTools;
+import com.verba.tools.display.StringTools;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +53,7 @@ public class XmlElement extends XmlNode {
             middle.append("\n");
 
             for (XmlNode node : this.nodes) {
-                middle.append(node.getContentIndented(indent + 2));
+                middle.append(node.getContentIndented(indent + 4));
                 middle.append("\n");
             }
 

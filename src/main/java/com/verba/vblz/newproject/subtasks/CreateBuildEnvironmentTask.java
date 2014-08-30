@@ -1,7 +1,7 @@
 package com.verba.vblz.newproject.subtasks;
 
-import com.verba.vblz.helpers.display.ConsoleOutput;
-import com.verba.vblz.helpers.tasks.Task;
+import com.verba.tools.display.ConsoleOutput;
+import com.verba.tools.tasks.Task;
 
 import java.io.*;
 

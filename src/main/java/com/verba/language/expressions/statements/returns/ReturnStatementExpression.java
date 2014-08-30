@@ -17,7 +17,7 @@ public class ReturnStatementExpression extends VerbaExpression implements Statem
         super(parent, lexer);
 
         int currentLine = lexer.current().line();
-        lexer.readCurrentAndAdvance(KeywordToken.class, "ret");
+        lexer.readCurrentAndAdvance(KeywordToken.class, "return");
 
         if (lexer.current().line() == currentLine) {
             this.value = RValueExpression.read(this, lexer);

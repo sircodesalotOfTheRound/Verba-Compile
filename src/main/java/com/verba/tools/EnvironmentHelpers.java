@@ -1,4 +1,4 @@
-package com.verba.vblz.helpers;
+package com.verba.tools;
 
 import java.io.BufferedReader;
 import java.io.IOException;

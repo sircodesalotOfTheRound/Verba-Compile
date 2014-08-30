@@ -4,10 +4,12 @@ import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
 
+import java.io.Serializable;
+
 /**
  * Flattens a tree of expressions into a QList.
  */
-public class VerbaASTNodeCollector {
+public class VerbaASTNodeCollector implements Serializable {
     private final QList<VerbaExpression> expressions;
 
     public VerbaASTNodeCollector(VerbaExpression root) {

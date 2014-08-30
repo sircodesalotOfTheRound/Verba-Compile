@@ -6,13 +6,14 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by sircodesalot on 14-5-16.
  */
-public class GlobalSymbolTable {
+public class GlobalSymbolTable implements Serializable {
     private final ScopedSymbolTable rootTable;
     private final QList<SymbolTableEntry> entries = new QList<>();
     private final Map<VerbaExpression, SymbolTableEntry> entriesByInstance = new HashMap<>();

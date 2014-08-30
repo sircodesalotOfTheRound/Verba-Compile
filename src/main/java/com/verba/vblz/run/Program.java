@@ -1,6 +1,6 @@
 package com.verba.vblz.run;
 
-import com.verba.vblz.helpers.display.ConsoleOutput;
+import com.verba.tools.display.ConsoleOutput;
 import com.verba.vblz.run.argparse.ArgumentParser;
 
 import java.io.Serializable;

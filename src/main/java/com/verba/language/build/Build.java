@@ -33,7 +33,7 @@ public class Build {
         QIterable<VerbaExpression> pages = generateCodePages();
         StaticSpaceExpression staticSpaceExpression = generateStaticSpaceExpression(pages);
         GlobalSymbolTable symbolTable = staticSpaceExpression.globalSymbolTable();
-        SymbolResolver resolver = new SymbolResolver(symbolTable);
+        //SymbolResolver resolver = new SymbolResolver(symbolTable);
 
         return new VlitFileGenerator(staticSpaceExpression);
     }

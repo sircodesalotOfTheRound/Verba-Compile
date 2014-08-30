@@ -1,17 +1,10 @@
 package com.verba.vblz.newproject.subtasks;
 
-import com.verba.vblz.helpers.display.ConsoleOutput;
-import com.verba.vblz.helpers.tasks.Task;
-import com.verba.vblz.helpers.xml.XmlElement;
-import com.verba.vblz.helpers.xml.XmlSpace;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import com.verba.tools.display.ConsoleOutput;
+import com.verba.tools.tasks.Task;
+import com.verba.tools.xml.XmlElement;
+import com.verba.tools.xml.XmlSpace;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 /**
