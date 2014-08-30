@@ -1,10 +1,10 @@
-package com.verba.vblz.helpers;
+package com.verba.vblz.helpers.display;
 
 /**
  * Created by sircodesalot on 14/8/29.
  */
 public class ConsoleOutput {
-    public static void println() {
+    public static void printBlankline() {
         System.out.println();
     }
 
@@ -15,6 +15,11 @@ public class ConsoleOutput {
 
     public static void printlnOk(String format, Object ... args) {
         String formattedString = String.format(format, args);
-        println("[OK]\t\t%s", formattedString);
+        println("[OK]\t%s", formattedString);
+    }
+
+    public static void printlnIndented(int indentLevel, String format, Object ... args)  {
+        String string = StringTools.formatIndented(indentLevel, format, args);
+        System.out.println(string);
     }
 }

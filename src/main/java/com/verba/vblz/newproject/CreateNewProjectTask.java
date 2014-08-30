@@ -1,32 +1,42 @@
 package com.verba.vblz.newproject;
 
 import com.verba.vblz.helpers.EnvironmentHelpers;
-import com.verba.vblz.newproject.buildscript.CreateBuildScriptTask;
+import com.verba.vblz.helpers.tasks.Task;
+import com.verba.vblz.helpers.tasks.TaskList;
+import com.verba.vblz.newproject.subtasks.CreateBuildEnvironmentTask;
+import com.verba.vblz.newproject.subtasks.CreateBuildScriptTask;
 
 /**
  * Created by sircodesalot on 14/8/29.
  */
-public class CreateNewProjectTask {
+public class CreateNewProjectTask implements Task{
 
-    private final CreateBuildScriptTask buildScriptTask;
+    TaskList taskList = new TaskList();
 
     private CreateNewProjectTask(String[] args) {
-        buildScriptTask = new CreateBuildScriptTask(
+        Task buildScriptTask = new CreateBuildScriptTask(
             EnvironmentHelpers.getHostname(),
             EnvironmentHelpers.getCurrentFolder(),
             "1.0");
+
+        Task directoryCreationTask = new CreateBuildEnvironmentTask();
+
+        this.taskList.add(buildScriptTask, directoryCreationTask);
+
     }
 
-    public void writeFile() throws Exception {
-        this.buildScriptTask.perform();
+    @Override
+    public void perform() {
+        this.taskList.perform();
     }
 
     public static void run(String[] args) {
         try {
             CreateNewProjectTask task = new CreateNewProjectTask(args);
-            task.writeFile();
+            task.perform();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
 }

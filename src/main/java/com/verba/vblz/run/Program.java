@@ -1,5 +1,6 @@
 package com.verba.vblz.run;
 
+import com.verba.vblz.helpers.display.ConsoleOutput;
 import com.verba.vblz.run.argparse.ArgumentParser;
 
 import java.io.Serializable;
@@ -17,11 +18,13 @@ public class Program implements Serializable {
     }
 
     private static void printUsage() {
+        System.out.println();
         System.out.println("Useage: vblz <command>");
         System.out.println();
         System.out.println("Commands:");
         System.out.println("    new     : Create a new project schema in this folder.");
         System.out.println("    build   : Build the project located in this folder.");
+        ConsoleOutput.printBlankline();
 
         System.exit(0);
     }
