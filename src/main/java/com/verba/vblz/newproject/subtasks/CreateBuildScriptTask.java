@@ -42,7 +42,8 @@ public class CreateBuildScriptTask implements Task {
                         new XmlElement("binaries",
                             new XmlElement("make", "dev"),
                             new XmlElement("make", "debug"),
-                            new XmlElement("make", "release"))),
+                            new XmlElement("make", "release")),
+                        new XmlSpace()),
                     new XmlSpace());
     }
 
@@ -51,7 +52,7 @@ public class CreateBuildScriptTask implements Task {
             File file = new File("vblz-build.xml");
             FileOutputStream outputStream = new FileOutputStream(file);
 
-            String buildScriptContent = buildScript.toString();
+            String buildScriptContent = String.format("%s\n", buildScript.toString());
 
             ConsoleOutput.printlnOk("Creating vblz-build.xml script");
             ConsoleOutput.printlnOk("Created vblz-build.xml script");

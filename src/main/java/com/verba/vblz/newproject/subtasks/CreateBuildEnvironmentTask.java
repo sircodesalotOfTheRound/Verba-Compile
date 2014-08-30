@@ -10,13 +10,15 @@ import java.io.*;
  */
 public class CreateBuildEnvironmentTask implements Task {
     private static final String helloWorldDotVFile =
+        "                           \n" +
         "# Use the 'vm' namespace.  \n" +
         "withns vm                  \n" +
         "                           \n" +
         "# The program entry point. \n" +
         "fn main() {                \n" +
-        "  print(\"hello world!\")  \n" +
-        "}                          \n";
+        "    print(\"hello world!\")\n" +
+        "}                          \n" +
+        "                           \n";
 
     public void perform() {
         createDir("code");
@@ -29,6 +31,8 @@ public class CreateBuildEnvironmentTask implements Task {
 
         createDir("build/bin");
         createDir("build/symbols");
+
+        ConsoleOutput.printBlankline();
     }
 
     private void createDir(String path) {

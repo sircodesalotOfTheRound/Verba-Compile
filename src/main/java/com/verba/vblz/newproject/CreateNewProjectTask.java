@@ -1,6 +1,7 @@
 package com.verba.vblz.newproject;
 
 import com.verba.vblz.helpers.EnvironmentHelpers;
+import com.verba.vblz.helpers.display.ConsoleOutput;
 import com.verba.vblz.helpers.tasks.Task;
 import com.verba.vblz.helpers.tasks.TaskList;
 import com.verba.vblz.newproject.subtasks.CreateBuildEnvironmentTask;
@@ -32,8 +33,11 @@ public class CreateNewProjectTask implements Task{
 
     public static void run(String[] args) {
         try {
+            ConsoleOutput.printBlankline();
+
             CreateNewProjectTask task = new CreateNewProjectTask(args);
             task.perform();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
