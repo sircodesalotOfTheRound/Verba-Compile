@@ -25,10 +25,16 @@ public class EnvironmentHelpers {
         return "anonymous";
     }
 
-    public static String getCurrentFolder() {
+    public static String getCurrentFolderName() {
         String path = System.getProperty("user.dir");
         String[] directories = path.split("/");
 
         return directories[directories.length - 1];
     }
+
+    public static String getCurrentFolderPath() {
+        return System.getProperty("user.dir");
+    }
+
+
 }

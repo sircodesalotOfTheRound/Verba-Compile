@@ -1,7 +1,6 @@
 package com.verba.vblz.newproject;
 
 import com.verba.tools.EnvironmentHelpers;
-import com.verba.tools.display.ConsoleOutput;
 import com.verba.tools.tasks.Task;
 import com.verba.tools.tasks.TaskList;
 import com.verba.vblz.newproject.subtasks.CreateBuildEnvironmentTask;
@@ -14,10 +13,10 @@ public class CreateNewProjectTask implements Task{
 
     TaskList taskList = new TaskList();
 
-    private CreateNewProjectTask(String[] args) {
+    public CreateNewProjectTask(String[] args) {
         Task buildScriptTask = new CreateBuildScriptTask(
             EnvironmentHelpers.getHostname(),
-            EnvironmentHelpers.getCurrentFolder(),
+            EnvironmentHelpers.getCurrentFolderName(),
             "1.0");
 
         Task directoryCreationTask = new CreateBuildEnvironmentTask();
@@ -29,18 +28,6 @@ public class CreateNewProjectTask implements Task{
     @Override
     public void perform() {
         this.taskList.perform();
-    }
-
-    public static void run(String[] args) {
-        try {
-            ConsoleOutput.printBlankline();
-
-            CreateNewProjectTask task = new CreateNewProjectTask(args);
-            task.perform();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
 }

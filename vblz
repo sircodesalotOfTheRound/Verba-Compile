@@ -1,3 +1,10 @@
 #!/bin/bash
 
-java -cp /Users/sircodesalot/IdeaProjects/Verbalize/target/verbalize-1.0-SNAPSHOT.jar com.verba.vblz.run.Program $@
+MAVEN_VERBA_FOLDER=~/.m2/repository/com/verba/language
+
+VERBALIZE=$MAVEN_VERBA_FOLDER/verbalize/1.0-SNAPSHOT/verbalize-1.0-SNAPSHOT.jar
+JAVALINQ=$MAVEN_VERBA_FOLDER/javaLinq/1.0-SNAPSHOT/javaLinq-1.0-SNAPSHOT.jar
+
+CLASSPATH="$VERBALIZE:$JAVALINQ"
+
+java -cp $CLASSPATH com.verba.vblz.run.Program $@
