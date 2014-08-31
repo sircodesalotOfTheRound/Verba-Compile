@@ -1,7 +1,5 @@
 package com.verba.tools.xml;
 
-import com.verba.language.test.validation.ExpressionValidator;
-
 /**
  * Created by sircodesalot on 14/8/31.
  */

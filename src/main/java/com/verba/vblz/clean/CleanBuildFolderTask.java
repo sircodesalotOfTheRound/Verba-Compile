@@ -19,6 +19,5 @@ public class CleanBuildFolderTask implements Task {
         }
 
         ConsoleTools.printlnOk("Successfully cleaned build folder.");
-        ConsoleTools.printBlankline();
     }
 }

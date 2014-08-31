@@ -25,22 +25,18 @@ public class BuildProjectTask implements Task {
         task.perform();
 
         ConsoleTools.printlnOk("Successfully linked files into symbol table.");
-        ConsoleTools.printBlankline();
     }
 
     @Override
     public void perform() {
         createCompilationListTask.perform();
         ConsoleTools.printlnOk("Generate list of files to build.");
-        ConsoleTools.printBlankline();
 
         createSymbolFiles(createCompilationListTask.files());
         ConsoleTools.printlnOk("Successfully built symbol files.");
-        ConsoleTools.printBlankline();
 
         mergeSymbolTables();
 
         ConsoleTools.printlnOk("Successfully built: %s", "PROJECT_NAME");
-        ConsoleTools.printBlankline();
     }
 }
