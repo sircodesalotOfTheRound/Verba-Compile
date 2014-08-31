@@ -1,6 +1,7 @@
 package com.verba.vblz.run.argparse;
 
 import com.verba.tools.tasks.Task;
+import com.verba.vblz.build.BuildProjectTask;
 import com.verba.vblz.build.subtasks.CreateCompilationListTask;
 import com.verba.vblz.newproject.CreateNewProjectTask;
 import com.verba.vblz.showusage.PrintUsageTask;
@@ -22,7 +23,7 @@ public class ArgumentParser {
             task = new CreateNewProjectTask(args);
         }
         else if (contains("build")) {
-            task = new CreateCompilationListTask();
+            task = new BuildProjectTask();
         }
 
         // Perform the task

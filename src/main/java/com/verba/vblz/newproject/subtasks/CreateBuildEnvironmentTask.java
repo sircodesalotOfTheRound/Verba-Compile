@@ -12,7 +12,7 @@ public class CreateBuildEnvironmentTask implements Task {
     private static final String helloWorldDotVFile =
         "                           \n" +
         "# Use the 'vm' namespace.  \n" +
-        "withns vm                  \n" +
+        "# withns vm                \n" +
         "                           \n" +
         "# The program entry point. \n" +
         "fn main() {                \n" +

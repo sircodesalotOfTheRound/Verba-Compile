@@ -16,7 +16,7 @@ public class CreateCompilationListTask implements Task {
     private QIterable<SourceFilePathInfo> files;
 
     public QIterable<SourceFilePathInfo> listFiles() {
-        File file = new File(EnvironmentHelpers.getCurrentFolderPath());
+        File file = new File(String.format("%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "code"));
         return getVerbaCompilableFiles(file, new QList<>());
     }
 

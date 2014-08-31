@@ -1,6 +1,7 @@
 package com.verba.vblz.build.objectfile;
 
 import com.verba.tools.EnvironmentHelpers;
+import com.verba.tools.display.StringTools;
 
 import java.io.File;
 
@@ -14,6 +15,7 @@ public class SourceFilePathInfo {
     private final String codePath;
     private final String filename;
     private final String filenameWithoutExtension;
+    private final String outputFolder;
     private final String outputPath;
 
     public SourceFilePathInfo(String absolutePath) {
@@ -23,7 +25,15 @@ public class SourceFilePathInfo {
         this.relativeFolder = determineRelativeFolder(absolutePath);
         this.filename = determineFilename(absolutePath);
         this.filenameWithoutExtension = determineFilenameWithoutExtension(absolutePath);
+        this.outputFolder = determineOutputFolder(absolutePath);
         this.outputPath = determineOutputPath(absolutePath);
+    }
+
+    private String determineOutputFolder(String absolutePath) {
+        String filenameWithoutExtension = this.determineFilenameWithoutExtension(absolutePath);
+        String relativePath = this.determineRelativeFolder(absolutePath);
+
+        return String.format("%s/build/symbols/%s", buildPath, relativePath);
     }
 
     private String determineCodePath() {
@@ -39,9 +49,9 @@ public class SourceFilePathInfo {
 
     private String determineOutputPath(String absolutePath) {
         String filenameWithoutExtension = this.determineFilenameWithoutExtension(absolutePath);
-        String relativePath = this.determineRelativeFolder(absolutePath);
+        String outputFolder = this.determineOutputFolder(absolutePath);
 
-        return String.format("%s/build/symbols/%s/%s.sym", buildPath, relativePath, filenameWithoutExtension);
+        return String.format("%s%s.sym", outputFolder, filenameWithoutExtension);
     }
 
     public SourceFilePathInfo(File file) {
@@ -63,7 +73,7 @@ public class SourceFilePathInfo {
         if (indexOfLastSlash > 1) {
             return relativePath.substring(1, indexOfLastSlash);
         } else {
-            return relativePath.substring(1);
+            return StringTools.emptyString();
         }
     }
 
@@ -76,6 +86,7 @@ public class SourceFilePathInfo {
     public String buildPath() { return this.buildPath; }
     public String filename() { return this.filename; }
     public String filenameWithoutExtension() { return this.filenameWithoutExtension; }
+    public String outputFolder() { return this.outputFolder; }
     public String outputPath() { return this.outputPath; }
 
     @Override
