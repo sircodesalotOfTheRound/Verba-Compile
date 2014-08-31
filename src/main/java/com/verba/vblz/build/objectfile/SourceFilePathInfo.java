@@ -32,7 +32,6 @@ public class SourceFilePathInfo {
     }
 
     private String determineOutputFolder(String absolutePath) {
-        String filenameWithoutExtension = this.determineFilenameWithoutExtension(absolutePath);
         String relativePath = this.determineRelativeFolder(absolutePath);
 
         return String.format("%s/build/symbols/%s", buildPath, relativePath);
@@ -73,9 +72,9 @@ public class SourceFilePathInfo {
         int indexOfLastSlash = relativePath.lastIndexOf("/");
 
         if (indexOfLastSlash > 1) {
-            return relativePath.substring(1, indexOfLastSlash);
+            return relativePath.substring(1, indexOfLastSlash + 1);
         } else {
-            return StringTools.emptyString();
+            return "";
         }
     }
 
