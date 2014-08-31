@@ -2,7 +2,6 @@ package com.verba.vblz.clean;
 
 import com.verba.tools.EnvironmentHelpers;
 import com.verba.tools.display.ConsoleTools;
-import com.verba.tools.files.FileTools;
 import com.verba.tools.tasks.Task;
 
 import java.io.File;

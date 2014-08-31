@@ -3,8 +3,8 @@ package com.verba.language.test.validation;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.validation.declarations.FunctionDeclarationValidator;
 import com.verba.language.test.tools.GeneralLexing;
+import com.verba.language.test.validation.declarations.FunctionDeclarationValidator;
 import org.junit.Test;
 
 /**

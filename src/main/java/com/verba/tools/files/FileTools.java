@@ -2,7 +2,6 @@ package com.verba.tools.files;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
-import com.verba.tools.EnvironmentHelpers;
 
 import java.io.*;
 import java.nio.file.Files;

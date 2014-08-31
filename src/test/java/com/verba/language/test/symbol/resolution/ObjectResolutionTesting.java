@@ -8,11 +8,11 @@ import com.verba.language.expressions.blockheader.varname.NamedObjectDeclaration
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
-import com.verba.language.test.lexing.Lexer;
 import com.verba.language.symbols.meta.NestedSymbolTableMetadata;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
+import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.tools.GeneralLexing;
 import org.junit.Test;
 

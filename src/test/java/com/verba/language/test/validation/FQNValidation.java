@@ -3,8 +3,8 @@ package com.verba.language.test.validation;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.validation.fqn.FullyQualifiedNameValidator;
 import com.verba.language.test.tools.GeneralLexing;
+import com.verba.language.test.validation.fqn.FullyQualifiedNameValidator;
 import org.junit.Test;
 
 /**

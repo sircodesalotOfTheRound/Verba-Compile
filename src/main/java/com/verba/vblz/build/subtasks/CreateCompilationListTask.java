@@ -1,14 +1,10 @@
 package com.verba.vblz.build.subtasks;
 
-import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
-import com.verba.language.symbols.resolution.interfaces.SymbolResolutionInfo;
 import com.verba.tools.EnvironmentHelpers;
 import com.verba.tools.files.FileTools;
 import com.verba.tools.tasks.Task;
 import com.verba.vblz.build.objectfile.SourceFilePathInfo;
-
-import java.io.File;
 
 /**
  * Created by sircodesalot on 14/8/30.

@@ -1,6 +1,5 @@
 package com.verba.language.test.lexing;
 
-import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.LambdaToken;
 import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 import com.verba.language.test.lexing.tokens.operators.assignment.*;

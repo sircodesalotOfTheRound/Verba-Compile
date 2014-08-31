@@ -2,9 +2,9 @@ package com.verba.vblz.run.argparse;
 
 import com.verba.tools.tasks.Task;
 import com.verba.vblz.build.BuildProjectTask;
-import com.verba.vblz.build.subtasks.CreateCompilationListTask;
 import com.verba.vblz.clean.CleanBuildFolderTask;
 import com.verba.vblz.newproject.CreateNewProjectTask;
+import com.verba.vblz.rebuild.RebuildProjectTask;
 import com.verba.vblz.showusage.PrintUsageTask;
 
 /**
@@ -23,6 +23,7 @@ public class ArgumentParser {
         if (contains("clean")) { task = new CleanBuildFolderTask(); }
         else if (contains("new")) { task = new CreateNewProjectTask(args); }
         else if (contains("build")) { task = new BuildProjectTask(); }
+        else if (contains("rebuild")) { task = new RebuildProjectTask(); }
 
         // Perform the task
         if (task == null) {

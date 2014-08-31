@@ -3,9 +3,9 @@ package com.verba.language.test.resolution.polymorphic;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
 import com.verba.language.symbols.resolution.polymorphic.PolymorphicResolutionMetadata;
 import com.verba.language.symbols.resolution.polymorphic.PolymorphicResolver;
+import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.tools.GeneralLexing;
 import org.junit.Test;
 

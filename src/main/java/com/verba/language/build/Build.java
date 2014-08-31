@@ -3,7 +3,6 @@ package com.verba.language.build;
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.build.codepage.VerbaCodePage;
-import com.verba.language.build.resolution.SymbolResolver;
 import com.verba.language.codegen.core.VlitFileGenerator;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;

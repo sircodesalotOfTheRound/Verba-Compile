@@ -1,6 +1,5 @@
 package com.verba.language.test.lexing;
 
-import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.EnclosureToken;
 import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
 import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
