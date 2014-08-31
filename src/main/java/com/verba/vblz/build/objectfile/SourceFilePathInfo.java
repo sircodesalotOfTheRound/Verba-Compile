@@ -1,9 +1,15 @@
 package com.verba.vblz.build.objectfile;
 
+import com.verba.language.exceptions.CompilerException;
 import com.verba.tools.EnvironmentHelpers;
 import com.verba.tools.display.StringTools;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 
 /**
  * Created by sircodesalot on 14/8/30.
@@ -88,6 +94,32 @@ public class SourceFilePathInfo {
     public String filenameWithoutExtension() { return this.filenameWithoutExtension; }
     public String outputFolder() { return this.outputFolder; }
     public String outputPath() { return this.outputPath; }
+
+    public boolean isSymbolFileUpToDate() {
+        Path sourceFile = new File(this.absolutePath).toPath();
+        Path symbolFile = new File(this.outputPath).toPath();
+
+        // If the symbol file doesn't exist, then it's not up to date.
+        if (!symbolFile.toFile().exists()) {
+            return false;
+        }
+
+        try {
+            BasicFileAttributes sourceFileAttributes = Files.readAttributes(sourceFile, BasicFileAttributes.class);
+            BasicFileAttributes symbolFileAttributes = Files.readAttributes(symbolFile, BasicFileAttributes.class);
+
+            FileTime sourceFileModified = sourceFileAttributes.lastModifiedTime();
+            FileTime symbolFileModified = symbolFileAttributes.lastModifiedTime();
+
+            // Source file should be modified less than the symbol file.
+            return sourceFileModified.compareTo(symbolFileModified) < 0;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            throw new CompilerException("Unable to check build times");
+        }
+    }
 
     @Override
     public String toString() {
