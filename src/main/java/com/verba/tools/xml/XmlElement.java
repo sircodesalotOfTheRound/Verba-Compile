@@ -75,4 +75,40 @@ public class XmlElement extends XmlNode {
         return getContentIndented(0);
     }
 
+    private static XmlElement parse(XmlLexer lexer) {
+        lexer.readAndAdvanceSkipWitespaces('<');
+
+        StringBuilder tag = new StringBuilder();
+        while (!lexer.isEof() && !(lexer.currentIs('/') || lexer.currentIs('>'))) {
+            tag.append(lexer.readAndAdvance());
+        }
+
+        // If this is the end tag, then finish reading and then bail.
+        if (lexer.currentIs('/')) {
+            lexer.readAndAdvanceSkipWitespaces('/');
+            lexer.readAndAdvanceSkipWitespaces('>');
+
+            return new XmlElement(tag.toString());
+
+        }
+
+        // Otherwise, read the end of this tag, then recursively read subtags.
+        lexer.readAndAdvanceSkipWitespaces('>');
+        XmlElement result = new XmlElement(tag.toString(), XmlElement.parse(lexer));
+
+        // Read the closing tag.
+        lexer.readAndAdvanceSkipWitespaces('<');
+        lexer.readAndAdvanceSkipWitespaces('/');
+        while (!lexer.isEof() && !lexer.currentIs('>')) {
+            lexer.advance();
+        }
+
+        // Return the result
+        return result;
+
+    }
+
+    public static XmlElement parse(String text) {
+        return parse(new XmlLexer(text));
+    }
 }
