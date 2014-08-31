@@ -1,7 +1,7 @@
 package com.verba.language.test.parsing.fqn;
 
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.members.MemberExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.tools.GeneralLexing;
@@ -49,13 +49,13 @@ public class MemberExpressionTests {
 
         // Read the first parameter
         VerbaExpression firstParameter = expression.parameterLists().first().get(0);
-        VarNameDeclarationExpression firstVarName = (VarNameDeclarationExpression) firstParameter;
+        NamedObjectDeclarationExpression firstVarName = (NamedObjectDeclarationExpression) firstParameter;
 
         assert (firstVarName.representation().equals("first"));
 
         // Read the second parameter
         VerbaExpression secondParameter = expression.parameterLists().get(1).get(0);
-        VarNameDeclarationExpression secondVarName = (VarNameDeclarationExpression) secondParameter;
+        NamedObjectDeclarationExpression secondVarName = (NamedObjectDeclarationExpression) secondParameter;
 
         assert (secondVarName.representation().equals("second"));
     }

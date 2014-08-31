@@ -3,9 +3,11 @@ package com.verba.language.expressions;
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.VerbaASTNodeCollector;
+import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
+import com.verba.vblz.build.objectfile.SourceFilePathInfo;
 
 /**
  * Created by sircodesalot on 14-5-14.
@@ -31,6 +33,11 @@ public class StaticSpaceExpression extends VerbaExpression implements SymbolTabl
             this.rootExpressions.add(expression);
 
         this.update();
+    }
+
+    public StaticSpaceExpression(SourceFilePathInfo path) {
+        this(VerbaCodePage.fromFile(null, path.absolutePath()));
+
     }
 
     public QIterable<VerbaExpression> rootLevelExpressions() {

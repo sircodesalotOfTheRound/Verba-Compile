@@ -12,7 +12,7 @@ import com.verba.language.expressions.blockheader.functions.FunctionDeclarationE
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
 import com.verba.language.expressions.blockheader.namespaces.NamespaceDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.categories.NamedExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
@@ -144,14 +144,14 @@ public class ScopedSymbolTable implements Serializable {
 
     private void scanFunction(FunctionDeclarationExpression function) {
         // First add the parameters
-        QIterable<VarNameDeclarationExpression> parameters = function.parameters()
+        QIterable<NamedObjectDeclarationExpression> parameters = function.parameters()
             .flatten(tuple -> tuple.items())
-            .cast(VarNameDeclarationExpression.class);
+            .cast(NamedObjectDeclarationExpression.class);
 
         this.scanGenericParameters(function.genericParameters());
 
         // Then add regular parameters
-        for (VarNameDeclarationExpression parameter : parameters) {
+        for (NamedObjectDeclarationExpression parameter : parameters) {
             this.add(parameter.identifier().representation(), parameter, new ParameterSymbolTableItem());
         }
 
@@ -161,7 +161,7 @@ public class ScopedSymbolTable implements Serializable {
 
     private void scanGenericParameters(GenericTypeListExpression genericParameters) {
         // Add generic parameters
-        for (VarNameDeclarationExpression genericParam : genericParameters) {
+        for (NamedObjectDeclarationExpression genericParam : genericParameters) {
             this.add(genericParam.identifier().representation(), genericParam, new GenericParameterSymbolTableItem());
         }
     }

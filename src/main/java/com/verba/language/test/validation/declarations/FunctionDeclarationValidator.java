@@ -2,7 +2,7 @@ package com.verba.language.test.validation.declarations;
 
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.test.validation.ExpressionValidator;
 import com.verba.language.test.validation.fqn.FullyQualifiedNameValidator;
@@ -41,8 +41,8 @@ public class FunctionDeclarationValidator extends ExpressionValidator<FunctionDe
 
     private void validateParameterTuple(TupleDeclarationExpression tuple) {
         for (VerbaExpression expression : tuple.items()) {
-            if (expression instanceof VarNameDeclarationExpression) {
-                VarNameDeclarationExpression varName = (VarNameDeclarationExpression) expression;
+            if (expression instanceof NamedObjectDeclarationExpression) {
+                NamedObjectDeclarationExpression varName = (NamedObjectDeclarationExpression) expression;
 
                 if (!varName.hasTypeConstraint()) {
                     this.addViolation(expression,

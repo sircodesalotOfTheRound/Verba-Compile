@@ -2,7 +2,7 @@ package com.verba.language.test.validation.fqn;
 
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.members.MemberExpression;
 import com.verba.language.test.validation.ExpressionValidator;
@@ -42,7 +42,7 @@ public class FullyQualifiedNameValidator extends ExpressionValidator<FullyQualif
             .flatten(tuple -> tuple.items());
     }
 
-    public QIterable<VarNameDeclarationExpression> flattenedGenericParameterList() {
+    public QIterable<NamedObjectDeclarationExpression> flattenedGenericParameterList() {
         return this.membersWithGenericParameters()
             .flatten(MemberExpression::genericParameterList);
     }

@@ -1,7 +1,7 @@
 package com.verba.language.expressions.statements.declaration;
 
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.categories.AssignmentExpression;
 import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
 import com.verba.language.expressions.categories.RValueExpression;
@@ -16,7 +16,7 @@ import com.verba.language.test.lexing.tokens.operators.assignment.AssignmentToke
 public class MutaDeclarationStatement extends VerbaExpression
     implements NamedDataDeclarationExpression, AssignmentExpression {
 
-    private VarNameDeclarationExpression identifier;
+    private NamedObjectDeclarationExpression identifier;
     private RValueExpression rvalue;
 
     private MutaDeclarationStatement(VerbaExpression parent, Lexer lexer) {
@@ -27,7 +27,7 @@ public class MutaDeclarationStatement extends VerbaExpression
 
     private void readExpression(Lexer lexer) {
         lexer.readCurrentAndAdvance(KeywordToken.class, "muta");
-        this.identifier = VarNameDeclarationExpression.read(this, lexer);
+        this.identifier = NamedObjectDeclarationExpression.read(this, lexer);
 
         if (lexer.currentIs(AssignmentToken.class)) {
             lexer.readCurrentAndAdvance(AssignmentToken.class, "=");
@@ -55,7 +55,7 @@ public class MutaDeclarationStatement extends VerbaExpression
         return this.identifier.typeDeclaration();
     }
 
-    public VarNameDeclarationExpression identifier() {
+    public NamedObjectDeclarationExpression identifier() {
         return this.identifier;
     }
 

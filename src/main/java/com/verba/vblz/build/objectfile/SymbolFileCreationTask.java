@@ -1,12 +1,9 @@
 package com.verba.vblz.build.objectfile;
 
-import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.test.lexing.VerbaMemoizingLexer;
-import com.verba.language.test.lexing.codestream.CodeStream;
-import com.verba.language.test.lexing.codestream.FileBasedCodeStream;
-import com.verba.tools.EnvironmentHelpers;
+import com.verba.tools.display.ConsoleTools;
+import com.verba.tools.files.FileTools;
 import com.verba.tools.tasks.Task;
 
 import java.io.*;
@@ -22,35 +19,28 @@ public class SymbolFileCreationTask implements Task {
     }
 
     private VerbaExpression compileFile() {
-        CodeStream stream = new FileBasedCodeStream(sourceFile.absolutePath());
-        VerbaMemoizingLexer lexer = new VerbaMemoizingLexer(sourceFile.filename(), stream);
-        VerbaCodePage codePage = VerbaCodePage.fromFile(null, sourceFile.absolutePath());
-
-        return new StaticSpaceExpression(codePage);
+        return new StaticSpaceExpression(sourceFile);
     }
 
     private void emitToSymbolFile() throws IOException {
-        File outputFolder = new File(sourceFile.outputFolder());
-        File symbolFile = new File(sourceFile.outputPath());
+        // If the symbol file is already up to date, don't bother.
+        if (!sourceFile.isSymbolFileUpToDate()) {
+            VerbaExpression compiledFile = compileFile();
 
-        // Create the directories
-        outputFolder.mkdirs();
-        symbolFile.createNewFile();
+            FileTools.createFolder(sourceFile.outputFolder());
+            FileTools.createFile(sourceFile.outputPath());
+            FileTools.serializeObjectToFile(sourceFile.outputPath(), compiledFile);
 
-        FileOutputStream outputStream = new FileOutputStream(symbolFile);
-        ObjectOutputStream serializer = new ObjectOutputStream(outputStream);
-
-        VerbaExpression compiledFile = compileFile();
-        serializer.writeObject(compiledFile);
-
-        serializer.flush();
-        serializer.close();
+            ConsoleTools.printlnOk("Compiled symbol file: %s from source %s",
+                sourceFile.outputPath(), sourceFile.absolutePath());
+        }
     }
 
     @Override
     public void perform() {
         try {
             emitToSymbolFile();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -2,7 +2,7 @@ package com.verba.language.test.parsing;
 
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.members.MemberExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -53,7 +53,7 @@ public class ClassParsing {
         assert (declaration.inlineParameters()
             .single()
             .items()
-            .singleAs(VarNameDeclarationExpression.class) // First parameter in this set
+            .singleAs(NamedObjectDeclarationExpression.class) // First parameter in this set
             .representation()
             .equals("first : One"));
 

@@ -4,7 +4,7 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.blockheader.namespaces.NamespaceDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.expressions.tags.hashtag.HashTagExpression;
@@ -33,14 +33,14 @@ public class ScopedSymbolTableTest {
 
         // Parameters
         assert (aFunctionTable.name().equals("aFunction"));
-        assert (aFunctionTable.get("first").single().instance() instanceof VarNameDeclarationExpression);
-        assert (aFunctionTable.get("second").single().instance() instanceof VarNameDeclarationExpression);
+        assert (aFunctionTable.get("first").single().instance() instanceof NamedObjectDeclarationExpression);
+        assert (aFunctionTable.get("second").single().instance() instanceof NamedObjectDeclarationExpression);
 
         // Generic Parameters
-        assert (aFunctionTable.get("T").single().instance() instanceof VarNameDeclarationExpression);
-        assert (aFunctionTable.get("U").single().instance() instanceof VarNameDeclarationExpression);
-        assert (aFunctionTable.get("U").single().instanceAs(VarNameDeclarationExpression.class).hasTypeConstraint());
-        assert (aFunctionTable.get("V").single().instance() instanceof VarNameDeclarationExpression);
+        assert (aFunctionTable.get("T").single().instance() instanceof NamedObjectDeclarationExpression);
+        assert (aFunctionTable.get("U").single().instance() instanceof NamedObjectDeclarationExpression);
+        assert (aFunctionTable.get("U").single().instanceAs(NamedObjectDeclarationExpression.class).hasTypeConstraint());
+        assert (aFunctionTable.get("V").single().instance() instanceof NamedObjectDeclarationExpression);
 
         // In function declarations
         assert (aFunctionTable.get("item").single().instance() instanceof ValDeclarationStatement);
@@ -64,7 +64,7 @@ public class ScopedSymbolTableTest {
 
         assert (internalFunctionTable.entries().count() == 3);
 
-        assert (internalFunctionTable.get("param").single().instance() instanceof VarNameDeclarationExpression);
+        assert (internalFunctionTable.get("param").single().instance() instanceof NamedObjectDeclarationExpression);
         assert (internalFunctionTable.get("another").single().instance() instanceof ValDeclarationStatement);
         assert (internalFunctionTable.get("number").single().instance() instanceof MutaDeclarationStatement);
 

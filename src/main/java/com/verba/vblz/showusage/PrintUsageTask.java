@@ -1,6 +1,6 @@
 package com.verba.vblz.showusage;
 
-import com.verba.tools.display.ConsoleOutput;
+import com.verba.tools.display.ConsoleTools;
 import com.verba.tools.tasks.Task;
 
 /**
@@ -16,7 +16,8 @@ public class PrintUsageTask implements Task {
         System.out.println("Commands:");
         System.out.println("    new     : Create a new project schema in this folder.");
         System.out.println("    build   : Build the project located in this folder.");
-        ConsoleOutput.printBlankline();
+        System.out.println("    clean   : Clean out the contents of the build folder.");
+        ConsoleTools.printBlankline();
 
         System.exit(0);
     }

@@ -3,7 +3,7 @@ package com.verba.language.expressions.blockheader.generic;
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 
@@ -13,8 +13,8 @@ import java.util.Iterator;
  * Created by sircodesalot on 14-2-17.
  */
 public class GenericTypeListExpression extends VerbaExpression
-    implements QIterable<VarNameDeclarationExpression> {
-    QList<VarNameDeclarationExpression> declarations = new QList<>();
+    implements QIterable<NamedObjectDeclarationExpression> {
+    QList<NamedObjectDeclarationExpression> declarations = new QList<>();
 
     public GenericTypeListExpression(VerbaExpression parent, Lexer lexer) {
         super(parent, lexer);
@@ -28,7 +28,7 @@ public class GenericTypeListExpression extends VerbaExpression
         lexer.readCurrentAndAdvance(OperatorToken.class, "<");
 
         while (!lexer.currentIs(OperatorToken.class, ">")) {
-            declarations.add(VarNameDeclarationExpression.read(this, lexer));
+            declarations.add(NamedObjectDeclarationExpression.read(this, lexer));
 
             if (!lexer.currentIs(OperatorToken.class, ",")) break;
             else lexer.readCurrentAndAdvance(OperatorToken.class, ",");
@@ -46,18 +46,18 @@ public class GenericTypeListExpression extends VerbaExpression
     }
 
     public String representation() {
-        Iterable<String> items = this.declarations.map(VarNameDeclarationExpression::representation);
+        Iterable<String> items = this.declarations.map(NamedObjectDeclarationExpression::representation);
         String joinedItems = String.join(", ", items);
 
         return String.format("<%s>", joinedItems);
     }
 
-    public QList<VarNameDeclarationExpression> parameters() {
+    public QList<NamedObjectDeclarationExpression> parameters() {
         return this.declarations;
     }
 
     @Override
-    public Iterator<VarNameDeclarationExpression> iterator() {
+    public Iterator<NamedObjectDeclarationExpression> iterator() {
         return this.declarations.iterator();
     }
 }

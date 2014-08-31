@@ -3,7 +3,7 @@ package com.verba.tools.display;
 /**
  * Created by sircodesalot on 14/8/29.
  */
-public class ConsoleOutput {
+public class ConsoleTools {
     public static void printBlankline() {
         System.out.println();
     }

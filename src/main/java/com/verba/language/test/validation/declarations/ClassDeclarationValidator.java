@@ -3,7 +3,7 @@ package com.verba.language.test.validation.declarations;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.test.validation.ExpressionValidator;
@@ -40,11 +40,11 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
             for (FullyQualifiedNameExpression fqn :
                 this.classDeclaration().traits().ofType(FullyQualifiedNameExpression.class)) {
                 FullyQualifiedNameValidator validator = new FullyQualifiedNameValidator(fqn);
-                QIterable<VarNameDeclarationExpression> genericParametersWithConstraint = validator
+                QIterable<NamedObjectDeclarationExpression> genericParametersWithConstraint = validator
                     .flattenedGenericParameterList()
-                    .where(VarNameDeclarationExpression::hasTypeConstraint);
+                    .where(NamedObjectDeclarationExpression::hasTypeConstraint);
 
-                for (VarNameDeclarationExpression invlidParameter : genericParametersWithConstraint) {
+                for (NamedObjectDeclarationExpression invlidParameter : genericParametersWithConstraint) {
                     this.addViolation(invlidParameter, "Generic Parameters in base types cannot be constained.", invlidParameter);
                 }
 
@@ -74,14 +74,14 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
 
         // Validate the types of parameters
         QIterable<ValidationViolation> typeViolations = new TupleListDeclarationValidator(this.classDeclaration().inlineParameters())
-            .findArguments(parameter -> !(parameter instanceof VarNameDeclarationExpression))
+            .findArguments(parameter -> !(parameter instanceof NamedObjectDeclarationExpression))
             .map(parameter -> new ValidationViolation(parameter, "Parameter %s must be a variable declaration", parameter));
 
         // Validate that the parameters are constrained
 
         QIterable<ValidationViolation> missingConstraintViolations = declarationValidator
             .flattenedParameterList()
-            .ofType(VarNameDeclarationExpression.class)
+            .ofType(NamedObjectDeclarationExpression.class)
             .where(parameter -> !parameter.hasTypeConstraint())
             .map(parameter -> new ValidationViolation(parameter, "Parameter %s must have a type constraint", parameter));
 

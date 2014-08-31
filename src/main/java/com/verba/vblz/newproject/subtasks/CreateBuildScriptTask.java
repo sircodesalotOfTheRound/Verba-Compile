@@ -1,6 +1,6 @@
 package com.verba.vblz.newproject.subtasks;
 
-import com.verba.tools.display.ConsoleOutput;
+import com.verba.tools.display.ConsoleTools;
 import com.verba.tools.tasks.Task;
 import com.verba.tools.xml.XmlElement;
 import com.verba.tools.xml.XmlSpace;
@@ -47,19 +47,19 @@ public class CreateBuildScriptTask implements Task {
 
             String buildScriptContent = String.format("%s\n", buildScript.toString());
 
-            ConsoleOutput.printlnOk("Creating vblz-build.xml script");
-            ConsoleOutput.printlnOk("Created vblz-build.xml script");
+            ConsoleTools.printlnOk("Creating vblz-build.xml script");
+            ConsoleTools.printlnOk("Created vblz-build.xml script");
 
-            ConsoleOutput.printBlankline();
-            ConsoleOutput.printlnIndented(2, "Generated Build Script:");
-            ConsoleOutput.printBlankline();
-            ConsoleOutput.println(buildScript.getContentIndented(4));
+            ConsoleTools.printBlankline();
+            ConsoleTools.printlnIndented(2, "Generated Build Script:");
+            ConsoleTools.printBlankline();
+            ConsoleTools.println(buildScript.getContentIndented(4));
 
             outputStream.write(buildScriptContent.getBytes(), 0, buildScriptContent.length());
 
             outputStream.close();
 
-            ConsoleOutput.printBlankline();
+            ConsoleTools.printBlankline();
 
         } catch (Exception ex) {
             ex.printStackTrace();

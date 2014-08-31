@@ -1,6 +1,6 @@
 package com.verba.vblz.newproject.subtasks;
 
-import com.verba.tools.display.ConsoleOutput;
+import com.verba.tools.display.ConsoleTools;
 import com.verba.tools.tasks.Task;
 
 import java.io.*;
@@ -32,12 +32,12 @@ public class CreateBuildEnvironmentTask implements Task {
         createDir("build/bin");
         createDir("build/symbols");
 
-        ConsoleOutput.printBlankline();
+        ConsoleTools.printBlankline();
     }
 
     private void createDir(String path) {
         new File(path).mkdir();
-        ConsoleOutput.printlnOk("Created directory %s", path);
+        ConsoleTools.printlnOk("Created directory %s", path);
     }
 
     private void createFile(String path, String content) {
@@ -49,7 +49,7 @@ public class CreateBuildEnvironmentTask implements Task {
             outputStream.write(content.getBytes(), 0, content.length());
             outputStream.close();
 
-            ConsoleOutput.printlnOk("Created file %s", path);
+            ConsoleTools.printlnOk("Created file %s", path);
 
         } catch (IOException ex) {
             ex.printStackTrace();

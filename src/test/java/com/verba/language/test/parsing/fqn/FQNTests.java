@@ -1,6 +1,6 @@
 package com.verba.language.test.parsing.fqn;
 
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.members.MemberExpression;
@@ -53,7 +53,7 @@ public class FQNTests {
 
         assert (secondMemberParameters.count() == 3);
         assert (secondMemberParameters.items().firstAs(NumericExpression.class).asInt() == 1);
-        assert ((VarNameDeclarationExpression) secondMemberParameters.get(1)).representation().equals("two");
+        assert ((NamedObjectDeclarationExpression) secondMemberParameters.get(1)).representation().equals("two");
         assert (secondMemberParameters.get(2) instanceof LambdaExpression);
     }
 }

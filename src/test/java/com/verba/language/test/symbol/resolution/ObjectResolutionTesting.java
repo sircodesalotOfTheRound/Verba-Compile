@@ -4,7 +4,7 @@ import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
@@ -31,7 +31,7 @@ public class ObjectResolutionTesting {
         ScopedSymbolTable classTable = new ScopedSymbolTable(declaration);
 
         assert (classTable.entries().count() == 5);
-        assert (classTable.get("T").first(t -> t.table() == classTable).instance() instanceof VarNameDeclarationExpression);
+        assert (classTable.get("T").first(t -> t.table() == classTable).instance() instanceof NamedObjectDeclarationExpression);
         assert (classTable.get("function").single().instance() instanceof FunctionDeclarationExpression);
         assert (classTable.get("item").single().instance() instanceof ValDeclarationStatement);
         assert (classTable.get("outerObject").single().instance() instanceof ValDeclarationStatement);
@@ -49,8 +49,8 @@ public class ObjectResolutionTesting {
         assert (functionTable.entries().count() == 5);
 
         // General validation
-        assert (functionTable.get("U").single().instance() instanceof VarNameDeclarationExpression);
-        assert (functionTable.get("param").single().instance() instanceof VarNameDeclarationExpression);
+        assert (functionTable.get("U").single().instance() instanceof NamedObjectDeclarationExpression);
+        assert (functionTable.get("param").single().instance() instanceof NamedObjectDeclarationExpression);
         assert (functionTable.get("innerObject").single().instance() instanceof ValDeclarationStatement);
         assert (functionTable.get("anotherObject").single().instance() instanceof MutaDeclarationStatement);
         assert (functionTable.get("item").single().instance() instanceof MutaDeclarationStatement);
@@ -61,7 +61,7 @@ public class ObjectResolutionTesting {
             .single(entry -> entry.name().equals("innerObject"))
             .instanceAs(ValDeclarationStatement.class);
 
-        VarNameDeclarationExpression innerObjectRval = (VarNameDeclarationExpression) innerObject.rvalue();
+        NamedObjectDeclarationExpression innerObjectRval = (NamedObjectDeclarationExpression) innerObject.rvalue();
         SymbolTableEntry innerObjectResolution
             = functionTable.resolveName(innerObjectRval.representation()).single();
 
@@ -73,7 +73,7 @@ public class ObjectResolutionTesting {
             .single(entry -> entry.name().equals("anotherObject"))
             .instanceAs(MutaDeclarationStatement.class);
 
-        VarNameDeclarationExpression anotherObjectRval = (VarNameDeclarationExpression) anotherObject.rvalue();
+        NamedObjectDeclarationExpression anotherObjectRval = (NamedObjectDeclarationExpression) anotherObject.rvalue();
         SymbolTableEntry anotherObjectRvalNameResolution
             = functionTable.resolveName(anotherObjectRval.representation()).single();
 
@@ -99,7 +99,7 @@ public class ObjectResolutionTesting {
 
         // Look up all resolutions for 'T'
         assert (functionTable.resolveName("T").count() == 2);
-        assert (functionTable.resolveName("T").single(t -> t.is(VarNameDeclarationExpression.class)) != null);
+        assert (functionTable.resolveName("T").single(t -> t.is(NamedObjectDeclarationExpression.class)) != null);
         assert (functionTable.resolveName("T").single(t -> t.is(ValDeclarationStatement.class)) != null);
     }
 

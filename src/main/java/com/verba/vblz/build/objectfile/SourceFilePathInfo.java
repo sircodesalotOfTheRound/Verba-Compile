@@ -1,14 +1,10 @@
 package com.verba.vblz.build.objectfile;
 
-import com.verba.language.exceptions.CompilerException;
 import com.verba.tools.EnvironmentHelpers;
 import com.verba.tools.display.StringTools;
+import com.verba.tools.files.FileTools;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
 /**
@@ -96,29 +92,16 @@ public class SourceFilePathInfo {
     public String outputPath() { return this.outputPath; }
 
     public boolean isSymbolFileUpToDate() {
-        Path sourceFile = new File(this.absolutePath).toPath();
-        Path symbolFile = new File(this.outputPath).toPath();
-
-        // If the symbol file doesn't exist, then it's not up to date.
-        if (!symbolFile.toFile().exists()) {
+        // If the file doesn't exist, can't be up to date.
+        if (!FileTools.fileExists(this.outputPath)) {
             return false;
         }
 
-        try {
-            BasicFileAttributes sourceFileAttributes = Files.readAttributes(sourceFile, BasicFileAttributes.class);
-            BasicFileAttributes symbolFileAttributes = Files.readAttributes(symbolFile, BasicFileAttributes.class);
+        FileTime sourceFileModifiedTime = FileTools.getModifiedTime(this.absolutePath);
+        FileTime symbolFileModifiedTime = FileTools.getModifiedTime(this.outputPath);
 
-            FileTime sourceFileModified = sourceFileAttributes.lastModifiedTime();
-            FileTime symbolFileModified = symbolFileAttributes.lastModifiedTime();
-
-            // Source file should be modified less than the symbol file.
-            return sourceFileModified.compareTo(symbolFileModified) < 0;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            throw new CompilerException("Unable to check build times");
-        }
+        // Source file should be modified less than the symbol file.
+        return sourceFileModifiedTime.compareTo(symbolFileModifiedTime) < 0;
     }
 
     @Override

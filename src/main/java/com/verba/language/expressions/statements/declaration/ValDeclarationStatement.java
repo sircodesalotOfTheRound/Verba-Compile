@@ -1,7 +1,7 @@
 package com.verba.language.expressions.statements.declaration;
 
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.categories.AssignmentExpression;
 import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
 import com.verba.language.expressions.categories.RValueExpression;
@@ -16,7 +16,7 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 public class ValDeclarationStatement extends VerbaExpression
     implements NamedDataDeclarationExpression, AssignmentExpression {
 
-    private VarNameDeclarationExpression identifier;
+    private NamedObjectDeclarationExpression identifier;
     private RValueExpression rvalue;
 
     private ValDeclarationStatement(VerbaExpression parent, Lexer lexer) {
@@ -27,7 +27,7 @@ public class ValDeclarationStatement extends VerbaExpression
 
     private void readExpression(Lexer lexer) {
         lexer.readCurrentAndAdvance(KeywordToken.class, "val");
-        this.identifier = VarNameDeclarationExpression.read(this, lexer);
+        this.identifier = NamedObjectDeclarationExpression.read(this, lexer);
 
         lexer.readCurrentAndAdvance(OperatorToken.class, "=");
 
@@ -54,7 +54,7 @@ public class ValDeclarationStatement extends VerbaExpression
     }
 
 
-    public VarNameDeclarationExpression identifier() {
+    public NamedObjectDeclarationExpression identifier() {
         return this.identifier;
     }
 

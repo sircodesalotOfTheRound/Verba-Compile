@@ -32,6 +32,14 @@ public class EnvironmentHelpers {
         return directories[directories.length - 1];
     }
 
+    public static String getCodeFolderPath() {
+        return String.format("%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "code");
+    }
+
+    public static String getSymbolFolderPath() {
+        return String.format("%s/%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "build", "symbols");
+    }
+
     public static String getCurrentFolderPath() {
         return System.getProperty("user.dir");
     }

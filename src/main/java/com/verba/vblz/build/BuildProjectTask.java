@@ -1,9 +1,11 @@
 package com.verba.vblz.build;
 
+import com.verba.tools.display.ConsoleTools;
 import com.verba.tools.tasks.Task;
 import com.verba.vblz.build.objectfile.SourceFilePathInfo;
 import com.verba.vblz.build.objectfile.SymbolFileCreationTask;
 import com.verba.vblz.build.subtasks.CreateCompilationListTask;
+import com.verba.vblz.build.symboltable.MergeSymbolTableTask;
 
 /**
  * Created by sircodesalot on 14/8/30.
@@ -18,9 +20,27 @@ public class BuildProjectTask implements Task {
         }
     }
 
+    private void mergeSymbolTables() {
+        MergeSymbolTableTask task = new MergeSymbolTableTask();
+        task.perform();
+
+        ConsoleTools.printlnOk("Successfully linked files into symbol table.");
+        ConsoleTools.printBlankline();
+    }
+
     @Override
     public void perform() {
         createCompilationListTask.perform();
+        ConsoleTools.printlnOk("Generate list of files to build.");
+        ConsoleTools.printBlankline();
+
         createSymbolFiles(createCompilationListTask.files());
+        ConsoleTools.printlnOk("Successfully built symbol files.");
+        ConsoleTools.printBlankline();
+
+        mergeSymbolTables();
+
+        ConsoleTools.printlnOk("Successfully built: %s", "PROJECT_NAME");
+        ConsoleTools.printBlankline();
     }
 }

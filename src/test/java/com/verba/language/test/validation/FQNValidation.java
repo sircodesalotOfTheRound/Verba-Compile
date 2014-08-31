@@ -1,7 +1,7 @@
 package com.verba.language.test.validation;
 
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.validation.fqn.FullyQualifiedNameValidator;
 import com.verba.language.test.tools.GeneralLexing;
@@ -14,7 +14,7 @@ public class FQNValidation {
     @Test
     public void validateSimpleFQN() {
         Lexer lexer = GeneralLexing.generateLexerFromString("First.Second.Third.Fourth");
-        VarNameDeclarationExpression fqn = (VarNameDeclarationExpression) VerbaExpression.read(null, lexer);
+        NamedObjectDeclarationExpression fqn = (NamedObjectDeclarationExpression) VerbaExpression.read(null, lexer);
         FullyQualifiedNameValidator validator = new FullyQualifiedNameValidator(fqn.identifier());
 
         assert (!validator.hasParameters());
@@ -25,7 +25,7 @@ public class FQNValidation {
     @Test
     public void validateFQNWithParameters() {
         Lexer lexer = GeneralLexing.generateLexerFromString("First.Second(1).Third.Fourth");
-        VarNameDeclarationExpression fqn = (VarNameDeclarationExpression) VerbaExpression.read(null, lexer);
+        NamedObjectDeclarationExpression fqn = (NamedObjectDeclarationExpression) VerbaExpression.read(null, lexer);
         FullyQualifiedNameValidator validator = new FullyQualifiedNameValidator(fqn.identifier());
 
         assert (validator.hasParameters());

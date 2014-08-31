@@ -8,7 +8,7 @@ import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
@@ -16,7 +16,6 @@ import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.rvalue.simple.IdentifierExpression;
 import com.verba.language.expressions.rvalue.simple.MathOpExpression;
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
-import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
@@ -57,7 +56,7 @@ public class VerbaStatementAndDeclarationVisitor {
         else if (node instanceof FunctionDeclarationExpression)
             this.visitFunction((FunctionDeclarationExpression) node);
 
-        else if (node instanceof VarNameDeclarationExpression) this.visitVarName((VarNameDeclarationExpression) node);
+        else if (node instanceof NamedObjectDeclarationExpression) this.visitVarName((NamedObjectDeclarationExpression) node);
 
             // Containers
         else if (node instanceof JsonExpression) this.visitJson((JsonExpression) node);
@@ -90,7 +89,7 @@ public class VerbaStatementAndDeclarationVisitor {
         this.visitAll(node.rootLevelExpressions());
     }
 
-    public void visitVarName(VarNameDeclarationExpression var) {
+    public void visitVarName(NamedObjectDeclarationExpression var) {
         if (var.hasTypeConstraint()) this.visit((VerbaExpression) var.typeDeclaration());
     }
 

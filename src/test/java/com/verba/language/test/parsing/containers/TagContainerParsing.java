@@ -1,6 +1,6 @@
 package com.verba.language.test.parsing.containers;
 
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.containers.markup.MarkupDeclarationExpression;
 import com.verba.language.expressions.containers.markup.MarkupTagItemExpression;
@@ -20,9 +20,9 @@ public class TagContainerParsing {
             (MarkupDeclarationExpression) RValueExpression.read(null, lexer);
         MarkupTagItemExpression tag = (MarkupTagItemExpression) expression.items().single();
 
-        assert (tag.identifier() instanceof VarNameDeclarationExpression);
+        assert (tag.identifier() instanceof NamedObjectDeclarationExpression);
 
-        VarNameDeclarationExpression identifier = (VarNameDeclarationExpression) tag.identifier();
+        NamedObjectDeclarationExpression identifier = (NamedObjectDeclarationExpression) tag.identifier();
         assert (identifier.representation().equals("Something"));
 
         assert (tag.items().count() == 2);
@@ -36,9 +36,9 @@ public class TagContainerParsing {
         MarkupDeclarationExpression expression = (MarkupDeclarationExpression) RValueExpression.read(null, lexer);
         MarkupTagItemExpression tag = (MarkupTagItemExpression) expression.items().single();
 
-        assert (tag.identifier() instanceof VarNameDeclarationExpression);
+        assert (tag.identifier() instanceof NamedObjectDeclarationExpression);
 
-        VarNameDeclarationExpression identifier = (VarNameDeclarationExpression) tag.identifier();
+        NamedObjectDeclarationExpression identifier = (NamedObjectDeclarationExpression) tag.identifier();
         assert (identifier.representation().equals("Something"));
 
         assert (tag.items().count() == 2);
@@ -52,9 +52,9 @@ public class TagContainerParsing {
         MarkupDeclarationExpression expression = (MarkupDeclarationExpression) RValueExpression.read(null, lexer);
         MarkupTagItemExpression tag = (MarkupTagItemExpression) expression.items().single();
 
-        assert (tag.identifier() instanceof VarNameDeclarationExpression);
+        assert (tag.identifier() instanceof NamedObjectDeclarationExpression);
 
-        VarNameDeclarationExpression identifier = (VarNameDeclarationExpression) tag.identifier();
+        NamedObjectDeclarationExpression identifier = (NamedObjectDeclarationExpression) tag.identifier();
         assert (identifier.representation().equals("Instance"));
 
         assert (tag.items().count() == 2);
@@ -69,9 +69,9 @@ public class TagContainerParsing {
         MarkupDeclarationExpression expression = (MarkupDeclarationExpression) RValueExpression.read(null, lexer);
         MarkupTagItemExpression tag = (MarkupTagItemExpression) expression.items().single();
 
-        assert (tag.identifier() instanceof VarNameDeclarationExpression);
+        assert (tag.identifier() instanceof NamedObjectDeclarationExpression);
 
-        VarNameDeclarationExpression identifier = (VarNameDeclarationExpression) tag.identifier();
+        NamedObjectDeclarationExpression identifier = (NamedObjectDeclarationExpression) tag.identifier();
         assert (identifier.representation().equals("Instance"));
 
         assert (tag.items().count() == 2);

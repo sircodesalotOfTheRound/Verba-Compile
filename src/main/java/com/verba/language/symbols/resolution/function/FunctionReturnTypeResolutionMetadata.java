@@ -2,7 +2,7 @@ package com.verba.language.symbols.resolution.function;
 
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.categories.InvokableExpression;
 import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
@@ -54,7 +54,7 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
                     if (VirtualMachineNativeTypes.isVirtualMachineType((VerbaExpression) returnStatement.value())) {
                         return VirtualMachineNativeTypes.getTypeFromInstance((VerbaExpression) returnStatement.value());
 
-                    } else if (value instanceof VarNameDeclarationExpression) {
+                    } else if (value instanceof NamedObjectDeclarationExpression) {
                         return resolveFromVariableName(value);
                     }
                 }
@@ -66,7 +66,7 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
 
     // TODO: Named resolution needs to be abstracted out into a class.
     public TypeDeclarationExpression resolveFromVariableName(VerbaExpression value) {
-        VarNameDeclarationExpression variable = (VarNameDeclarationExpression) value;
+        NamedObjectDeclarationExpression variable = (NamedObjectDeclarationExpression) value;
         String localName = variable.name();
 
         if (this.scope.containsKey(localName)) {

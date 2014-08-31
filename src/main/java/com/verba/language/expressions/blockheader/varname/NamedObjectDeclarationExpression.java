@@ -13,7 +13,7 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 /**
  * Created by sircodesalot on 14-2-17.
  */
-public class VarNameDeclarationExpression extends VerbaExpression
+public class NamedObjectDeclarationExpression extends VerbaExpression
     implements RValueExpression, TupleItemExpression, MarkupRvalueExpression,
     NamedDataDeclarationExpression
 
@@ -21,7 +21,7 @@ public class VarNameDeclarationExpression extends VerbaExpression
     private final FullyQualifiedNameExpression identifier;
     private TypeDeclarationExpression type;
 
-    public VarNameDeclarationExpression(VerbaExpression parent, Lexer lexer) {
+    public NamedObjectDeclarationExpression(VerbaExpression parent, Lexer lexer) {
         super(parent, lexer);
 
         this.identifier = FullyQualifiedNameExpression.read(this, lexer);
@@ -32,8 +32,8 @@ public class VarNameDeclarationExpression extends VerbaExpression
         }
     }
 
-    public static VarNameDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
-        return new VarNameDeclarationExpression(parent, lexer);
+    public static NamedObjectDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
+        return new NamedObjectDeclarationExpression(parent, lexer);
     }
 
     public String representation() {

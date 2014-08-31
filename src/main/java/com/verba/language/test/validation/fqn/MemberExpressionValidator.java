@@ -2,7 +2,7 @@ package com.verba.language.test.validation.fqn;
 
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.members.MemberExpression;
 import com.verba.language.test.validation.ExpressionValidator;
 
@@ -28,13 +28,13 @@ public class MemberExpressionValidator extends ExpressionValidator<MemberExpress
             .flatten(parameterList -> parameterList.items());
 
         boolean allParametersAreVarNameExpressions = parameters
-            .all(parameter -> parameter instanceof VarNameDeclarationExpression);
+            .all(parameter -> parameter instanceof NamedObjectDeclarationExpression);
 
         if (!allParametersAreVarNameExpressions) return false;
 
         return parameters
-            .cast(VarNameDeclarationExpression.class)
-            .all(VarNameDeclarationExpression::hasTypeConstraint);
+            .cast(NamedObjectDeclarationExpression.class)
+            .all(NamedObjectDeclarationExpression::hasTypeConstraint);
     }
 
     public QIterable<VerbaExpression> flattenedParameterLists() {

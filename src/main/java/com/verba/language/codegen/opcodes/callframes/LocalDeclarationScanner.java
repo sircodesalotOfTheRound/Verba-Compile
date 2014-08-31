@@ -3,7 +3,7 @@ package com.verba.language.codegen.opcodes.callframes;
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.VarNameDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.symbols.meta.decorators.FunctionSymbol;
 
 /**
@@ -22,7 +22,7 @@ public class LocalDeclarationScanner {
     private void scan() {
         // Add local variable name declarations
         for (VerbaExpression expression : function.block()) {
-            if (expression instanceof VarNameDeclarationExpression)
+            if (expression instanceof NamedObjectDeclarationExpression)
                 this.locals.add(expression);
         }
     }
