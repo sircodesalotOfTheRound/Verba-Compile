@@ -1,14 +1,11 @@
 package com.verba.tools.xml;
 
+import com.javalinq.implementations.QList;
+import com.javalinq.interfaces.QIterable;
 import com.verba.tools.display.StringTools;
 import com.verba.tools.xml.parsing.XmlTag;
 import com.verba.tools.xml.parsing.XmlTagType;
 import com.verba.tools.xml.parsing.XmlText;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by sircodesalot on 14/8/30.
@@ -16,35 +13,33 @@ import java.util.List;
 public class XmlElement extends XmlNode {
     private final String name;
     private final String content;
-    private final List<XmlNode> nodes;
+    private final QList<XmlNode> children;
 
     public XmlElement(String name, String content) {
         this.name = name;
-        this.nodes = new ArrayList<>();
+        this.children = new QList<>();
         this.content = content;
     }
 
     public XmlElement(String name) {
         this.name = name;
-        this.nodes = new ArrayList<>();
+        this.children = new QList<>();
         this.content = StringTools.emptyString();
     }
 
-    public XmlElement(String name, XmlNode ... nodes) {
-        this(name, StringTools.emptyString(), nodes);
+    public XmlElement(String name, XmlNode ... children) {
+        this(name, StringTools.emptyString(), children);
     }
 
-    public XmlElement(String name, String content, XmlNode ... nodes) {
+    public XmlElement(String name, String content, XmlNode ... children) {
         this.name = name;
         this.content = content;
-        this.nodes = new ArrayList<XmlNode>();
-
-        Collections.addAll(this.nodes, nodes);
+        this.children = new QList<>(children);
     }
 
-    public boolean hasChildren() { return !this.nodes.isEmpty(); }
+    public boolean hasChildren() { return this.children.any(); }
     public String name() { return this.name; }
-    public Iterable<XmlNode> nodes() { return this.nodes; }
+    public QIterable<XmlNode> children() { return this.children; }
 
 
     public String getContentIndented(int indent) {
@@ -60,7 +55,7 @@ public class XmlElement extends XmlNode {
 
             middle.append("\n");
 
-            for (XmlNode node : this.nodes) {
+            for (XmlNode node : this.children) {
                 middle.append(node.getContentIndented(indent + 4));
                 middle.append("\n");
             }
