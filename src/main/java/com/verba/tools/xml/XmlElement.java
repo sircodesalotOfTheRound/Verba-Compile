@@ -1,6 +1,10 @@
 package com.verba.tools.xml;
 
 import com.verba.tools.display.StringTools;
+import com.verba.tools.xml.parsing.XmlTag;
+import com.verba.tools.xml.parsing.XmlTagType;
+import com.verba.tools.xml.parsing.XmlText;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,10 +15,10 @@ import java.util.List;
  */
 public class XmlElement extends XmlNode {
     private final String name;
-    private final Object content;
+    private final String content;
     private final List<XmlNode> nodes;
 
-    public XmlElement(String name, Object content) {
+    public XmlElement(String name, String content) {
         this.name = name;
         this.nodes = new ArrayList<>();
         this.content = content;
@@ -23,12 +27,16 @@ public class XmlElement extends XmlNode {
     public XmlElement(String name) {
         this.name = name;
         this.nodes = new ArrayList<>();
-        this.content = null;
+        this.content = StringTools.emptyString();
     }
 
     public XmlElement(String name, XmlNode ... nodes) {
+        this(name, StringTools.emptyString(), nodes);
+    }
+
+    public XmlElement(String name, String content, XmlNode ... nodes) {
         this.name = name;
-        this.content = null;
+        this.content = content;
         this.nodes = new ArrayList<XmlNode>();
 
         Collections.addAll(this.nodes, nodes);
@@ -60,7 +68,7 @@ public class XmlElement extends XmlNode {
             return String.format("%s%s%s", start, middle, end);
 
         } else {
-            if (content != null) {
+            if (!content.isEmpty()) {
                 return StringTools.formatIndented(indent, "<%1$s>%2$s</%1$s>", this.name, this.content);
 
             } else {
@@ -75,37 +83,28 @@ public class XmlElement extends XmlNode {
         return getContentIndented(0);
     }
 
-    private static XmlElement parse(XmlLexer lexer) {
-        lexer.readAndAdvanceSkipWitespaces('<');
+    public static XmlElement parse(XmlLexer lexer) {
+        XmlTag openingTag = XmlTag.parse(lexer);
 
-        StringBuilder tag = new StringBuilder();
-        while (!lexer.isEof() && !(lexer.currentIs('/') || lexer.currentIs('>'))) {
-            tag.append(lexer.readAndAdvance());
+        if (openingTag.type() == XmlTagType.SELF_CLOSED) {
+            return new XmlElement(openingTag.name());
         }
 
-        // If this is the end tag, then finish reading and then bail.
-        if (lexer.currentIs('/')) {
-            lexer.readAndAdvanceSkipWitespaces('/');
-            lexer.readAndAdvanceSkipWitespaces('>');
+        XmlText text = XmlText.parse(lexer);
 
-            return new XmlElement(tag.toString());
-
+        XmlElement innerElement = null;
+        if (!lexer.isEof() && !(XmlTag.peekNextTag(lexer).name().equals(openingTag.name()))) {
+            innerElement = XmlElement.parse(lexer);
         }
 
-        // Otherwise, read the end of this tag, then recursively read subtags.
-        lexer.readAndAdvanceSkipWitespaces('>');
-        XmlElement result = new XmlElement(tag.toString(), XmlElement.parse(lexer));
+        XmlTag closingTag = XmlTag.parse(lexer);
 
-        // Read the closing tag.
-        lexer.readAndAdvanceSkipWitespaces('<');
-        lexer.readAndAdvanceSkipWitespaces('/');
-        while (!lexer.isEof() && !lexer.currentIs('>')) {
-            lexer.advance();
+        if (innerElement != null) {
+            return new XmlElement(openingTag.name(), text.toString(), innerElement);
+
+        } else {
+            return new XmlElement(openingTag.name(), text.toString());
         }
-
-        // Return the result
-        return result;
-
     }
 
     public static XmlElement parse(String text) {

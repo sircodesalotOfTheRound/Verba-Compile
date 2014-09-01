@@ -1,9 +1,12 @@
 package com.verba.tools.xml;
 
+import java.util.Stack;
+
 /**
  * Created by sircodesalot on 14/8/31.
  */
 public class XmlLexer {
+    private final Stack<Integer> undoStack = new Stack<>();
     private final String text;
     private int index;
 
@@ -16,6 +19,14 @@ public class XmlLexer {
     public XmlLexer(String text) {
         this.text = text;
         this.index = 0;
+    }
+
+    public void pushUndoLocation() {
+        this.undoStack.push(this.index);
+    }
+
+    public void revertToUndoLocation() {
+        this.index = this.undoStack.pop();
     }
 
     public boolean isEof() {
@@ -34,7 +45,7 @@ public class XmlLexer {
         this.index++;
     }
 
-    public void clearWhitespace() {
+    public void skipWhitespaces() {
         while (!isEof()) {
             if (Character.isWhitespace(current())) {
                 advance();
@@ -46,14 +57,14 @@ public class XmlLexer {
 
     public Character readAndAdvanceSkipWitespaces(Character letter) {
         readAndAdvance(letter);
-        clearWhitespace();
+        skipWhitespaces();
 
         return letter;
     }
 
     public Character readAndAdvanceSkipWitespaces() {
         Character letter = readAndAdvance();
-        clearWhitespace();
+        skipWhitespaces();
 
         return letter;
     }
