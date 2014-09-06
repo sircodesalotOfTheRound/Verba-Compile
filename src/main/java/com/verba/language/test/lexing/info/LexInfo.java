@@ -13,6 +13,10 @@ public class LexInfo implements Serializable {
     private final String filename;
     private final int absolutePosition;
     private String typeName;
+
+    // Can't serialize this, so we store the typename instead.
+    private transient Class type;
+
     private final int line;
     private final int column;
 
@@ -44,11 +48,15 @@ public class LexInfo implements Serializable {
     }
 
     public Class type() {
-        try {
-            return Class.forName(this.typeName);
-        } catch (ClassNotFoundException e) {
-            throw new CompilerException("Unable to instantiate class");
+        if (type == null) {
+            try {
+                this.type = Class.forName(this.typeName);
+            } catch (ClassNotFoundException e) {
+                throw new CompilerException("Unable to instantiate class");
+            }
         }
+
+        return this.type;
     }
 
     public int getLength() {

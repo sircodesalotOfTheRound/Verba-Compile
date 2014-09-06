@@ -8,11 +8,11 @@ public class KeywordToken extends IdentifierToken {
     private static final Set<String> keywords = ((Supplier<Set<String>>) () -> {
         String[] basicKeywords = new String[]{
             "public", "private", "protect", "internal",
-            "static", "operator", "override", "segment", "virtual", "injected",
+            "static", "operator", "override", "segment", "virt", "injected",
             "to", "in", "withns", "enum", "trait",
             "options", "option", "enum", "get", "set", "inline",
-            "namespace", "class", "abstract", "extend", "sql", "environment", "native",
-            "signature", "fn", "task", "template", "service", "event", "proxy",
+            "namespace", "class", "abstr", "extend", "sql", "native",
+            "signature", "fn", "task", "template", "service", "fork", "event", "proxy",
             "val", "muta", "yield",
             "new", "inject",
             "return",
