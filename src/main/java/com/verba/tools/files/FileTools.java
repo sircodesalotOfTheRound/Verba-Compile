@@ -144,6 +144,23 @@ public class FileTools {
         return getSubfolders(new File(path), new QList<File>());
     }
 
+    public static QIterable<File> findInParentFolders(String path, Predicate<File> predicate) {
+        QList<File> matches = new QList<>();
+        File currentDirectory = new File(path);
+
+        do {
+            if (predicate.test(currentDirectory)) {
+                matches.add(currentDirectory);
+            }
+
+            if (currentDirectory.getParent() != null) {
+                currentDirectory = new File(currentDirectory.getParent());
+            }
+        } while (currentDirectory.getParent() != null);
+
+        return matches;
+    }
+
     public static QIterable<File> findInSubfolders(String path, Predicate<File> predicate) {
         QList<File> resultList = new QList<>();
         QIterable<File> folders = getSubfolders(path);

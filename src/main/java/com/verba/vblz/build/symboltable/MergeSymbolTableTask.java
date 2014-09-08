@@ -1,5 +1,6 @@
 package com.verba.vblz.build.symboltable;
 
+import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.tools.EnvironmentHelpers;
@@ -16,5 +17,11 @@ public class MergeSymbolTableTask implements Task {
             .findInSubfolders(EnvironmentHelpers.getSymbolFolderPath(), file -> file.getAbsolutePath().endsWith(".sym"))
             .map(file -> FileTools.deserializeObjectFromFile(file.getAbsolutePath()))
             .cast(StaticSpaceExpression.class);
+
+        QList<Object> objects = FileTools.findInSubfolders(EnvironmentHelpers.getSymbolFolderPath(), file -> file.getAbsolutePath().endsWith(".sym"))
+            .map(file -> FileTools.deserializeObjectFromFile(file.getAbsolutePath()))
+            .toList();
+
+
     }
 }

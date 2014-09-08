@@ -1,14 +1,31 @@
 package com.verba.tools;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import com.javalinq.implementations.QList;
+import com.javalinq.interfaces.QIterable;
+import com.verba.tools.files.FileTools;
+
+import java.io.*;
+import java.util.function.Supplier;
 
 /**
  * Created by sircodesalot on 14/8/29.
  */
 public class EnvironmentHelpers {
+    private static final File buildRoot = new Supplier<File>() {
+        @Override
+        public File get() {
+            File file = FileTools
+                .findInParentFolders(System.getProperty("user.dir"),
+                    folder -> {
+                        QIterable<String> filesInFolder = new QList<>(folder.list());
+                        return filesInFolder.any(fileName -> fileName.equals("vblz-build.xml"));
+                    })
+                .first();
+
+            return file;
+        }
+    }.get();
+
     public static String getHostname() {
         try {
             Process process = Runtime.getRuntime().exec("hostname");
@@ -32,6 +49,7 @@ public class EnvironmentHelpers {
         return directories[directories.length - 1];
     }
 
+
     public static String getCodeFolderPath() {
         return String.format("%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "code");
     }
@@ -41,7 +59,7 @@ public class EnvironmentHelpers {
     }
 
     public static String getCurrentFolderPath() {
-        return System.getProperty("user.dir");
+        return buildRoot.getAbsolutePath();
     }
 
 
