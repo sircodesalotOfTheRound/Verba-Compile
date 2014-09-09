@@ -3,6 +3,7 @@ package com.verba.tools;
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.tools.files.FileTools;
+import com.verba.tools.xml.XmlElement;
 
 import java.io.*;
 import java.util.function.Supplier;
@@ -14,15 +15,13 @@ public class EnvironmentHelpers {
     private static final File buildRoot = new Supplier<File>() {
         @Override
         public File get() {
-            File file = FileTools
-                .findInParentFolders(System.getProperty("user.dir"),
+            return FileTools
+                .findInParentFolders(getCurrentFolderPath(),
                     folder -> {
                         QIterable<String> filesInFolder = new QList<>(folder.list());
                         return filesInFolder.any(fileName -> fileName.equals("vblz-build.xml"));
                     })
-                .first();
-
-            return file;
+                .firstOrNull();
         }
     }.get();
 
@@ -51,16 +50,23 @@ public class EnvironmentHelpers {
 
 
     public static String getCodeFolderPath() {
-        return String.format("%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "code");
+        return String.format("%s/%s", EnvironmentHelpers.getBuildConfigFolderPath(), "code");
     }
 
     public static String getSymbolFolderPath() {
-        return String.format("%s/%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "build", "symbols");
+        return String.format("%s/%s/%s", EnvironmentHelpers.getBuildConfigFolderPath(), "build", "symbols");
     }
 
-    public static String getCurrentFolderPath() {
+    public static String getCurrentFolderPath() { return System.getProperty("user.dir"); }
+
+    public static String getBuildConfigFolderPath() {
         return buildRoot.getAbsolutePath();
     }
 
+    public static XmlElement loadBuildScript() {
+        String buildScriptPath = String.format("%s/%s", getBuildConfigFolderPath(), "vblz-build.xml");
+        String content = FileTools.readAllText(buildScriptPath);
 
+        return XmlElement.parse(content);
+    }
 }

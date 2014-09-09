@@ -2,6 +2,7 @@ package com.verba.vblz.build;
 
 import com.verba.tools.display.ConsoleTools;
 import com.verba.tools.tasks.Task;
+import com.verba.vblz.build.buildscript.BuildScriptDecorator;
 import com.verba.vblz.build.objectfile.SourceFilePathInfo;
 import com.verba.vblz.build.objectfile.SymbolFileCreationTask;
 import com.verba.vblz.build.subtasks.CreateCompilationListTask;
@@ -37,6 +38,6 @@ public class BuildProjectTask implements Task {
 
         mergeSymbolTables();
 
-        ConsoleTools.printlnOk("Successfully built: %s", "PROJECT_NAME");
+        ConsoleTools.printlnOk("Successfully built: %s", new BuildScriptDecorator().buildSchemas().first());
     }
 }

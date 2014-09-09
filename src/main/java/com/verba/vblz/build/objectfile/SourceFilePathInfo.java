@@ -1,7 +1,6 @@
 package com.verba.vblz.build.objectfile;
 
 import com.verba.tools.EnvironmentHelpers;
-import com.verba.tools.display.StringTools;
 import com.verba.tools.files.FileTools;
 
 import java.io.File;
@@ -38,7 +37,7 @@ public class SourceFilePathInfo {
     }
 
     private String determineCodePath() {
-        return String.format("%s/%s", EnvironmentHelpers.getCurrentFolderPath(), "code");
+        return String.format("%s/%s", EnvironmentHelpers.getBuildConfigFolderPath(), "code");
     }
 
     private String determineFilenameWithoutExtension(String absolutePath) {
@@ -79,7 +78,7 @@ public class SourceFilePathInfo {
     }
 
     private String determineBuildPath() {
-        return EnvironmentHelpers.getCurrentFolderPath();
+        return EnvironmentHelpers.getBuildConfigFolderPath();
     }
 
     public String absolutePath() { return this.absolutePath; }

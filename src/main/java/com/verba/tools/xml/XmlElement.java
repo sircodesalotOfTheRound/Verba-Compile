@@ -37,9 +37,26 @@ public class XmlElement extends XmlNode {
         this.children = new QList<>(children);
     }
 
+    public XmlElement(String name, String content, Iterable<XmlNode> elements) {
+        this.name = name;
+        this.content = content;
+        this.children = new QList<XmlNode>(elements);
+    }
+
     public boolean hasChildren() { return this.children.any(); }
     public String name() { return this.name; }
+    public String innerText() { return this.content; }
     public QIterable<XmlNode> children() { return this.children; }
+
+    public XmlElement elementByName(String name) {
+        return childrenByName(name).single();
+    }
+
+    public QIterable<XmlElement> childrenByName(String name) {
+        return this.children
+            .ofType(XmlElement.class)
+            .where(child -> child.name.equals(name));
+    }
 
 
     public String getContentIndented(int indent) {
@@ -87,15 +104,15 @@ public class XmlElement extends XmlNode {
 
         XmlText text = XmlText.parse(lexer);
 
-        XmlElement innerElement = null;
-        if (!lexer.isEof() && !(XmlTag.peekNextTag(lexer).name().equals(openingTag.name()))) {
-            innerElement = XmlElement.parse(lexer);
+        QList<XmlNode> innerElements = new QList<>();
+        while (!lexer.isEof() && !(XmlTag.peekNextTag(lexer).name().equals(openingTag.name()))) {
+            innerElements.add(XmlElement.parse(lexer));
         }
 
         XmlTag closingTag = XmlTag.parse(lexer);
 
-        if (innerElement != null) {
-            return new XmlElement(openingTag.name(), text.toString(), innerElement);
+        if (innerElements.any()) {
+            return new XmlElement(openingTag.name(), text.toString(), innerElements);
 
         } else {
             return new XmlElement(openingTag.name(), text.toString());
@@ -105,4 +122,5 @@ public class XmlElement extends XmlNode {
     public static XmlElement parse(String text) {
         return parse(new XmlLexer(text));
     }
+
 }
