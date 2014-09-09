@@ -1,6 +1,7 @@
 package com.verba.language.expressions.containers.tuple;
 
 import com.javalinq.implementations.QList;
+import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.DataContainerExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
@@ -61,7 +62,7 @@ public class TupleDeclarationExpression extends VerbaExpression implements TypeD
         return this.tokens.get(index);
     }
 
-    public QList<VerbaExpression> items() {
+    public QIterable<VerbaExpression> items() {
         return this.tokens;
     }
 }
