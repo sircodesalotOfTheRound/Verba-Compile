@@ -1,7 +1,5 @@
 package com.verba.scratchpad;
 
-import com.verba.vblz.build.buildscript.BuildScriptDecorator;
-
 /**
  * Created by sircodesalot on 14-2-16.
  */
