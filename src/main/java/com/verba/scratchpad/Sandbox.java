@@ -1,9 +1,5 @@
 package com.verba.scratchpad;
 
-import com.verba.tools.EnvironmentHelpers;
-import com.verba.tools.xml.XmlElement;
-import com.verba.tools.xml.XmlLexer;
-import com.verba.tools.xml.parsing.XmlTag;
 import com.verba.vblz.build.buildscript.BuildScriptDecorator;
 
 /**

@@ -41,13 +41,12 @@ public class EnvironmentHelpers {
         return "anonymous";
     }
 
-    public static String getCurrentFolderName() {
+    public static String getOnlyCurrentFolderName() {
         String path = System.getProperty("user.dir");
         String[] directories = path.split("/");
 
         return directories[directories.length - 1];
     }
-
 
     public static String getCodeFolderPath() {
         return String.format("%s/%s", EnvironmentHelpers.getBuildConfigFolderPath(), "code");

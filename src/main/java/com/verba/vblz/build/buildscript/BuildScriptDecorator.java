@@ -1,6 +1,5 @@
 package com.verba.vblz.build.buildscript;
 
-import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.tools.EnvironmentHelpers;
 import com.verba.tools.xml.XmlElement;
