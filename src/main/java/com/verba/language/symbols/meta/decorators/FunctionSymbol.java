@@ -51,7 +51,7 @@ public class FunctionSymbol extends SymbolTableDecorator {
     }
 
     public TupleDeclarationExpression parameters() {
-        return this.function.parameters().single();
+        return this.function.parameterSets().single();
     }
 
     public GenericTypeListExpression genericParameters() {

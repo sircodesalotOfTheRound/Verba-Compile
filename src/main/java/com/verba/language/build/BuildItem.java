@@ -35,9 +35,9 @@ public class BuildItem {
 
     // Return a code page from the specified file.
     public VerbaCodePage codePage() {
-        if (this.packageClass != null) {
-            return VerbaCodePage.fromPackageItem(null, this.packageClass, this.path);
-        }
+        /*if (this.packageClass != null) {
+            return VerbaCodePage.fromResourceStream(null, this.packageClass, this.path);
+        }*/
 
         return VerbaCodePage.fromFile(null, this.path);
     }

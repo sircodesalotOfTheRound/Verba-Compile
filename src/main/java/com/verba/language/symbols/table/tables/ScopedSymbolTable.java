@@ -143,14 +143,14 @@ public class ScopedSymbolTable implements Serializable {
     }
 
     private void scanFunction(FunctionDeclarationExpression function) {
-        // First add the parameters
-        QIterable<NamedObjectDeclarationExpression> parameters = function.parameters()
+        // First add the parameterSets
+        QIterable<NamedObjectDeclarationExpression> parameters = function.parameterSets()
             .flatten(tuple -> tuple.items())
             .cast(NamedObjectDeclarationExpression.class);
 
         this.scanGenericParameters(function.genericParameters());
 
-        // Then add regular parameters
+        // Then add regular parameterSets
         for (NamedObjectDeclarationExpression parameter : parameters) {
             this.add(parameter.identifier().representation(), parameter, new ParameterSymbolTableItem());
         }
@@ -160,7 +160,7 @@ public class ScopedSymbolTable implements Serializable {
     }
 
     private void scanGenericParameters(GenericTypeListExpression genericParameters) {
-        // Add generic parameters
+        // Add generic parameterSets
         for (NamedObjectDeclarationExpression genericParam : genericParameters) {
             this.add(genericParam.identifier().representation(), genericParam, new GenericParameterSymbolTableItem());
         }

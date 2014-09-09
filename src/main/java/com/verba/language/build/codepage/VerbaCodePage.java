@@ -2,6 +2,7 @@ package com.verba.language.build.codepage;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -58,11 +59,18 @@ public class VerbaCodePage extends VerbaExpression implements SymbolTableExpress
     }
 
     // Build from an item in a package.
-    public static VerbaCodePage fromPackageItem(VerbaExpression parent, Class packageClass, String path) {
-        InputStream stream = packageClass.getResourceAsStream(path);
-        CodeStream codeStream = new FileBasedCodeStream(path, stream);
-        Lexer lexer = new VerbaMemoizingLexer(path, codeStream);
+    public static VerbaCodePage fromResourceStream(String path) {
+        try {
+            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+            Class packageClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
 
-        return new VerbaCodePage(parent, lexer);
+            InputStream stream = packageClass.getResourceAsStream(path);
+            CodeStream codeStream = new FileBasedCodeStream(path, stream);
+            Lexer lexer = new VerbaMemoizingLexer(path, codeStream);
+
+            return new VerbaCodePage(null, lexer);
+        } catch (Exception ex) {
+            throw new CompilerException("Unable to load file %s", path);
+        }
     }
 }

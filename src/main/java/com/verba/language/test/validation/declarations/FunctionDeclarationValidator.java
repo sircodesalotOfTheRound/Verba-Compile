@@ -34,7 +34,7 @@ public class FunctionDeclarationValidator extends ExpressionValidator<FunctionDe
     }
 
     private void validateParameters() {
-        for (TupleDeclarationExpression tuple : this.function().parameters()) {
+        for (TupleDeclarationExpression tuple : this.function().parameterSets()) {
             validateParameterTuple(tuple);
         }
     }
@@ -63,7 +63,7 @@ public class FunctionDeclarationValidator extends ExpressionValidator<FunctionDe
 
         if (!declarationValidator.hasParameters()) {
             this.addViolation(this.function().declaration(),
-                "Function '%s' must have parameters.", function().declaration().representation());
+                "Function '%s' must have parameterSets.", function().declaration().representation());
         }
     }
 

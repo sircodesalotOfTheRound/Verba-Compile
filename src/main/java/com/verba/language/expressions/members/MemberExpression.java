@@ -23,7 +23,7 @@ public class MemberExpression extends VerbaExpression {
         this.identifier = IdentifierExpression.read(this, lexer);
         this.genericParameters = GenericTypeListExpression.read(this, lexer);
 
-        // Read parameters if they exist
+        // Read parameterSets if they exist
         do {
             if (lexer.currentIs(EnclosureToken.class, "(")) {
                 parameterLists.add(TupleDeclarationExpression.read(this, lexer));

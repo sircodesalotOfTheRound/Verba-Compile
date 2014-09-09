@@ -36,7 +36,7 @@ public class FullyQualifiedNameValidator extends ExpressionValidator<FullyQualif
     }
 
     public QIterable<VerbaExpression> flattenedParameterList() {
-        // Flatten the parameter lists, then flatten all parameters
+        // Flatten the parameter lists, then flatten all parameterSets
         return this.membersWithParameters()
             .flatten(MemberExpression::parameterLists)
             .flatten(tuple -> tuple.items());

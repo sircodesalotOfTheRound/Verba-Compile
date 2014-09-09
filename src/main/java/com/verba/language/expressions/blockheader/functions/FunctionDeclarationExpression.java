@@ -67,7 +67,7 @@ public class FunctionDeclarationExpression extends VerbaExpression
     }
 
     @Override
-    public QIterable<TupleDeclarationExpression> parameters() {
+    public QIterable<TupleDeclarationExpression> parameterSets() {
         return this.primaryIdentifier().parameterLists();
     }
 

@@ -7,7 +7,5 @@ import com.verba.vblz.build.buildscript.BuildScriptDecorator;
  */
 public class Sandbox {
     public static void main(String[] args) throws Exception {
-        BuildScriptDecorator decorator = new BuildScriptDecorator();
-        System.out.println(decorator.buildSchemas().first());
     }
 }

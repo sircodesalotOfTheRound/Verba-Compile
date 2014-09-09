@@ -36,7 +36,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
             }
 
 
-            // Validate generic parameters for base type.
+            // Validate generic parameterSets for base type.
             for (FullyQualifiedNameExpression fqn :
                 this.classDeclaration().traits().ofType(FullyQualifiedNameExpression.class)) {
                 FullyQualifiedNameValidator validator = new FullyQualifiedNameValidator(fqn);
@@ -63,7 +63,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
     }
 
     private void validateParameters() {
-        // Validate the number of parameters
+        // Validate the number of parameterSets
         if (declarationValidator.hasParameters()) {
             if (this.classDeclaration().inlineParameters().count() > 1) {
                 this.addViolation(this.classDeclaration().inlineParameters().first(),
@@ -72,12 +72,12 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
 
         }
 
-        // Validate the types of parameters
+        // Validate the types of parameterSets
         QIterable<ValidationViolation> typeViolations = new TupleListDeclarationValidator(this.classDeclaration().inlineParameters())
             .findArguments(parameter -> !(parameter instanceof NamedObjectDeclarationExpression))
             .map(parameter -> new ValidationViolation(parameter, "Parameter %s must be a variable declaration", parameter));
 
-        // Validate that the parameters are constrained
+        // Validate that the parameterSets are constrained
 
         QIterable<ValidationViolation> missingConstraintViolations = declarationValidator
             .flattenedParameterList()
