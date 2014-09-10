@@ -114,4 +114,39 @@ public class FunctionSignatureTesting {
         assert(!dynamicArg.hasTypeConstraint());
     }
 
+    @Test
+    public void testExplicitReturnTypeFunction() {
+        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+
+        FunctionDeclarationExpression explicitReturnTypeFunction = singleFileTest.allSubExpressions()
+            .ofType(FunctionDeclarationExpression.class)
+            .singleOrNull(function -> function.name().equals("explicitReturnTypeFunction"));
+
+        assert(explicitReturnTypeFunction != null);
+        assert(explicitReturnTypeFunction.hasTypeConstraint());
+        assert(explicitReturnTypeFunction.typeDeclaration().representation().equals("uint64"));
+        assert(!explicitReturnTypeFunction.block().expressions().any());
+        assert(!explicitReturnTypeFunction.hasGenericParameters());
+        assert(explicitReturnTypeFunction.parameterSets().count() == 1);
+        assert(!explicitReturnTypeFunction.parameterSets().single().hasItems());
+    }
+
+    @Test
+    public void testGenericFunction() {
+        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+
+        FunctionDeclarationExpression genericFunction = singleFileTest.allSubExpressions()
+            .ofType(FunctionDeclarationExpression.class)
+            .singleOrNull(function -> function.name().equals("genericFunction"));
+
+        assert(genericFunction != null);
+        assert(genericFunction.hasGenericParameters());
+        assert(genericFunction.genericParameters().first().representation().equals("T"));
+        assert(genericFunction.genericParameters().last().hasTypeConstraint());
+        assert(genericFunction.genericParameters().last().identifier().representation().equals("U"));
+        assert(genericFunction.genericParameters().last().typeDeclaration().representation().equals("string"));
+        assert(!genericFunction.block().expressions().any());
+        assert(genericFunction.parameterSets().count() == 1);
+        assert(!genericFunction.parameterSets().single().hasItems());
+    }
 }
