@@ -1,4 +1,4 @@
-package com.verba.language.test;
+package com.verba.language.test.typesig;
 
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
@@ -12,7 +12,7 @@ public class InlineClassTests {
 
     @Test
     public void emptyInlineClassTest() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
         ClassDeclarationExpression expression = singleFileTest.allSubExpressions()
             .ofType(ClassDeclarationExpression.class)
             .single(declaration -> declaration.name().equals("EmptyInlineClass"));
@@ -26,7 +26,7 @@ public class InlineClassTests {
 
     @Test
     public void parameterlessInlineClass() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
         ClassDeclarationExpression expression = singleFileTest.allSubExpressions()
             .ofType(ClassDeclarationExpression.class)
             .single(declaration -> declaration.name().equals("ParameterlessInlineClass"));
@@ -39,7 +39,7 @@ public class InlineClassTests {
 
     @Test
     public void parameterlessDerivedClass() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
         ClassDeclarationExpression expression = singleFileTest.allSubExpressions()
             .ofType(ClassDeclarationExpression.class)
             .single(declaration -> declaration.name().equals("ParameterlessDerivedClass"));

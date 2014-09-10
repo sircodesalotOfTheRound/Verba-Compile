@@ -1,4 +1,4 @@
-package com.verba.language.test;
+package com.verba.language.test.typesig;
 
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
@@ -12,7 +12,7 @@ public class InlineTraitTests {
 
     @Test
     public void emptyInlineTraitTest() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
         TraitDeclarationExpression expression = singleFileTest.allSubExpressions()
             .ofType(TraitDeclarationExpression.class)
             .single(declaration -> declaration.name().equals("EmptyInlineTrait"));
@@ -26,7 +26,7 @@ public class InlineTraitTests {
 
     @Test
     public void parameterlessInlineTrait() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
         TraitDeclarationExpression expression = singleFileTest.allSubExpressions()
             .ofType(TraitDeclarationExpression.class)
             .single(declaration -> declaration.name().equals("ParameterlessInlineTrait"));
@@ -40,7 +40,7 @@ public class InlineTraitTests {
 
     @Test
     public void parameterlessDerivedTrait() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
         TraitDeclarationExpression expression = singleFileTest.allSubExpressions()
             .ofType(TraitDeclarationExpression.class)
             .single(declaration -> declaration.name().equals("ParameterlessDerivedTrait"));

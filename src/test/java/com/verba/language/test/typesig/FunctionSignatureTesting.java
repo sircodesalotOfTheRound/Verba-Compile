@@ -1,4 +1,4 @@
-package com.verba.language.test.functions;
+package com.verba.language.test.typesig;
 
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
@@ -13,7 +13,7 @@ import org.junit.Test;
 public class FunctionSignatureTesting {
     @Test
     public void testEmptyFunction() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
 
         FunctionDeclarationExpression emptyFunction = singleFileTest.allSubExpressions()
             .ofType(FunctionDeclarationExpression.class)
@@ -28,7 +28,7 @@ public class FunctionSignatureTesting {
 
     @Test
     public void testSingleDynamicArgumentFunction() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
 
         FunctionDeclarationExpression singleDynamicArgumentFunction = singleFileTest.allSubExpressions()
             .ofType(FunctionDeclarationExpression.class)
@@ -49,7 +49,7 @@ public class FunctionSignatureTesting {
 
     @Test
     public void testSingleStaticTypedArgumentFunction() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
 
         FunctionDeclarationExpression singleStaticTypedArgumentFunction = singleFileTest.allSubExpressions()
             .ofType(FunctionDeclarationExpression.class)
@@ -72,7 +72,7 @@ public class FunctionSignatureTesting {
 
     @Test
     public void testMixedArgumentFunction() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
 
         FunctionDeclarationExpression mixedArgumentFunction = singleFileTest.allSubExpressions()
             .ofType(FunctionDeclarationExpression.class)
@@ -116,7 +116,7 @@ public class FunctionSignatureTesting {
 
     @Test
     public void testExplicitReturnTypeFunction() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
 
         FunctionDeclarationExpression explicitReturnTypeFunction = singleFileTest.allSubExpressions()
             .ofType(FunctionDeclarationExpression.class)
@@ -133,7 +133,7 @@ public class FunctionSignatureTesting {
 
     @Test
     public void testGenericFunction() {
-        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
 
         FunctionDeclarationExpression genericFunction = singleFileTest.allSubExpressions()
             .ofType(FunctionDeclarationExpression.class)
