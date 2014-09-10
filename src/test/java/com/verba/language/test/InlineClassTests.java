@@ -36,4 +36,18 @@ public class InlineClassTests {
         assert (!expression.hasTraits());
         assert (!expression.hasGenericParameters());
     }
+
+    @Test
+    public void parameterlessDerivedClass() {
+        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        ClassDeclarationExpression expression = singleFileTest.allSubExpressions()
+            .ofType(ClassDeclarationExpression.class)
+            .single(declaration -> declaration.name().equals("ParameterlessDerivedClass"));
+
+        assert (expression.isInlineClass());
+        assert (expression.hasTraits());
+        assert (expression.traits().singleOrNull(trait -> trait.representation().equals("ParameterlessInlineClass")) != null);
+        assert (!expression.hasBlock());
+        assert (!expression.hasGenericParameters());
+    }
 }

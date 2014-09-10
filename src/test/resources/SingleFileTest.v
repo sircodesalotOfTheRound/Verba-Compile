@@ -11,6 +11,7 @@ fn genericFunction<T, U : string>() { }
 # Inline class tests:
 class EmptyInlineClass()
 class ParameterlessInlineClass
+class ParameterlessDerivedClass : ParameterlessInlineClass
 class DynamicParameterInlineClass(dynamicParameter)
 class StaticParameterInlineClass(str : string)
 
