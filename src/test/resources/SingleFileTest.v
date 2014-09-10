@@ -13,3 +13,9 @@ class EmptyInlineClass()
 class ParameterlessInlineClass
 class DynamicParameterInlineClass(dynamicParameter)
 class StaticParameterInlineClass(str : string)
+
+# Inline trait tests:
+trait EmptyInlineTrait()
+trait ParameterlessInlineTrait
+trait DynamicParameterInlineTrait(dynamicParameter)
+trait StaticParameterInlineTrait(str : string)

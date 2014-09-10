@@ -6,6 +6,7 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
+import com.verba.language.expressions.categories.GenericExpression;
 import com.verba.language.expressions.categories.PolymorphicExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
@@ -19,7 +20,7 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-2-17.
  */
 public class TraitDeclarationExpression extends VerbaExpression
-    implements NamedBlockExpression, PolymorphicExpression {
+    implements NamedBlockExpression, PolymorphicExpression, GenericExpression {
 
     private final FullyQualifiedNameExpression identifier;
     private final BlockDeclarationExpression block;
@@ -82,6 +83,12 @@ public class TraitDeclarationExpression extends VerbaExpression
         return this.primaryIdentifier().parameterLists();
     }
 
+    @Override
+    public boolean hasGenericParameters() {
+        return this.primaryIdentifier().hasGenericParameters();
+    }
+
+    @Override
     public GenericTypeListExpression genericParameters() {
         return this.primaryIdentifier().genericParameterList();
     }
@@ -91,6 +98,13 @@ public class TraitDeclarationExpression extends VerbaExpression
         return this.identifier.members().first().memberName();
     }
 
+    public boolean isInlineTrait() {
+        return (this.primaryIdentifier().hasParameters() || !this.hasBlock());
+    }
+
+    public boolean hasBlock() {
+        return (this.block != null && this.block.hasItems());
+    }
     @Override
     public boolean hasTraits() {
         return this.traits != null;
