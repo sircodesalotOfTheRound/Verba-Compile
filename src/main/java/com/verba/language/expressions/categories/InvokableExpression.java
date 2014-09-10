@@ -11,5 +11,4 @@ public interface InvokableExpression extends com.verba.language.expressions.cate
     public QIterable<TupleDeclarationExpression> parameterSets();
 
     public BlockDeclarationExpression block();
-
 }
