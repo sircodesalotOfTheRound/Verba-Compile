@@ -36,4 +36,19 @@ public class InlineTraitTests {
         assert (!expression.hasTraits());
         assert (!expression.hasGenericParameters());
     }
+
+
+    @Test
+    public void parameterlessDerivedTrait() {
+        StaticSpaceExpression singleFileTest = TestFileLoader.SINGLE_FILE_TEST;
+        TraitDeclarationExpression expression = singleFileTest.allSubExpressions()
+            .ofType(TraitDeclarationExpression.class)
+            .single(declaration -> declaration.name().equals("ParameterlessDerivedTrait"));
+
+        assert (expression.isInlineTrait());
+        assert (expression.hasTraits());
+        assert (expression.traits().singleOrNull(trait -> trait.representation().equals("ParameterlessInlineTrait")) != null);
+        assert (!expression.hasBlock());
+        assert (!expression.hasGenericParameters());
+    }
 }

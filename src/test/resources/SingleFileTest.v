@@ -18,5 +18,6 @@ class StaticParameterInlineClass(str : string)
 # Inline trait tests:
 trait EmptyInlineTrait()
 trait ParameterlessInlineTrait
+trait ParameterlessDerivedTrait : ParameterlessInlineTrait
 trait DynamicParameterInlineTrait(dynamicParameter)
 trait StaticParameterInlineTrait(str : string)
