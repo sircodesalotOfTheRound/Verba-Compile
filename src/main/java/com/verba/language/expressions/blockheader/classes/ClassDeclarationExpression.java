@@ -90,7 +90,7 @@ public class ClassDeclarationExpression extends VerbaExpression
     }
 
     public boolean isInlineClass() {
-        return (this.primaryIdentifier().hasParameters());
+        return (this.primaryIdentifier().hasParameters() || !this.hasBlock());
     }
 
     @Override

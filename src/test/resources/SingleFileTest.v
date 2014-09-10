@@ -1,10 +1,13 @@
 # SingleFileTest.v -- Simple tests for making sure basic language stuff works
 
-# Simple signature testing (dynamic and statically typed functions)
+# Function signature testing:
 fn emptyFunction() { }
 fn singleDynamicArgumentFunction(dynamicArgument) {  }
 fn singleStaticTypedArgumentFunction(stringArgument : string) {  }
 fn mixedArgumentFunction(stringArg : string, intArg : uint64, dynamicArg) { }
 
-# Simple class testing
+# Inline class tests:
 class EmptyInlineClass()
+class ParameterlessInlineClass
+class DynamicParameterInlineClass(dynamicParameter)
+class StaticParameterInlineClass(str : string)
