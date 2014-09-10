@@ -8,6 +8,14 @@ fn mixedArgumentFunction(stringArg : string, intArg : uint64, dynamicArg) { }
 fn explicitReturnTypeFunction() : uint64 { }
 fn genericFunction<T, U : string>() { }
 
+# Task signature testing:
+task emptyTask() { }
+task singleDynamicArgumentTask(dynamicArgument) {  }
+task singleStaticTypedArgumentTask(stringArgument : string) {  }
+task mixedArgumentTask(stringArg : string, intArg : uint64, dynamicArg) { }
+task explicitReturnTypeTask() : uint64 { }
+task genericTask<T, U : object>() { }
+
 # Inline class tests:
 class EmptyInlineClass()
 class ParameterlessInlineClass

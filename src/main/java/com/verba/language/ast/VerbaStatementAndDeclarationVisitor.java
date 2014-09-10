@@ -8,6 +8,7 @@ import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
@@ -53,8 +54,8 @@ public class VerbaStatementAndDeclarationVisitor {
             // Declaration
         else if (node instanceof ClassDeclarationExpression) this.visitClass((ClassDeclarationExpression) node);
         else if (node instanceof TraitDeclarationExpression) this.visitTrait((TraitDeclarationExpression) node);
-        else if (node instanceof FunctionDeclarationExpression)
-            this.visitFunction((FunctionDeclarationExpression) node);
+        else if (node instanceof FunctionDeclarationExpression) this.visitFunction((FunctionDeclarationExpression) node);
+        else if (node instanceof TaskDeclarationExpression) this.visitFunction((TaskDeclarationExpression) node);
 
         else if (node instanceof NamedObjectDeclarationExpression) this.visitVarName((NamedObjectDeclarationExpression) node);
 
@@ -99,6 +100,10 @@ public class VerbaStatementAndDeclarationVisitor {
 
     public void visitFunction(FunctionDeclarationExpression function) {
         this.visitAll(function.block());
+    }
+
+    public void visitFunction(TaskDeclarationExpression task) {
+        this.visitAll(task.block());
     }
 
     private void visitArray(ArrayDeclarationExpression array) {
