@@ -9,4 +9,7 @@ import com.verba.language.expressions.StaticSpaceExpression;
 public class TestFileLoader {
   public static final StaticSpaceExpression TYPE_SIGNATURE_TESTS =
     new StaticSpaceExpression(VerbaCodePage.fromResourceStream("/TypeSignatureTests.v"));
+
+  public static final StaticSpaceExpression TYPE_RESOLUTION_TESTS =
+    new StaticSpaceExpression(VerbaCodePage.fromResourceStream("/TypeResolutionTests.v"));
 }
