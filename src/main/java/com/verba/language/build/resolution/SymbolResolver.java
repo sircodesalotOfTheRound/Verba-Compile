@@ -44,6 +44,4 @@ public class SymbolResolver {
       else throw new CompilerException("%s is not a valid resolvable type", expression);
     }
   }
-
-
 }
