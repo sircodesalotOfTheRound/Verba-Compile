@@ -5,6 +5,7 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
 
@@ -44,5 +45,10 @@ public class NamespaceDeclarationExpression extends VerbaExpression implements N
   @Override
   public void accept(AstVisitor visitor) {
 
+  }
+
+  @Override
+  public void accept(ScopedSymbolTable symbolTable) {
+    symbolTable.visit(this);
   }
 }

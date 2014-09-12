@@ -33,3 +33,9 @@ trait StaticParameterInlineTrait(str : string)
 # Plain Signature Tests
 # TODO: Unbreak this! (Symbol table needs rework).
 # signature emptyFunction() : String
+
+fn outerFunction() {
+  fn innerFunction() {
+
+  }
+}

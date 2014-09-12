@@ -6,6 +6,7 @@ import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
+import com.verba.language.expressions.blockheader.NamedBlockExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
@@ -53,7 +54,7 @@ public class ScopedSymbolTable implements Serializable {
     this.headerExpression = block;
     this.fqn = resolveFqn(name);
 
-    this.scan(block);
+    block.accept(this);
   }
 
   private String resolveName(SymbolTableExpression block) {
@@ -72,122 +73,76 @@ public class ScopedSymbolTable implements Serializable {
     return name;
   }
 
-  // Scanning (walk the item, but don't add it).
-  private void scan(SymbolTableExpression block) {
-    if (block instanceof BlockDeclarationExpression)
-      this.scanBlock((BlockDeclarationExpression) block);
-
-    else if (block instanceof FunctionDeclarationExpression)
-      this.scanFunction((FunctionDeclarationExpression) block);
-
-    else if (block instanceof NamespaceDeclarationExpression)
-      this.scanNamespace((NamespaceDeclarationExpression) block);
-
-    else if (block instanceof ClassDeclarationExpression)
-      this.scanClass((ClassDeclarationExpression) block);
-
-    else if (block instanceof TraitDeclarationExpression)
-      this.scanTrait((TraitDeclarationExpression) block);
-
-    else if (block instanceof StaticSpaceExpression)
-      this.scanStaticSpace((StaticSpaceExpression) block);
-
-    else if (block instanceof VerbaCodePage)
-      this.scanCodePage((VerbaCodePage) block);
-  }
 
 
-  private void scanStaticSpace(StaticSpaceExpression block) {
-    for (VerbaExpression expression : block.rootLevelExpressions()) {
-      if (expression instanceof VerbaCodePage)
-        scanCodePage((VerbaCodePage) expression);
-
-      else if (expression instanceof ValDeclarationStatement)
-        addValDeclarationStatement((ValDeclarationStatement) expression);
-
-      else if (expression instanceof MutaDeclarationStatement)
-        addMutaDeclarationStatement((MutaDeclarationStatement) expression);
-
-      else if (expression instanceof FunctionDeclarationExpression)
-        addFunctionDeclarationStatement((FunctionDeclarationExpression) expression);
-
-      else if (expression instanceof ClassDeclarationExpression)
-        addClassDeclarationStatement((ClassDeclarationExpression) expression);
-
-      else if (expression instanceof TraitDeclarationExpression)
-        addTraitDeclarationStatement((TraitDeclarationExpression) expression);
-
-      else if (expression instanceof TaskDeclarationExpression)
-        addTaskDeclarationStatement((TaskDeclarationExpression) expression);
+  public void visit(StaticSpaceExpression block) {
+    for (SymbolTableExpression expression : block.rootLevelExpressions().ofType(SymbolTableExpression.class)) {
+      expression.accept(this);
     }
   }
 
-  private void scanCodePage(VerbaCodePage block) {
+  public void visit(TaskDeclarationExpression expression) {
+//    this.addNested(expression);
+  }
+
+  public void visit(VerbaCodePage block) {
     for (NamedExpression expression : block.expressions().ofType(NamedExpression.class)) {
       this.addNested(expression);
     }
   }
 
-  private void scanClass(ClassDeclarationExpression classDeclaration) {
-    this.scanGenericParameters(classDeclaration.genericParameters());
-    this.scanBlock(classDeclaration.block());
+  public void visit(ClassDeclarationExpression classDeclaration) {
+    this.visit(classDeclaration.genericParameters());
+    this.visit(classDeclaration.block());
   }
 
-  private void scanTrait(TraitDeclarationExpression trait) {
-    this.scanGenericParameters(trait.genericParameters());
-    this.scanBlock(trait.block());
+  public void visit(TraitDeclarationExpression trait) {
+    this.visit(trait.genericParameters());
+    this.visit(trait.block());
   }
 
-  private void scanNamespace(NamespaceDeclarationExpression namespace) {
-    this.scanBlock(namespace.block());
+  public void visit(NamespaceDeclarationExpression namespace) {
+    this.addNested(namespace);
+    this.visit(namespace.block());
   }
 
-  private void scanFunction(FunctionDeclarationExpression function) {
+  public void visit(FunctionDeclarationExpression function) {
     // First add the parameterSets
     QIterable<NamedObjectDeclarationExpression> parameters = function.parameterSets()
       .flatten(tuple -> tuple.items())
       .cast(NamedObjectDeclarationExpression.class);
 
-    this.scanGenericParameters(function.genericParameters());
+    this.visit(function.genericParameters());
 
     // Then add regular parameterSets
     for (NamedObjectDeclarationExpression parameter : parameters) {
       this.add(parameter.identifier().representation(), parameter, new ParameterSymbolTableItem());
     }
 
-    // Then add the body
-    this.scanBlock(function.block());
+    // Add symbols. In particular add sub-tables for named block expressions.
+    for (SymbolTableExpression subExpression : function.block().ofType(SymbolTableExpression.class)) {
+      if (subExpression instanceof NamedBlockExpression) {
+        NamedBlockExpression block = (NamedBlockExpression) subExpression;
+        this.addNested(block.name(), block.block());
+
+      } else {
+        subExpression.accept(this);
+      }
+    }
   }
 
-  private void scanGenericParameters(GenericTypeListExpression genericParameters) {
+  public void visit(GenericTypeListExpression genericParameters) {
     // Add generic parameterSets
     for (NamedObjectDeclarationExpression genericParam : genericParameters) {
       this.add(genericParam.identifier().representation(), genericParam, new GenericParameterSymbolTableItem());
     }
   }
 
-  private void scanBlock(BlockDeclarationExpression block) {
-    for (VerbaExpression expression : block) {
-      if (expression instanceof ValDeclarationStatement)
-        addValDeclarationStatement((ValDeclarationStatement) expression);
-
-      else if (expression instanceof MutaDeclarationStatement)
-        addMutaDeclarationStatement((MutaDeclarationStatement) expression);
-
-      else if (expression instanceof FunctionDeclarationExpression)
-        addFunctionDeclarationStatement((FunctionDeclarationExpression) expression);
-
-      else if (expression instanceof ClassDeclarationExpression)
-        addClassDeclarationStatement((ClassDeclarationExpression) expression);
-
-      else if (expression instanceof TraitDeclarationExpression)
-        addTraitDeclarationStatement((TraitDeclarationExpression) expression);
-
-      else if (expression instanceof TaskDeclarationExpression)
-        addTaskDeclarationStatement((TaskDeclarationExpression) expression);
+  public void visit(BlockDeclarationExpression block) {
+    for (SymbolTableExpression expression : block.ofType(SymbolTableExpression.class)) {
+      expression.accept(this);
     }
   }
-
 
   // Additions
   public void add(SymbolTableEntry entry) {
@@ -207,42 +162,23 @@ public class ScopedSymbolTable implements Serializable {
     this.add(entry);
   }
 
-  private void addNested(NamedExpression expression) {
+  //TODO: Named expression seems wrong. Should be a NamedBlock or something.
+  public void addNested(NamedExpression expression) {
     this.addNested(expression.name(), (SymbolTableExpression) expression);
   }
 
-  private void addNested(String name, SymbolTableExpression block) {
+  public void addNested(String name, SymbolTableExpression block) {
     ScopedSymbolTable nestedTable = new ScopedSymbolTable(this, block);
 
     this.add(name, (VerbaExpression) block, new NestedSymbolTableMetadata(nestedTable));
     this.nestedTables.add(nestedTable);
   }
 
-  private void addTaskDeclarationStatement(TaskDeclarationExpression task) {
-    this.addNested(task);
-  }
-
-  private void addClassDeclarationStatement(ClassDeclarationExpression classDeclaration) {
-    this.addNested(classDeclaration);
-  }
-
-  private void addTraitDeclarationStatement(TraitDeclarationExpression trait) {
-    this.addNested(trait);
-  }
-
-  private void addFunctionDeclarationStatement(FunctionDeclarationExpression function) {
-    this.addNested(function);
-  }
-
-  private void addNamespaceDeclaration(NamespaceDeclarationExpression namespace) {
-    this.addNested(namespace);
-  }
-
-  private void addValDeclarationStatement(ValDeclarationStatement statement) {
+  public void visit(ValDeclarationStatement statement) {
     this.add(statement.name(), statement);
   }
 
-  private void addMutaDeclarationStatement(MutaDeclarationStatement statement) {
+  public void visit(MutaDeclarationStatement statement) {
     this.add(statement.name(), statement);
   }
 

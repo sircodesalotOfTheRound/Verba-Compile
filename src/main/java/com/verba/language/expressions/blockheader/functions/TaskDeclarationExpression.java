@@ -6,13 +6,11 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
-import com.verba.language.expressions.categories.GenericExpression;
-import com.verba.language.expressions.categories.InvokableExpression;
-import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.expressions.categories.TypedExpression;
+import com.verba.language.expressions.categories.*;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.members.MemberExpression;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
 import com.verba.language.test.lexing.tokens.operators.OperatorToken;
@@ -20,9 +18,8 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 /**
  * Created by sircodesalot on 14-2-17.
  */
-public
-class TaskDeclarationExpression extends VerbaExpression
-  implements NamedBlockExpression, TypedExpression, InvokableExpression, GenericExpression {
+public class TaskDeclarationExpression extends VerbaExpression
+  implements NamedBlockExpression, TypedExpression, InvokableExpression, GenericExpression, SymbolTableExpression {
 
   private final FullyQualifiedNameExpression identifier;
   private final BlockDeclarationExpression block;
@@ -95,5 +92,10 @@ class TaskDeclarationExpression extends VerbaExpression
   @Override
   public void accept(AstVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public void accept(ScopedSymbolTable symbolTable) {
+    symbolTable.visit(this);
   }
 }

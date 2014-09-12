@@ -7,6 +7,7 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.vblz.build.objectfile.SourceFilePathInfo;
 
 /**
@@ -60,5 +61,10 @@ public class StaticSpaceExpression extends VerbaExpression implements SymbolTabl
   @Override
   public void accept(AstVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public void accept(ScopedSymbolTable symbolTable) {
+    symbolTable.visit(this);
   }
 }

@@ -6,6 +6,7 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.EnclosureToken;
 
@@ -59,5 +60,10 @@ public class BlockDeclarationExpression extends VerbaExpression
   @Override
   public void accept(AstVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public void accept(ScopedSymbolTable symbolTable) {
+    symbolTable.visit(this);
   }
 }

@@ -3,10 +3,8 @@ package com.verba.language.expressions.statements.declaration;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
-import com.verba.language.expressions.categories.AssignmentExpression;
-import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
-import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.expressions.categories.TypeDeclarationExpression;
+import com.verba.language.expressions.categories.*;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
 import com.verba.language.test.lexing.tokens.operators.OperatorToken;
@@ -15,7 +13,7 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-2-19.
  */
 public class ValDeclarationStatement extends VerbaExpression
-  implements NamedDataDeclarationExpression, AssignmentExpression {
+  implements NamedDataDeclarationExpression, AssignmentExpression, SymbolTableExpression {
 
   private NamedObjectDeclarationExpression identifier;
   private RValueExpression rvalue;
@@ -72,5 +70,10 @@ public class ValDeclarationStatement extends VerbaExpression
   @Override
   public void accept(AstVisitor visitor) {
 
+  }
+
+  @Override
+  public void accept(ScopedSymbolTable symbolTable) {
+    symbolTable.visit(this);
   }
 }

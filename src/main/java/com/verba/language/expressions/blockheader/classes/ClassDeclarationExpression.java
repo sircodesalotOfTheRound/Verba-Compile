@@ -9,10 +9,12 @@ import com.verba.language.expressions.blockheader.NamedBlockExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
 import com.verba.language.expressions.categories.GenericExpression;
 import com.verba.language.expressions.categories.PolymorphicExpression;
+import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.members.MemberExpression;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
 import com.verba.language.test.lexing.tokens.operators.OperatorToken;
@@ -21,7 +23,7 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-2-17.
  */
 public class ClassDeclarationExpression extends VerbaExpression
-  implements NamedBlockExpression, PolymorphicExpression, GenericExpression {
+  implements NamedBlockExpression, PolymorphicExpression, GenericExpression, SymbolTableExpression {
 
   private final FullyQualifiedNameExpression identifier;
   private BlockDeclarationExpression block;
@@ -116,5 +118,10 @@ public class ClassDeclarationExpression extends VerbaExpression
   @Override
   public void accept(AstVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public void accept(ScopedSymbolTable symbolTable) {
+    symbolTable.visit(this);
   }
 }

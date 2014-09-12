@@ -64,16 +64,19 @@ public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<Ver
 
   public void visit(ClassDeclarationExpression classDeclaration) {
     add(classDeclaration);
+
     this.visitAll(classDeclaration.block());
   }
 
   public void visit(FunctionDeclarationExpression function) {
     add(function);
+
     this.visitAll(function.block());
   }
 
   public void visit(TaskDeclarationExpression task) {
     add(task);
+
     this.visitAll(task.block());
   }
 
