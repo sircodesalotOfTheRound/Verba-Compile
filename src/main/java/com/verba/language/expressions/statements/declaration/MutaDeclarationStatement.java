@@ -1,6 +1,7 @@
 package com.verba.language.expressions.statements.declaration;
 
 import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.build.resolution.SymbolResolver;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.categories.*;
@@ -13,7 +14,7 @@ import com.verba.language.test.lexing.tokens.operators.assignment.AssignmentToke
  * Created by sircodesalot on 14-2-19.
  */
 public class MutaDeclarationStatement extends VerbaExpression
-  implements NamedDataDeclarationExpression, AssignmentExpression, SymbolTableExpression {
+  implements NamedDataDeclarationExpression, AssignmentExpression, SymbolTableExpression, ResolvableTypeExpression {
 
   private NamedObjectDeclarationExpression identifier;
   private RValueExpression rvalue;
@@ -76,5 +77,10 @@ public class MutaDeclarationStatement extends VerbaExpression
   @Override
   public void accept(ScopedSymbolTable symbolTable) {
     symbolTable.visit(this);
+  }
+
+  @Override
+  public void accept(SymbolResolver resolver) {
+    resolver.visit(this);
   }
 }

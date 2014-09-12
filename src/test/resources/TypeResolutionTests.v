@@ -15,3 +15,9 @@ fn typesDerivedFromParameter(first : string, second : uint32) {
   val derivedFirst = first
   muta derivedSecond = second
 }
+
+# Test chain derivation
+fn chainDerived(item : object) {
+  val firstChain = item
+  val secondChain = firstChain
+}

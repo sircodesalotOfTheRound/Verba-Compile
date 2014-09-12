@@ -1,10 +1,14 @@
 package com.verba.language.build.resolution;
 
+import com.javalinq.interfaces.QIterable;
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.InvokableExpression;
 import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
 import com.verba.language.expressions.categories.PolymorphicExpression;
+import com.verba.language.expressions.categories.ResolvableTypeExpression;
+import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
+import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.symbols.resolution.fields.VariableTypeResolver;
 import com.verba.language.symbols.resolution.function.FunctionReturnTypeResolver;
 import com.verba.language.symbols.resolution.polymorphic.PolymorphicResolver;
@@ -29,19 +33,21 @@ public class SymbolResolver {
   }
 
   private void resolveAll(GlobalSymbolTable symbolTable) {
-    for (SymbolTableEntry entry : symbolTable.entries()) {
-      VerbaExpression expression = entry.instance();
+    QIterable<ResolvableTypeExpression> resolvableExpressions = symbolTable
+      .entries()
+      .map(SymbolTableEntry::instance)
+      .ofType(ResolvableTypeExpression.class);
 
-      if (expression instanceof InvokableExpression)
-        this.functionResolver.resolve((InvokableExpression) expression);
-
-      else if (expression instanceof PolymorphicExpression)
-        this.polymorphicResolver.resolve((PolymorphicExpression) expression);
-
-      else if (expression instanceof NamedDataDeclarationExpression)
-        this.variableResolver.resolve((NamedDataDeclarationExpression) expression);
-
-      else throw new CompilerException("%s is not a valid resolvable type", expression);
+    for (ResolvableTypeExpression expression : resolvableExpressions) {
+      expression.accept(this);
     }
+  }
+
+  public void visit(ValDeclarationStatement valDeclarationStatement) {
+    this.variableResolver.resolve(valDeclarationStatement);
+  }
+
+  public void visit(MutaDeclarationStatement mutaDeclarationStatement) {
+    this.variableResolver.resolve(mutaDeclarationStatement);
   }
 }
