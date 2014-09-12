@@ -16,6 +16,7 @@ import com.verba.language.expressions.blockheader.namespaces.NamespaceDeclaratio
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.categories.NamedExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
+import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.symbols.meta.GenericParameterSymbolTableItem;
@@ -87,7 +88,7 @@ public class ScopedSymbolTable implements Serializable {
 
   public void visit(VerbaCodePage block) {
     for (NamedExpression expression : block.expressions().ofType(NamedExpression.class)) {
-      this.addNested(expression);
+      this.addNested(expression.name(), (SymbolTableExpression)expression);
     }
   }
 
@@ -102,14 +103,13 @@ public class ScopedSymbolTable implements Serializable {
   }
 
   public void visit(NamespaceDeclarationExpression namespace) {
-    this.addNested(namespace);
-    this.visit(namespace.block());
+    this.addNested(namespace.name(), namespace);
   }
 
   public void visit(FunctionDeclarationExpression function) {
     // First add the parameterSets
     QIterable<NamedObjectDeclarationExpression> parameters = function.parameterSets()
-      .flatten(tuple -> tuple.items())
+      .flatten(TupleDeclarationExpression::items)
       .cast(NamedObjectDeclarationExpression.class);
 
     this.visit(function.genericParameters());
@@ -160,11 +160,6 @@ public class ScopedSymbolTable implements Serializable {
 
     // Add the entry to the symbol table
     this.add(entry);
-  }
-
-  //TODO: Named expression seems wrong. Should be a NamedBlock or something.
-  public void addNested(NamedExpression expression) {
-    this.addNested(expression.name(), (SymbolTableExpression) expression);
   }
 
   public void addNested(String name, SymbolTableExpression block) {
