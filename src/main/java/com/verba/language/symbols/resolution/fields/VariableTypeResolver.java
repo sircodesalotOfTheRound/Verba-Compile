@@ -25,6 +25,10 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
   public VariableTypeResolutionMetadata resolve(NamedDataDeclarationExpression expression) {
     SymbolTableEntry entry = symbolTable.getByInstance((VerbaExpression) expression);
 
+    if (entry.metadata().ofType(VariableTypeResolutionMetadata.class).any()) {
+      return entry.metadata().ofType(VariableTypeResolutionMetadata.class).single();
+    }
+
     // If this item has an explicit type constrait, return that
     // TODO: Make this verify that the type constraint is in fact correct.
     if (expression.hasTypeConstraint()) {
@@ -80,8 +84,7 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
     if (instance.hasTypeConstraint()) {
       return instance.typeDeclaration();
     } else {
-      // TODO: Change 'first' to 'single'
-      VariableTypeResolutionMetadata type = entry.metadata().ofType(VariableTypeResolutionMetadata.class).first();
+      VariableTypeResolutionMetadata type = entry.metadata().ofType(VariableTypeResolutionMetadata.class).single();
       return type.symbolType();
     }
   }

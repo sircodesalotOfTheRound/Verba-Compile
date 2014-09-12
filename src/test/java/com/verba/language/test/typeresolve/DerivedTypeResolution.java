@@ -46,10 +46,10 @@ public class DerivedTypeResolution {
 
 
     // Todo: change first to single.
-    VariableTypeResolutionMetadata firstMeta = first.metadata().ofType(VariableTypeResolutionMetadata.class).first();
-    VariableTypeResolutionMetadata secondMeta = second.metadata().ofType(VariableTypeResolutionMetadata.class).first();
-    VariableTypeResolutionMetadata thirdMeta = third.metadata().ofType(VariableTypeResolutionMetadata.class).first();
-    VariableTypeResolutionMetadata fourthMeta = fourth.metadata().ofType(VariableTypeResolutionMetadata.class).first();
+    VariableTypeResolutionMetadata firstMeta = first.metadata().ofType(VariableTypeResolutionMetadata.class).single();
+    VariableTypeResolutionMetadata secondMeta = second.metadata().ofType(VariableTypeResolutionMetadata.class).single();
+    VariableTypeResolutionMetadata thirdMeta = third.metadata().ofType(VariableTypeResolutionMetadata.class).single();
+    VariableTypeResolutionMetadata fourthMeta = fourth.metadata().ofType(VariableTypeResolutionMetadata.class).single();
 
     assert(firstMeta.symbolType().representation().equals("object"));
     assert(secondMeta.symbolType().representation().equals("object"));
