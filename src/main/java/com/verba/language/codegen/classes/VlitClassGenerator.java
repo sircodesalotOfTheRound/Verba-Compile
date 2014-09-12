@@ -9,24 +9,24 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
  * Generates vlit information that describes a class.
  */
 public class VlitClassGenerator {
-    private final SymbolTableEntry entry;
-    private final ClassDeclarationExpression declaration;
-    private PolymorphicResolutionMetadata resolutionMetadata;
+  private final SymbolTableEntry entry;
+  private final ClassDeclarationExpression declaration;
+  private PolymorphicResolutionMetadata resolutionMetadata;
 
-    public VlitClassGenerator(PolymorphicResolver resolver, SymbolTableEntry entry) {
+  public VlitClassGenerator(PolymorphicResolver resolver, SymbolTableEntry entry) {
 
-        this.entry = entry;
-        this.declaration = (ClassDeclarationExpression) entry.instance();
+    this.entry = entry;
+    this.declaration = (ClassDeclarationExpression) entry.instance();
 
-        this.resolveMembers(resolver, entry);
-        this.buildImage();
-    }
+    this.resolveMembers(resolver, entry);
+    this.buildImage();
+  }
 
-    private void resolveMembers(PolymorphicResolver resolver, SymbolTableEntry entry) {
-        this.resolutionMetadata = resolver.resolveBinding(entry);
-    }
+  private void resolveMembers(PolymorphicResolver resolver, SymbolTableEntry entry) {
+    this.resolutionMetadata = resolver.resolveBinding(entry);
+  }
 
-    private void buildImage() {
+  private void buildImage() {
 
-    }
+  }
 }

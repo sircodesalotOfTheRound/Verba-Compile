@@ -10,20 +10,20 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
  * Created by sircodesalot on 14-5-22.
  */
 public class VariableTypeResolutionMetadata implements SymbolTableMetadata, SymbolTypeMetadata, SymbolResolutionInfo {
-    private final SymbolTableEntry entry;
-    private final TypeDeclarationExpression type;
+  private final SymbolTableEntry entry;
+  private final TypeDeclarationExpression type;
 
-    public VariableTypeResolutionMetadata(SymbolTableEntry entry, TypeDeclarationExpression typeDeclarationExpression) {
-        this.entry = entry;
-        this.type = typeDeclarationExpression;
-    }
+  public VariableTypeResolutionMetadata(SymbolTableEntry entry, TypeDeclarationExpression typeDeclarationExpression) {
+    this.entry = entry;
+    this.type = typeDeclarationExpression;
+  }
 
-    public SymbolTableEntry symbolTableEntry() {
-        return this.entry;
-    }
+  public SymbolTableEntry symbolTableEntry() {
+    return this.entry;
+  }
 
-    @Override
-    public TypeDeclarationExpression symbolType() {
-        return this.type;
-    }
+  @Override
+  public TypeDeclarationExpression symbolType() {
+    return this.type;
+  }
 }

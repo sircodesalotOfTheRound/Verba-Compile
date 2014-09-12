@@ -10,12 +10,12 @@ import com.verba.language.test.lexing.Lexer;
  * Created by sircodesalot on 14-5-21.
  */
 public interface MarkupRvalueExpression {
-    static final BacktrackRuleSet<MarkupRvalueExpression> rules
-        = new BacktrackRuleSet<MarkupRvalueExpression>()
-        .addRule(new LiteralExpressionRule())
-        .addRule(new VarNameExpressionBacktrackRule());
+  static final BacktrackRuleSet<MarkupRvalueExpression> rules
+    = new BacktrackRuleSet<MarkupRvalueExpression>()
+    .addRule(new LiteralExpressionRule())
+    .addRule(new VarNameExpressionBacktrackRule());
 
-    public static MarkupRvalueExpression read(VerbaExpression parent, Lexer lexer) {
-        return rules.resolve(parent, lexer);
-    }
+  public static MarkupRvalueExpression read(VerbaExpression parent, Lexer lexer) {
+    return rules.resolve(parent, lexer);
+  }
 }

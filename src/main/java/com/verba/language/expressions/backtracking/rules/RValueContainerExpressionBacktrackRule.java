@@ -14,19 +14,19 @@ import com.verba.language.test.lexing.tokens.EnclosureToken;
  * Created by sircodesalot on 14-2-27.
  */
 public class RValueContainerExpressionBacktrackRule extends BacktrackRule {
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        return (lexer.currentIs(EnclosureToken.class, "["))
-            || (lexer.currentIs(EnclosureToken.class, "("))
-            || (lexer.currentIs(EnclosureToken.class, "{"));
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    return (lexer.currentIs(EnclosureToken.class, "["))
+      || (lexer.currentIs(EnclosureToken.class, "("))
+      || (lexer.currentIs(EnclosureToken.class, "{"));
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        if (lexer.currentIs(EnclosureToken.class, "[")) return ArrayDeclarationExpression.read(parent, lexer);
-        else if (lexer.currentIs(EnclosureToken.class, "(")) return TupleDeclarationExpression.read(parent, lexer);
-        else if (lexer.currentIs(EnclosureToken.class, "{")) return JsonExpression.read(parent, lexer);
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    if (lexer.currentIs(EnclosureToken.class, "[")) return ArrayDeclarationExpression.read(parent, lexer);
+    else if (lexer.currentIs(EnclosureToken.class, "(")) return TupleDeclarationExpression.read(parent, lexer);
+    else if (lexer.currentIs(EnclosureToken.class, "{")) return JsonExpression.read(parent, lexer);
 
-        throw MismatchException.getInstance();
-    }
+    throw MismatchException.getInstance();
+  }
 }

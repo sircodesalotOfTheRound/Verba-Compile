@@ -12,15 +12,15 @@ import com.verba.language.test.lexing.info.LexList;
  */
 public class RValueExpressionBacktrackRule extends BacktrackRule {
 
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        return super.verifyThenRollback(lexer, lex -> {
-            RValueExpression.read(parent, lexer);
-        });
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    return super.verifyThenRollback(lexer, lex -> {
+      RValueExpression.read(parent, lexer);
+    });
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        return (VerbaExpression) RValueExpression.read(parent, lexer);
-    }
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    return (VerbaExpression) RValueExpression.read(parent, lexer);
+  }
 }

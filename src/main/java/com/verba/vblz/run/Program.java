@@ -9,9 +9,9 @@ import java.io.Serializable;
  */
 public class Program implements Serializable {
 
-    public static void main(String[] args) throws Exception {
-        ArgumentParser parser = new ArgumentParser(args);
-        parser.runApplication();
-    }
+  public static void main(String[] args) throws Exception {
+    ArgumentParser parser = new ArgumentParser(args);
+    parser.runApplication();
+  }
 
 }

@@ -9,11 +9,11 @@ import com.verba.language.test.lexing.Lexer;
  * Created by sircodesalot on 14-4-26.
  */
 public interface TupleItemExpression {
-    static BacktrackRuleSet<TupleItemExpression> rules = new BacktrackRuleSet<TupleItemExpression>()
-        .addRule(new RValueExpressionBacktrackRule());
+  static BacktrackRuleSet<TupleItemExpression> rules = new BacktrackRuleSet<TupleItemExpression>()
+    .addRule(new RValueExpressionBacktrackRule());
 
 
-    public static TupleItemExpression read(VerbaExpression parent, Lexer lexer) {
-        return rules.resolve(parent, lexer);
-    }
+  public static TupleItemExpression read(VerbaExpression parent, Lexer lexer) {
+    return rules.resolve(parent, lexer);
+  }
 }

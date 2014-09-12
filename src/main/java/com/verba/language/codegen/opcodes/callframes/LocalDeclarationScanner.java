@@ -10,24 +10,29 @@ import com.verba.language.symbols.meta.decorators.FunctionSymbol;
  * Created by sircodesalot on 14-6-11.
  */
 public class LocalDeclarationScanner {
-    private final FunctionSymbol function;
-    private final QList<VerbaExpression> locals = new QList<>();
+  private final FunctionSymbol function;
+  private final QList<VerbaExpression> locals = new QList<>();
 
-    public LocalDeclarationScanner(FunctionSymbol function) {
-        this.function = function;
+  public LocalDeclarationScanner(FunctionSymbol function) {
+    this.function = function;
 
-        this.scan();
+    this.scan();
+  }
+
+  private void scan() {
+    // Add local variable name declarations
+    for (VerbaExpression expression : function.block()) {
+      if (expression instanceof NamedObjectDeclarationExpression)
+        this.locals.add(expression);
     }
-
-    private void scan() {
-        // Add local variable name declarations
-        for (VerbaExpression expression : function.block()) {
-            if (expression instanceof NamedObjectDeclarationExpression)
-                this.locals.add(expression);
-        }
-    }
+  }
 
 
-    public QIterable<VerbaExpression> locals() { return this.locals; }
-    public int count() { return (int) this.locals.count(); }
+  public QIterable<VerbaExpression> locals() {
+    return this.locals;
+  }
+
+  public int count() {
+    return (int) this.locals.count();
+  }
 }

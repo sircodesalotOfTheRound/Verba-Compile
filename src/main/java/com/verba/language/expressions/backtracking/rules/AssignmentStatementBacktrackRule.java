@@ -16,38 +16,38 @@ import com.verba.language.test.lexing.tokens.operators.assignment.AssignmentToke
  * Created by sircodesalot on 14-2-27.
  */
 public class AssignmentStatementBacktrackRule extends BacktrackRule {
-    private static TokenSignature[] tupleAssignmentSequence
-        = new TokenSignature[]{
-        TokenSignature.make(EnclosureToken.class, "("),
-        TokenSignature.make(IdentifierToken.class)
-    };
+  private static TokenSignature[] tupleAssignmentSequence
+    = new TokenSignature[]{
+    TokenSignature.make(EnclosureToken.class, "("),
+    TokenSignature.make(IdentifierToken.class)
+  };
 
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        // Assignments should start with an LValue
-        if (!restOfLine.startsWith(IdentifierToken.class)
-            || !restOfLine.startsWithSequence(tupleAssignmentSequence))
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    // Assignments should start with an LValue
+    if (!restOfLine.startsWith(IdentifierToken.class)
+      || !restOfLine.startsWithSequence(tupleAssignmentSequence))
 
-            return false;
+      return false;
 
-        // Should contain assignment operator
-        if (!restOfLine.contains(AssignmentToken.class)) return false;
+    // Should contain assignment operator
+    if (!restOfLine.contains(AssignmentToken.class)) return false;
 
-        // If these preliminary tests check out, go ahead and try.
-        return true;
+    // If these preliminary tests check out, go ahead and try.
+    return true;
+  }
+
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    try {
+      lexer.setUndoPoint();
+      VerbaExpression result = AssignmentStatementExpression.read(parent, lexer);
+      lexer.clearUndoPoint();
+
+      return result;
+    } catch (ParseException ex) {
+      lexer.rollbackToUndoPoint();
+      throw MismatchException.getInstance();
     }
-
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        try {
-            lexer.setUndoPoint();
-            VerbaExpression result = AssignmentStatementExpression.read(parent, lexer);
-            lexer.clearUndoPoint();
-
-            return result;
-        } catch (ParseException ex) {
-            lexer.rollbackToUndoPoint();
-            throw MismatchException.getInstance();
-        }
-    }
+  }
 }

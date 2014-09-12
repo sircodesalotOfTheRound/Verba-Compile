@@ -8,7 +8,7 @@ import com.javalinq.interfaces.QIterable;
  * Means that this class can derive from other classes / traits.
  */
 public interface PolymorphicExpression {
-    public QIterable<TypeDeclarationExpression> traits();
+  public QIterable<TypeDeclarationExpression> traits();
 
-    public boolean hasTraits();
+  public boolean hasTraits();
 }

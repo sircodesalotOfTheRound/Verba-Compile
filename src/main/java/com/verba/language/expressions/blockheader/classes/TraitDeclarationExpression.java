@@ -2,6 +2,7 @@ package com.verba.language.expressions.blockheader.classes;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
@@ -20,93 +21,99 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-2-17.
  */
 public class TraitDeclarationExpression extends VerbaExpression
-    implements NamedBlockExpression, PolymorphicExpression, GenericExpression {
+  implements NamedBlockExpression, PolymorphicExpression, GenericExpression {
 
-    private final FullyQualifiedNameExpression identifier;
-    private final BlockDeclarationExpression block;
-    private QIterable<TypeDeclarationExpression> traits;
+  private final FullyQualifiedNameExpression identifier;
+  private final BlockDeclarationExpression block;
+  private QIterable<TypeDeclarationExpression> traits;
 
-    public TraitDeclarationExpression(VerbaExpression parent, Lexer lexer) {
-        super(parent, lexer);
+  public TraitDeclarationExpression(VerbaExpression parent, Lexer lexer) {
+    super(parent, lexer);
 
-        lexer.readCurrentAndAdvance(KeywordToken.class, "trait");
-        this.identifier = FullyQualifiedNameExpression.read(this, lexer);
+    lexer.readCurrentAndAdvance(KeywordToken.class, "trait");
+    this.identifier = FullyQualifiedNameExpression.read(this, lexer);
 
-        if (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ":")) {
-            lexer.readCurrentAndAdvance(OperatorToken.class, ":");
+    if (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ":")) {
+      lexer.readCurrentAndAdvance(OperatorToken.class, ":");
 
-            this.traits = readBaseTypes(lexer);
-        }
-
-        this.block = BlockDeclarationExpression.read(this, lexer);
+      this.traits = readBaseTypes(lexer);
     }
 
-    private QIterable<TypeDeclarationExpression> readBaseTypes(Lexer lexer) {
-        QList<TypeDeclarationExpression> baseTypes = new QList<>();
+    this.block = BlockDeclarationExpression.read(this, lexer);
+  }
 
-        do {
-            baseTypes.add(TypeDeclarationExpression.read(this, lexer));
+  private QIterable<TypeDeclarationExpression> readBaseTypes(Lexer lexer) {
+    QList<TypeDeclarationExpression> baseTypes = new QList<>();
 
-            // Read a comma if that's the next item, else break.
-            if (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ","))
-                lexer.readCurrentAndAdvance(OperatorToken.class, ",");
-            else
-                break;
+    do {
+      baseTypes.add(TypeDeclarationExpression.read(this, lexer));
 
-        } while (lexer.notEOF());
+      // Read a comma if that's the next item, else break.
+      if (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ","))
+        lexer.readCurrentAndAdvance(OperatorToken.class, ",");
+      else
+        break;
 
-        return baseTypes;
-    }
+    } while (lexer.notEOF());
 
-    public static TraitDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
-        return new TraitDeclarationExpression(parent, lexer);
-    }
+    return baseTypes;
+  }
 
-    public BlockDeclarationExpression block() {
-        return this.block;
-    }
+  public static TraitDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
+    return new TraitDeclarationExpression(parent, lexer);
+  }
 
-    @Override
-    public QIterable<TypeDeclarationExpression> traits() {
-        return this.traits;
-    }
+  public BlockDeclarationExpression block() {
+    return this.block;
+  }
 
-    public FullyQualifiedNameExpression declaration() {
-        return this.identifier;
-    }
+  @Override
+  public QIterable<TypeDeclarationExpression> traits() {
+    return this.traits;
+  }
 
-    public MemberExpression primaryIdentifier() {
-        return this.declaration().first();
-    }
+  public FullyQualifiedNameExpression declaration() {
+    return this.identifier;
+  }
 
-    public QIterable<TupleDeclarationExpression> inlineParameters() {
-        return this.primaryIdentifier().parameterLists();
-    }
+  public MemberExpression primaryIdentifier() {
+    return this.declaration().first();
+  }
 
-    @Override
-    public boolean hasGenericParameters() {
-        return this.primaryIdentifier().hasGenericParameters();
-    }
+  public QIterable<TupleDeclarationExpression> inlineParameters() {
+    return this.primaryIdentifier().parameterLists();
+  }
 
-    @Override
-    public GenericTypeListExpression genericParameters() {
-        return this.primaryIdentifier().genericParameterList();
-    }
+  @Override
+  public boolean hasGenericParameters() {
+    return this.primaryIdentifier().hasGenericParameters();
+  }
 
-    @Override
-    public String name() {
-        return this.identifier.members().first().memberName();
-    }
+  @Override
+  public GenericTypeListExpression genericParameters() {
+    return this.primaryIdentifier().genericParameterList();
+  }
 
-    public boolean isInlineTrait() {
-        return (this.primaryIdentifier().hasParameters() || !this.hasBlock());
-    }
+  @Override
+  public String name() {
+    return this.identifier.members().first().memberName();
+  }
 
-    public boolean hasBlock() {
-        return (this.block != null && this.block.hasItems());
-    }
-    @Override
-    public boolean hasTraits() {
-        return this.traits != null;
-    }
+  public boolean isInlineTrait() {
+    return (this.primaryIdentifier().hasParameters() || !this.hasBlock());
+  }
+
+  public boolean hasBlock() {
+    return (this.block != null && this.block.hasItems());
+  }
+
+  @Override
+  public boolean hasTraits() {
+    return this.traits != null;
+  }
+
+  @Override
+  public void accept(AstVisitor visitor) {
+    visitor.visit(this);
+  }
 }

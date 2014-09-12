@@ -14,37 +14,37 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-5-21.
  */
 public class SetDeclarationExpressionBacktrackRule extends BacktrackRule {
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        lexer.setUndoPoint();
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    lexer.setUndoPoint();
 
-        boolean shouldAttempt = firstItemIsOpenBrace(lexer)
-            && secondItemIsRvalueExpression(lexer)
-            && thirdItemIsCommaOrBrace(lexer);
+    boolean shouldAttempt = firstItemIsOpenBrace(lexer)
+      && secondItemIsRvalueExpression(lexer)
+      && thirdItemIsCommaOrBrace(lexer);
 
-        lexer.rollbackToUndoPoint();
-        return shouldAttempt;
+    lexer.rollbackToUndoPoint();
+    return shouldAttempt;
+  }
+
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    return SetDeclarationExpression.read(parent, lexer);
+  }
+
+  private boolean firstItemIsOpenBrace(Lexer lexer) {
+    if (lexer.notEOF() && lexer.currentIs(EnclosureToken.class, "{")) {
+      lexer.readCurrentAndAdvance(EnclosureToken.class, "{");
+      return true;
     }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        return SetDeclarationExpression.read(parent, lexer);
-    }
+    return false;
+  }
 
-    private boolean firstItemIsOpenBrace(Lexer lexer) {
-        if (lexer.notEOF() && lexer.currentIs(EnclosureToken.class, "{")) {
-            lexer.readCurrentAndAdvance(EnclosureToken.class, "{");
-            return true;
-        }
+  private boolean secondItemIsRvalueExpression(Lexer lexer) {
+    return (lexer.notEOF() && VerbaExpression.read(null, lexer) instanceof RValueExpression);
+  }
 
-        return false;
-    }
-
-    private boolean secondItemIsRvalueExpression(Lexer lexer) {
-        return (lexer.notEOF() && VerbaExpression.read(null, lexer) instanceof RValueExpression);
-    }
-
-    private boolean thirdItemIsCommaOrBrace(Lexer lexer) {
-        return (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ",") || lexer.currentIs(EnclosureToken.class, "}"));
-    }
+  private boolean thirdItemIsCommaOrBrace(Lexer lexer) {
+    return (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ",") || lexer.currentIs(EnclosureToken.class, "}"));
+  }
 }

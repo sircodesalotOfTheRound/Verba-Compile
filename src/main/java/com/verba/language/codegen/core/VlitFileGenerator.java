@@ -19,95 +19,95 @@ import com.verba.language.symbols.table.tables.GlobalSymbolTable;
  * vlit file.
  */
 public class VlitFileGenerator {
-    private final StaticSpaceExpression root;
-    private final GlobalSymbolTable symbolTable;
-    private final Partition<Class, SymbolTableEntry> expressions;
-    private QIterable<VlitFunctionGenerator> functions;
+  private final StaticSpaceExpression root;
+  private final GlobalSymbolTable symbolTable;
+  private final Partition<Class, SymbolTableEntry> expressions;
+  private QIterable<VlitFunctionGenerator> functions;
 
-    public VlitFileGenerator(StaticSpaceExpression root) {
-        this.root = root;
-        this.symbolTable = root.globalSymbolTable();
-        this.expressions = this.buildGrouping();
+  public VlitFileGenerator(StaticSpaceExpression root) {
+    this.root = root;
+    this.symbolTable = root.globalSymbolTable();
+    this.expressions = this.buildGrouping();
 
-        this.process();
+    this.process();
+  }
+
+  private void process() {
+    this.functions = this.processFunctions();
+  }
+
+  // Group the symbol table items by their type.
+  private Partition<Class, SymbolTableEntry> buildGrouping() {
+    // Group by the type of each symbol table item.
+    return this.symbolTable
+      .entries()
+      .parition(entry -> entry.instance().getClass());
+  }
+
+  private <T> QIterable<SymbolTableEntry> get(Class<T> type) {
+    return this.expressions.get(type);
+  }
+
+  private <T> boolean containsKey(Class<T> type) {
+    return this.expressions.get(type) != null;
+  }
+
+  public void processMetatags() {
+    for (SymbolTableEntry metatagEntry : this.get(HashTagExpression.class)) {
+
     }
 
-    private void process() {
-        this.functions = this.processFunctions();
+    for (SymbolTableEntry metatagEntry : this.get(AspectTagExpression.class)) {
+
+    }
+  }
+
+  public Object processClasses() {
+    if (!this.containsKey(ClassDeclarationExpression.class)) return null;
+
+    // Resolve all of the members associated to each class.
+    // This automatically caches the member information to the entry
+    // in the symbol table (as an instance of PolymorphicResolutionMetadata)
+    PolymorphicResolver resolver = new PolymorphicResolver(symbolTable);
+    for (SymbolTableEntry classDeclaration : this.get(ClassDeclarationExpression.class)) {
+
+      VlitClassGenerator generator = new VlitClassGenerator(resolver, classDeclaration);
     }
 
-    // Group the symbol table items by their type.
-    private Partition<Class, SymbolTableEntry> buildGrouping() {
-        // Group by the type of each symbol table item.
-        return this.symbolTable
-            .entries()
-            .parition(entry -> entry.instance().getClass());
+    // TODO: Return something
+    return null;
+  }
+
+  public QIterable<VlitFunctionGenerator> processFunctions() {
+    if (!containsKey(FunctionDeclarationExpression.class)) return null;
+
+    return this.get(FunctionDeclarationExpression.class)
+      .map(functionEntry -> new VlitFunctionGenerator(functionEntry))
+      .toList();
+  }
+
+  public StaticSpaceExpression root() {
+    return this.root;
+  }
+
+  public GlobalSymbolTable symbolTable() {
+    return this.symbolTable;
+  }
+
+  public boolean hasFunctions() {
+    return this.functions != null;
+  }
+
+  public QIterable<VlitFunctionGenerator> functions() {
+    return this.functions;
+  }
+
+  public void save(String outputPath) {
+    DataSegment segment = new DataSegment();
+    for (VlitFunctionGenerator function : this.functions()) {
+      function.emitTo(segment);
     }
 
-    private <T> QIterable<SymbolTableEntry> get(Class<T> type) {
-        return this.expressions.get(type);
-    }
-
-    private <T> boolean containsKey(Class<T> type) {
-        return this.expressions.get(type) != null;
-    }
-
-    public void processMetatags() {
-        for (SymbolTableEntry metatagEntry : this.get(HashTagExpression.class)) {
-
-        }
-
-        for (SymbolTableEntry metatagEntry : this.get(AspectTagExpression.class)) {
-
-        }
-    }
-
-    public Object processClasses() {
-        if (!this.containsKey(ClassDeclarationExpression.class)) return null;
-
-        // Resolve all of the members associated to each class.
-        // This automatically caches the member information to the entry
-        // in the symbol table (as an instance of PolymorphicResolutionMetadata)
-        PolymorphicResolver resolver = new PolymorphicResolver(symbolTable);
-        for (SymbolTableEntry classDeclaration : this.get(ClassDeclarationExpression.class)) {
-
-            VlitClassGenerator generator = new VlitClassGenerator(resolver, classDeclaration);
-        }
-
-        // TODO: Return something
-        return null;
-    }
-
-    public QIterable<VlitFunctionGenerator> processFunctions() {
-        if (!containsKey(FunctionDeclarationExpression.class)) return null;
-
-        return this.get(FunctionDeclarationExpression.class)
-            .map(functionEntry -> new VlitFunctionGenerator(functionEntry))
-            .toList();
-    }
-
-    public StaticSpaceExpression root() {
-        return this.root;
-    }
-
-    public GlobalSymbolTable symbolTable() {
-        return this.symbolTable;
-    }
-
-    public boolean hasFunctions() {
-        return this.functions != null;
-    }
-
-    public QIterable<VlitFunctionGenerator> functions() {
-        return this.functions;
-    }
-
-    public void save(String outputPath) {
-        DataSegment segment = new DataSegment();
-        for (VlitFunctionGenerator function : this.functions()) {
-            function.emitTo(segment);
-        }
-
-        segment.save(outputPath);
-    }
+    segment.save(outputPath);
+  }
 }

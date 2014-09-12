@@ -6,7 +6,7 @@ import com.verba.language.test.lexing.tokens.operators.assignment.CompositeAssig
  * Created by sircodesalot on 14-2-26.
  */
 public class PowerEqualsToken extends CompositeAssignmentToken {
-    public PowerEqualsToken() {
-        super("^=");
-    }
+  public PowerEqualsToken() {
+    super("^=");
+  }
 }

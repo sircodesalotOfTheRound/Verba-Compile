@@ -9,16 +9,16 @@ import com.verba.language.expressions.statements.returns.ReturnStatementExpressi
  * Created by sircodesalot on 14-6-11.
  */
 public class ReturnStatementOpEmitter extends OpEmitter {
-    private final ReturnStatementExpression retStatement;
+  private final ReturnStatementExpression retStatement;
 
-    public ReturnStatementOpEmitter(ReturnStatementExpression retStatement) {
-        super(0);
-        this.retStatement = retStatement;
-    }
+  public ReturnStatementOpEmitter(ReturnStatementExpression retStatement) {
+    super(0);
+    this.retStatement = retStatement;
+  }
 
 
-    @Override
-    public void emit(DataSegment segment) {
-        segment.addOpCode(new RetOp());
-    }
+  @Override
+  public void emit(DataSegment segment) {
+    segment.addOpCode(new RetOp());
+  }
 }

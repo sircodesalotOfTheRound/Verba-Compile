@@ -11,17 +11,17 @@ import com.verba.tools.tasks.Task;
  * Created by sircodesalot on 14/8/31.
  */
 public class MergeSymbolTableTask implements Task {
-    @Override
-    public void perform() {
-        QIterable<StaticSpaceExpression> staticSpaceExpressions = FileTools
-            .findInSubfolders(EnvironmentHelpers.getSymbolFolderPath(), file -> file.getAbsolutePath().endsWith(".sym"))
-            .map(file -> FileTools.deserializeObjectFromFile(file.getAbsolutePath()))
-            .cast(StaticSpaceExpression.class);
+  @Override
+  public void perform() {
+    QIterable<StaticSpaceExpression> staticSpaceExpressions = FileTools
+      .findInSubfolders(EnvironmentHelpers.getSymbolFolderPath(), file -> file.getAbsolutePath().endsWith(".sym"))
+      .map(file -> FileTools.deserializeObjectFromFile(file.getAbsolutePath()))
+      .cast(StaticSpaceExpression.class);
 
-        QList<Object> objects = FileTools.findInSubfolders(EnvironmentHelpers.getSymbolFolderPath(), file -> file.getAbsolutePath().endsWith(".sym"))
-            .map(file -> FileTools.deserializeObjectFromFile(file.getAbsolutePath()))
-            .toList();
+    QList<Object> objects = FileTools.findInSubfolders(EnvironmentHelpers.getSymbolFolderPath(), file -> file.getAbsolutePath().endsWith(".sym"))
+      .map(file -> FileTools.deserializeObjectFromFile(file.getAbsolutePath()))
+      .toList();
 
 
-    }
+  }
 }

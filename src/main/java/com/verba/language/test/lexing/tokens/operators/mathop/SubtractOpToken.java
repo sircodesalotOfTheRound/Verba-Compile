@@ -5,12 +5,12 @@ package com.verba.language.test.lexing.tokens.operators.mathop;
  */
 public class SubtractOpToken extends MathOpToken {
 
-    public SubtractOpToken() {
-        super("-");
-    }
+  public SubtractOpToken() {
+    super("-");
+  }
 
-    @Override
-    public int getPriorityLevel() {
-        return 1;
-    }
+  @Override
+  public int getPriorityLevel() {
+    return 1;
+  }
 }

@@ -2,6 +2,7 @@ package com.verba.language.expressions.members;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
@@ -13,59 +14,64 @@ import com.verba.language.test.lexing.tokens.EnclosureToken;
  * Created by sircodesalot on 14-2-25.
  */
 public class MemberExpression extends VerbaExpression {
-    private final IdentifierExpression identifier;
-    private final GenericTypeListExpression genericParameters;
-    private final QList<TupleDeclarationExpression> parameterLists = new QList<>();
+  private final IdentifierExpression identifier;
+  private final GenericTypeListExpression genericParameters;
+  private final QList<TupleDeclarationExpression> parameterLists = new QList<>();
 
-    public MemberExpression(VerbaExpression parent, Lexer lexer) {
-        super(parent, lexer);
+  public MemberExpression(VerbaExpression parent, Lexer lexer) {
+    super(parent, lexer);
 
-        this.identifier = IdentifierExpression.read(this, lexer);
-        this.genericParameters = GenericTypeListExpression.read(this, lexer);
+    this.identifier = IdentifierExpression.read(this, lexer);
+    this.genericParameters = GenericTypeListExpression.read(this, lexer);
 
-        // Read parameterSets if they exist
-        do {
-            if (lexer.currentIs(EnclosureToken.class, "(")) {
-                parameterLists.add(TupleDeclarationExpression.read(this, lexer));
-            }
-        } while (lexer.notEOF() && lexer.currentIs(EnclosureToken.class, "("));
+    // Read parameterSets if they exist
+    do {
+      if (lexer.currentIs(EnclosureToken.class, "(")) {
+        parameterLists.add(TupleDeclarationExpression.read(this, lexer));
+      }
+    } while (lexer.notEOF() && lexer.currentIs(EnclosureToken.class, "("));
+  }
+
+  public static MemberExpression read(VerbaExpression parent, Lexer lexer) {
+    return new MemberExpression(parent, lexer);
+  }
+
+  public String memberName() {
+    return this.identifier.representation();
+  }
+
+  public String representation() {
+    if (genericParameters.hasItems()) {
+      return String.format("%s%s",
+        this.identifier.representation(),
+        this.genericParameters.representation());
+    } else {
+      return this.identifier.representation();
     }
+  }
 
-    public static MemberExpression read(VerbaExpression parent, Lexer lexer) {
-        return new MemberExpression(parent, lexer);
-    }
+  public boolean hasParameters() {
+    return this.parameterLists.any();
+  }
 
-    public String memberName() {
-        return this.identifier.representation();
-    }
+  public IdentifierExpression identifier() {
+    return this.identifier;
+  }
 
-    public String representation() {
-        if (genericParameters.hasItems()) {
-            return String.format("%s%s",
-                this.identifier.representation(),
-                this.genericParameters.representation());
-        } else {
-            return this.identifier.representation();
-        }
-    }
+  public QIterable<TupleDeclarationExpression> parameterLists() {
+    return this.parameterLists;
+  }
 
-    public boolean hasParameters() {
-        return this.parameterLists.any();
-    }
+  public GenericTypeListExpression genericParameterList() {
+    return this.genericParameters;
+  }
 
-    public IdentifierExpression identifier() {
-        return this.identifier;
-    }
+  public boolean hasGenericParameters() {
+    return this.genericParameters.hasItems();
+  }
 
-    public QIterable<TupleDeclarationExpression> parameterLists() {
-        return this.parameterLists;
-    }
+  @Override
+  public void accept(AstVisitor visitor) {
 
-    public GenericTypeListExpression genericParameterList() {
-        return this.genericParameters;
-    }
-
-    public boolean hasGenericParameters() {
-        return this.genericParameters.hasItems();
-    }
+  }
 }

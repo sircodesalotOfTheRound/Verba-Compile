@@ -2,6 +2,7 @@ package com.verba.language.expressions.blockheader.generic;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -13,51 +14,56 @@ import java.util.Iterator;
  * Created by sircodesalot on 14-2-17.
  */
 public class GenericTypeListExpression extends VerbaExpression
-    implements QIterable<NamedObjectDeclarationExpression> {
-    QList<NamedObjectDeclarationExpression> declarations = new QList<>();
+  implements QIterable<NamedObjectDeclarationExpression> {
+  QList<NamedObjectDeclarationExpression> declarations = new QList<>();
 
-    public GenericTypeListExpression(VerbaExpression parent, Lexer lexer) {
-        super(parent, lexer);
+  public GenericTypeListExpression(VerbaExpression parent, Lexer lexer) {
+    super(parent, lexer);
 
-        if (lexer.notEOF() && lexer.currentIs(OperatorToken.class, "<")) {
-            this.readExpressions(lexer);
-        }
+    if (lexer.notEOF() && lexer.currentIs(OperatorToken.class, "<")) {
+      this.readExpressions(lexer);
+    }
+  }
+
+  private void readExpressions(Lexer lexer) {
+    lexer.readCurrentAndAdvance(OperatorToken.class, "<");
+
+    while (!lexer.currentIs(OperatorToken.class, ">")) {
+      declarations.add(NamedObjectDeclarationExpression.read(this, lexer));
+
+      if (!lexer.currentIs(OperatorToken.class, ",")) break;
+      else lexer.readCurrentAndAdvance(OperatorToken.class, ",");
     }
 
-    private void readExpressions(Lexer lexer) {
-        lexer.readCurrentAndAdvance(OperatorToken.class, "<");
+    lexer.readCurrentAndAdvance(OperatorToken.class, ">");
+  }
 
-        while (!lexer.currentIs(OperatorToken.class, ">")) {
-            declarations.add(NamedObjectDeclarationExpression.read(this, lexer));
+  public static GenericTypeListExpression read(VerbaExpression parent, Lexer lexer) {
+    return new GenericTypeListExpression(parent, lexer);
+  }
 
-            if (!lexer.currentIs(OperatorToken.class, ",")) break;
-            else lexer.readCurrentAndAdvance(OperatorToken.class, ",");
-        }
+  public boolean hasItems() {
+    return this.declarations.any();
+  }
 
-        lexer.readCurrentAndAdvance(OperatorToken.class, ">");
-    }
+  public String representation() {
+    Iterable<String> items = this.declarations.map(NamedObjectDeclarationExpression::representation);
+    String joinedItems = String.join(", ", items);
 
-    public static GenericTypeListExpression read(VerbaExpression parent, Lexer lexer) {
-        return new GenericTypeListExpression(parent, lexer);
-    }
+    return String.format("<%s>", joinedItems);
+  }
 
-    public boolean hasItems() {
-        return this.declarations.any();
-    }
+  public QList<NamedObjectDeclarationExpression> parameters() {
+    return this.declarations;
+  }
 
-    public String representation() {
-        Iterable<String> items = this.declarations.map(NamedObjectDeclarationExpression::representation);
-        String joinedItems = String.join(", ", items);
+  @Override
+  public Iterator<NamedObjectDeclarationExpression> iterator() {
+    return this.declarations.iterator();
+  }
 
-        return String.format("<%s>", joinedItems);
-    }
+  @Override
+  public void accept(AstVisitor visitor) {
 
-    public QList<NamedObjectDeclarationExpression> parameters() {
-        return this.declarations;
-    }
-
-    @Override
-    public Iterator<NamedObjectDeclarationExpression> iterator() {
-        return this.declarations.iterator();
-    }
+  }
 }

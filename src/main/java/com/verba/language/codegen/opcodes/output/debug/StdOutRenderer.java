@@ -4,17 +4,17 @@ package com.verba.language.codegen.opcodes.output.debug;
  * Created by sircodesalot on 14-4-28.
  */
 public class StdOutRenderer {
-   // private final Mode mode;
-    //private final VlitRenderable renderable;
+  // private final Mode mode;
+  //private final VlitRenderable renderable;
 
-   // public void project() {
-   //     this.renderable.render(this);
-   // }
+  // public void project() {
+  //     this.renderable.render(this);
+  // }
 
-    public enum Mode {
-        DECIMAL,
-        HEX
-    }
+  public enum Mode {
+    DECIMAL,
+    HEX
+  }
 /*
     public StdOutRenderer(VlitRenderable renderable, Mode mode) {
         this.renderable = renderable;

@@ -12,21 +12,21 @@ import com.verba.language.test.lexing.Lexer;
  * Created by sircodesalot on 14-2-27.
  */
 public interface NamedBlockExpression extends SymbolTableExpression, NamedExpression {
-    public static BacktrackRuleSet<NamedBlockExpression> declarations
-        = new BacktrackRuleSet<NamedBlockExpression>()
-        .addRule(new NamespaceDeclarationBacktrackRule())
-        .addRule(new ClassDeclarationBacktrackRule())
-        .addRule(new FunctionDeclarationBacktrackRule())
-        .addRule(new InjectedClassDeclarationBacktrackRule())
-        .addRule(new TraitDeclarationBacktrackRule())
-        .addRule(new MetaDeclarationBacktrackRule())
-        .addRule(new TaskDeclarationBacktrackRule())
-        .addRule(new ExtendDeclarationBacktrackRule())
-        .addRule(new SignatureDeclarationBacktrackRule());
+  public static BacktrackRuleSet<NamedBlockExpression> declarations
+    = new BacktrackRuleSet<NamedBlockExpression>()
+    .addRule(new NamespaceDeclarationBacktrackRule())
+    .addRule(new ClassDeclarationBacktrackRule())
+    .addRule(new FunctionDeclarationBacktrackRule())
+    .addRule(new InjectedClassDeclarationBacktrackRule())
+    .addRule(new TraitDeclarationBacktrackRule())
+    .addRule(new MetaDeclarationBacktrackRule())
+    .addRule(new TaskDeclarationBacktrackRule())
+    .addRule(new ExtendDeclarationBacktrackRule())
+    .addRule(new SignatureDeclarationBacktrackRule());
 
-    BlockDeclarationExpression block();
+  BlockDeclarationExpression block();
 
-    public static NamedBlockExpression read(VerbaExpression parent, Lexer lexer) {
-        return declarations.resolve(parent, lexer);
-    }
+  public static NamedBlockExpression read(VerbaExpression parent, Lexer lexer) {
+    return declarations.resolve(parent, lexer);
+  }
 }

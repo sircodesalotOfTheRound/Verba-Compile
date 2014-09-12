@@ -8,12 +8,12 @@ import com.verba.vblz.clean.CleanBuildFolderTask;
  * Created by sircodesalot on 14/8/31.
  */
 public class RebuildProjectTask implements Task {
-    @Override
-    public void perform() {
-        CleanBuildFolderTask cleanTask = new CleanBuildFolderTask();
-        BuildProjectTask buildtask = new BuildProjectTask();
+  @Override
+  public void perform() {
+    CleanBuildFolderTask cleanTask = new CleanBuildFolderTask();
+    BuildProjectTask buildtask = new BuildProjectTask();
 
-        cleanTask.perform();
-        buildtask.perform();
-    }
+    cleanTask.perform();
+    buildtask.perform();
+  }
 }

@@ -6,7 +6,7 @@ import com.verba.language.expressions.blockheader.generic.GenericTypeListExpress
  * Created by sircodesalot on 14-5-30.
  */
 public interface GenericExpression {
-    boolean hasGenericParameters();
+  boolean hasGenericParameters();
 
-    GenericTypeListExpression genericParameters();
+  GenericTypeListExpression genericParameters();
 }

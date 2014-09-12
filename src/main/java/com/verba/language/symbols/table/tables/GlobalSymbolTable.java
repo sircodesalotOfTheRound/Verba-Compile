@@ -14,93 +14,93 @@ import java.util.Map;
  * Created by sircodesalot on 14-5-16.
  */
 public class GlobalSymbolTable implements Serializable {
-    private final ScopedSymbolTable rootTable;
-    private final QList<SymbolTableEntry> entries = new QList<>();
-    private final Map<VerbaExpression, SymbolTableEntry> entriesByInstance = new HashMap<>();
-    private final Map<String, QList<SymbolTableEntry>> entriesByFriendlyName = new HashMap<>();
-    private final Map<String, QList<SymbolTableEntry>> entriesByFqn = new HashMap<>();
+  private final ScopedSymbolTable rootTable;
+  private final QList<SymbolTableEntry> entries = new QList<>();
+  private final Map<VerbaExpression, SymbolTableEntry> entriesByInstance = new HashMap<>();
+  private final Map<String, QList<SymbolTableEntry>> entriesByFriendlyName = new HashMap<>();
+  private final Map<String, QList<SymbolTableEntry>> entriesByFqn = new HashMap<>();
 
-    public GlobalSymbolTable(SymbolTableExpression block) {
-        this(new ScopedSymbolTable(block));
+  public GlobalSymbolTable(SymbolTableExpression block) {
+    this(new ScopedSymbolTable(block));
+  }
+
+  public GlobalSymbolTable(ScopedSymbolTable table) {
+    this.rootTable = table;
+    this.scanTableHierarchy(table);
+  }
+
+  private void scanTableHierarchy(ScopedSymbolTable table) {
+    for (SymbolTableEntry entry : table.entries()) {
+      this.putEntry(entry);
     }
 
-    public GlobalSymbolTable(ScopedSymbolTable table) {
-        this.rootTable = table;
-        this.scanTableHierarchy(table);
+    for (ScopedSymbolTable subTable : table.nestedTables()) {
+      scanTableHierarchy(subTable);
+    }
+  }
+
+  private void putEntry(SymbolTableEntry entry) {
+    String friendlyName = entry.name();
+    String fqn = entry.fqn();
+    VerbaExpression instance = entry.instance();
+
+    // Add to all entry lists
+    this.entries.add(entry);
+    this.entriesByInstance.put(instance, entry);
+    this.getEntryListByFriendlyName(friendlyName).add(entry);
+    this.getEntryListByFqn(fqn).add(entry);
+  }
+
+
+  public QList<SymbolTableEntry> getEntryListByFriendlyName(String friendlyName) {
+    // If there is already a list associated with this name,
+    // then just return that.
+    if (this.entriesByFriendlyName.containsKey(friendlyName)) {
+      return this.entriesByFriendlyName.get(friendlyName);
     }
 
-    private void scanTableHierarchy(ScopedSymbolTable table) {
-        for (SymbolTableEntry entry : table.entries()) {
-            this.putEntry(entry);
-        }
+    // Else create a new list
+    QList<SymbolTableEntry> entryList = new QList<>();
+    this.entriesByFriendlyName.put(friendlyName, entryList);
 
-        for (ScopedSymbolTable subTable : table.nestedTables()) {
-            scanTableHierarchy(subTable);
-        }
+    return entryList;
+  }
+
+  public QList<SymbolTableEntry> getEntryListByFqn(String fqn) {
+    // If there is already a list associated with this name,
+    // then just return that.
+    if (this.entriesByFqn.containsKey(fqn)) {
+      return this.entriesByFqn.get(fqn);
     }
 
-    private void putEntry(SymbolTableEntry entry) {
-        String friendlyName = entry.name();
-        String fqn = entry.fqn();
-        VerbaExpression instance = entry.instance();
+    // Else create a new list
+    QList<SymbolTableEntry> entryList = new QList<>();
+    this.entriesByFqn.put(fqn, entryList);
 
-        // Add to all entry lists
-        this.entries.add(entry);
-        this.entriesByInstance.put(instance, entry);
-        this.getEntryListByFriendlyName(friendlyName).add(entry);
-        this.getEntryListByFqn(fqn).add(entry);
-    }
+    return entryList;
+  }
 
+  public QIterable<SymbolTableEntry> entries() {
+    return this.entries;
+  }
 
-    public QList<SymbolTableEntry> getEntryListByFriendlyName(String friendlyName) {
-        // If there is already a list associated with this name,
-        // then just return that.
-        if (this.entriesByFriendlyName.containsKey(friendlyName)) {
-            return this.entriesByFriendlyName.get(friendlyName);
-        }
+  public QIterable<SymbolTableEntry> getByFriendlyName(String friendlyName) {
+    return this.entriesByFriendlyName.get(friendlyName);
+  }
 
-        // Else create a new list
-        QList<SymbolTableEntry> entryList = new QList<>();
-        this.entriesByFriendlyName.put(friendlyName, entryList);
+  public QIterable<SymbolTableEntry> getByFqn(String fqn) {
+    return this.entriesByFqn.get(fqn);
+  }
 
-        return entryList;
-    }
+  public SymbolTableEntry getByIndex(int index) {
+    return this.entries.get(index);
+  }
 
-    public QList<SymbolTableEntry> getEntryListByFqn(String fqn) {
-        // If there is already a list associated with this name,
-        // then just return that.
-        if (this.entriesByFqn.containsKey(fqn)) {
-            return this.entriesByFqn.get(fqn);
-        }
+  public SymbolTableEntry getByInstance(VerbaExpression instance) {
+    return this.entriesByInstance.get(instance);
+  }
 
-        // Else create a new list
-        QList<SymbolTableEntry> entryList = new QList<>();
-        this.entriesByFqn.put(fqn, entryList);
-
-        return entryList;
-    }
-
-    public QIterable<SymbolTableEntry> entries() {
-        return this.entries;
-    }
-
-    public QIterable<SymbolTableEntry> getByFriendlyName(String friendlyName) {
-        return this.entriesByFriendlyName.get(friendlyName);
-    }
-
-    public QIterable<SymbolTableEntry> getByFqn(String fqn) {
-        return this.entriesByFqn.get(fqn);
-    }
-
-    public SymbolTableEntry getByIndex(int index) {
-        return this.entries.get(index);
-    }
-
-    public SymbolTableEntry getByInstance(VerbaExpression instance) {
-        return this.entriesByInstance.get(instance);
-    }
-
-    public ScopedSymbolTable rootTable() {
-        return this.rootTable;
-    }
+  public ScopedSymbolTable rootTable() {
+    return this.rootTable;
+  }
 }

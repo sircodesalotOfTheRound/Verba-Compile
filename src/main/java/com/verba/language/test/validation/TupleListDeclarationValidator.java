@@ -15,17 +15,17 @@ import java.util.function.Predicate;
  * Created by sircodesalot on 14-5-5.
  */
 public class TupleListDeclarationValidator extends ExpressionValidator<QIterable<TupleDeclarationExpression>> {
-    public TupleListDeclarationValidator(QIterable<TupleDeclarationExpression> tuple) {
-        super(tuple);
-    }
+  public TupleListDeclarationValidator(QIterable<TupleDeclarationExpression> tuple) {
+    super(tuple);
+  }
 
-    public QIterable<TupleDeclarationExpression> tupleList() {
-        return super.target();
-    }
+  public QIterable<TupleDeclarationExpression> tupleList() {
+    return super.target();
+  }
 
-    public QIterable<VerbaExpression> findArguments(Predicate<VerbaExpression> predicate) {
-        return this.tupleList()
-            .flatten(tupleList -> tupleList.items())
-            .where(argument -> predicate.test(argument));
-    }
+  public QIterable<VerbaExpression> findArguments(Predicate<VerbaExpression> predicate) {
+    return this.tupleList()
+      .flatten(tupleList -> tupleList.items())
+      .where(argument -> predicate.test(argument));
+  }
 }

@@ -9,25 +9,25 @@ import com.verba.vblz.newproject.subtasks.CreateBuildScriptTask;
 /**
  * Created by sircodesalot on 14/8/29.
  */
-public class CreateNewProjectTask implements Task{
+public class CreateNewProjectTask implements Task {
 
-    TaskList taskList = new TaskList();
+  TaskList taskList = new TaskList();
 
-    public CreateNewProjectTask(String[] args) {
-        Task buildScriptTask = new CreateBuildScriptTask(
-            EnvironmentHelpers.getHostname(),
-            EnvironmentHelpers.getOnlyCurrentFolderName(),
-            "1.0");
+  public CreateNewProjectTask(String[] args) {
+    Task buildScriptTask = new CreateBuildScriptTask(
+      EnvironmentHelpers.getHostname(),
+      EnvironmentHelpers.getOnlyCurrentFolderName(),
+      "1.0");
 
-        Task directoryCreationTask = new CreateBuildEnvironmentTask();
+    Task directoryCreationTask = new CreateBuildEnvironmentTask();
 
-        this.taskList.add(buildScriptTask, directoryCreationTask);
+    this.taskList.add(buildScriptTask, directoryCreationTask);
 
-    }
+  }
 
-    @Override
-    public void perform() {
-        this.taskList.perform();
-    }
+  @Override
+  public void perform() {
+    this.taskList.perform();
+  }
 
 }

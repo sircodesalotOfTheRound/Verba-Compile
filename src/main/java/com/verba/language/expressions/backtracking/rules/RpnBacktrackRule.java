@@ -12,14 +12,14 @@ import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
  * Created by sircodesalot on 14-2-27.
  */
 public class RpnBacktrackRule extends BacktrackRule {
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        // This will require shunting if the second item is a math token.
-        return (restOfLine.length() > 2) && (restOfLine.get(1).is(MathOpToken.class));
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    // This will require shunting if the second item is a math token.
+    return (restOfLine.length() > 2) && (restOfLine.get(1).is(MathOpToken.class));
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        return tryWithRollback(lexer, () -> RpnRValueExpression.read(parent, lexer));
-    }
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    return tryWithRollback(lexer, () -> RpnRValueExpression.read(parent, lexer));
+  }
 }

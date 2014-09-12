@@ -5,7 +5,7 @@ package com.verba.language.test.lexing.tokens.operators.tags;
  */
 public class AspectTagToken extends TagToken {
 
-    public AspectTagToken() {
-        super("@[");
-    }
+  public AspectTagToken() {
+    super("@[");
+  }
 }

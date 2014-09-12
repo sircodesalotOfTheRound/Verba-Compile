@@ -12,13 +12,13 @@ import com.verba.language.test.lexing.tokens.operators.tags.HashTagToken;
  * Created by sircodesalot on 14-2-25.
  */
 public class HashtagDeclarationBacktrackRule extends BacktrackRule {
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        return restOfLine.startsWith(HashTagToken.class);
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    return restOfLine.startsWith(HashTagToken.class);
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        return tryWithRollback(lexer, () -> HashTagExpression.read(parent, lexer));
-    }
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    return tryWithRollback(lexer, () -> HashTagExpression.read(parent, lexer));
+  }
 }

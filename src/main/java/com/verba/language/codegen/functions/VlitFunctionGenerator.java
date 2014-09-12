@@ -17,57 +17,57 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
  * Lays out the opcodes for a particular function.
  */
 public class VlitFunctionGenerator implements VLitEmitter {
-    //private final DataSegment segment;
-    private final FunctionSymbol function;
-    private final VlitFunctionDeclaration header;
-    private final QList<OpEmitter> opcodeEmitters = new QList<>();
+  //private final DataSegment segment;
+  private final FunctionSymbol function;
+  private final VlitFunctionDeclaration header;
+  private final QList<OpEmitter> opcodeEmitters = new QList<>();
 
-    public VlitFunctionGenerator(SymbolTableEntry entry) {
-        this.function = new FunctionSymbol(entry);
-        this.header = new VlitFunctionDeclaration(function);
+  public VlitFunctionGenerator(SymbolTableEntry entry) {
+    this.function = new FunctionSymbol(entry);
+    this.header = new VlitFunctionDeclaration(function);
 
-        this.processFunction();
+    this.processFunction();
+  }
+
+  private void processFunction() {
+    int startingRegister = 0;
+
+    for (VerbaExpression expression : this.function.block()) {
+      OpEmitter emitter;
+
+      // Return statement
+      if (expression instanceof ReturnStatementExpression)
+        emitter = new ReturnStatementOpEmitter((ReturnStatementExpression) expression);
+
+        // VarName Declaration / Method Call
+      else if (expression instanceof NamedObjectDeclarationExpression)
+        emitter = new VarNameOpEmitter(startingRegister, (NamedObjectDeclarationExpression) expression);
+
+        // Otherwise exception
+      else
+        throw new CompilerException("Unable to emit code for type");
+
+      this.opcodeEmitters.add(emitter);
+    }
+  }
+
+  public VlitFunctionDeclaration declaration() {
+    return this.header;
+  }
+
+  public void emitTo(DataSegment segment) {
+    this.header.emitTo(segment);
+
+    DataSegment opcodes = new DataSegment();
+    for (OpEmitter emitter : this.opcodeEmitters) {
+      emitter.emit(opcodes);
     }
 
-    private void processFunction() {
-        int startingRegister = 0;
+    // Add the length of the code segment
+    segment.add32((int) opcodes.count());
 
-        for (VerbaExpression expression : this.function.block()) {
-            OpEmitter emitter;
-
-            // Return statement
-            if (expression instanceof ReturnStatementExpression)
-                emitter = new ReturnStatementOpEmitter((ReturnStatementExpression) expression);
-
-            // VarName Declaration / Method Call
-            else if (expression instanceof NamedObjectDeclarationExpression)
-                emitter = new VarNameOpEmitter(startingRegister, (NamedObjectDeclarationExpression) expression);
-
-            // Otherwise exception
-            else
-                throw new CompilerException("Unable to emit code for type");
-
-            this.opcodeEmitters.add(emitter);
-        }
-    }
-
-    public VlitFunctionDeclaration declaration() {
-        return this.header;
-    }
-
-    public void emitTo(DataSegment segment) {
-        this.header.emitTo(segment);
-
-        DataSegment opcodes = new DataSegment();
-        for (OpEmitter emitter : this.opcodeEmitters) {
-            emitter.emit(opcodes);
-        }
-
-        // Add the length of the code segment
-        segment.add32((int)opcodes.count());
-
-        // Write the code segment to the main segment
-        segment.appendSegment(opcodes);
-    }
+    // Write the code segment to the main segment
+    segment.appendSegment(opcodes);
+  }
 
 }

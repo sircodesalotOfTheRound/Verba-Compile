@@ -2,6 +2,7 @@ package com.verba.language.expressions.containers.set;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.DataContainerExpression;
 import com.verba.language.expressions.categories.RValueExpression;
@@ -13,33 +14,38 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-5-21.
  */
 public class SetDeclarationExpression extends VerbaExpression
-    implements DataContainerExpression, RValueExpression {
-    private final QList<VerbaExpression> items = new QList<>();
+  implements DataContainerExpression, RValueExpression {
+  private final QList<VerbaExpression> items = new QList<>();
 
-    private SetDeclarationExpression(VerbaExpression parent, Lexer lexer) {
-        super(parent, lexer);
+  private SetDeclarationExpression(VerbaExpression parent, Lexer lexer) {
+    super(parent, lexer);
 
-        lexer.readCurrentAndAdvance(EnclosureToken.class, "{");
+    lexer.readCurrentAndAdvance(EnclosureToken.class, "{");
 
-        while (lexer.notEOF()
-            && !lexer.currentIs(EnclosureToken.class, "}")
-            && !lexer.currentIs(OperatorToken.class, ",")) {
+    while (lexer.notEOF()
+      && !lexer.currentIs(EnclosureToken.class, "}")
+      && !lexer.currentIs(OperatorToken.class, ",")) {
 
-            RValueExpression item = RValueExpression.read(this, lexer);
-            this.items.add((VerbaExpression) item);
+      RValueExpression item = RValueExpression.read(this, lexer);
+      this.items.add((VerbaExpression) item);
 
-            if (lexer.currentIs(OperatorToken.class, ",")) lexer.readCurrentAndAdvance(OperatorToken.class, ",");
-            else break; // Shennanigans
-        }
-
-        lexer.readCurrentAndAdvance(EnclosureToken.class, "}");
+      if (lexer.currentIs(OperatorToken.class, ",")) lexer.readCurrentAndAdvance(OperatorToken.class, ",");
+      else break; // Shennanigans
     }
 
-    public QIterable<VerbaExpression> items() {
-        return this.items;
-    }
+    lexer.readCurrentAndAdvance(EnclosureToken.class, "}");
+  }
 
-    public static SetDeclarationExpression read(VerbaExpression expression, Lexer lexer) {
-        return new SetDeclarationExpression(expression, lexer);
-    }
+  public QIterable<VerbaExpression> items() {
+    return this.items;
+  }
+
+  public static SetDeclarationExpression read(VerbaExpression expression, Lexer lexer) {
+    return new SetDeclarationExpression(expression, lexer);
+  }
+
+  @Override
+  public void accept(AstVisitor visitor) {
+
+  }
 }

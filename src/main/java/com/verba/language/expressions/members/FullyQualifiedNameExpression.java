@@ -2,6 +2,7 @@ package com.verba.language.expressions.members;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -14,41 +15,46 @@ import java.util.Iterator;
  * Created by sircodesalot on 14-2-24.
  */
 public class FullyQualifiedNameExpression extends VerbaExpression
-    implements TypeDeclarationExpression, QIterable<MemberExpression> {
+  implements TypeDeclarationExpression, QIterable<MemberExpression> {
 
-    QList<MemberExpression> fullyQualifiedName = new QList<MemberExpression>();
+  QList<MemberExpression> fullyQualifiedName = new QList<MemberExpression>();
 
-    private FullyQualifiedNameExpression(VerbaExpression parent, Lexer lexer) {
-        super(parent, lexer);
+  private FullyQualifiedNameExpression(VerbaExpression parent, Lexer lexer) {
+    super(parent, lexer);
 
-        fullyQualifiedName.add(MemberExpression.read(this, lexer));
+    fullyQualifiedName.add(MemberExpression.read(this, lexer));
 
-        while (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ".")) {
-            lexer.readCurrentAndAdvance(OperatorToken.class, ".");
-            fullyQualifiedName.add(MemberExpression.read(this, lexer));
-        }
-
+    while (lexer.notEOF() && lexer.currentIs(OperatorToken.class, ".")) {
+      lexer.readCurrentAndAdvance(OperatorToken.class, ".");
+      fullyQualifiedName.add(MemberExpression.read(this, lexer));
     }
 
-    public static boolean IsFullyQualifiedName(Lexer lexer) {
-        return lexer.currentIs(IdentifierToken.class);
-    }
+  }
 
-    public static FullyQualifiedNameExpression read(VerbaExpression parent, Lexer lexer) {
-        return new FullyQualifiedNameExpression(parent, lexer);
-    }
+  public static boolean IsFullyQualifiedName(Lexer lexer) {
+    return lexer.currentIs(IdentifierToken.class);
+  }
 
-    public QIterable<MemberExpression> members() {
-        return this.fullyQualifiedName;
-    }
+  public static FullyQualifiedNameExpression read(VerbaExpression parent, Lexer lexer) {
+    return new FullyQualifiedNameExpression(parent, lexer);
+  }
 
-    public String representation() {
-        Iterable<String> fqnItems = this.fullyQualifiedName.map(item -> item.representation());
-        return String.join(".", fqnItems);
-    }
+  public QIterable<MemberExpression> members() {
+    return this.fullyQualifiedName;
+  }
 
-    @Override
-    public Iterator<MemberExpression> iterator() {
-        return this.fullyQualifiedName.iterator();
-    }
+  public String representation() {
+    Iterable<String> fqnItems = this.fullyQualifiedName.map(item -> item.representation());
+    return String.join(".", fqnItems);
+  }
+
+  @Override
+  public Iterator<MemberExpression> iterator() {
+    return this.fullyQualifiedName.iterator();
+  }
+
+  @Override
+  public void accept(AstVisitor visitor) {
+
+  }
 }

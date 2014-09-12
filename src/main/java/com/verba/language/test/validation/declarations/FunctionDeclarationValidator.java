@@ -11,63 +11,63 @@ import com.verba.language.test.validation.fqn.FullyQualifiedNameValidator;
  * Created by sircodesalot on 14-5-3.
  */
 public class FunctionDeclarationValidator extends ExpressionValidator<FunctionDeclarationExpression> {
-    private final FullyQualifiedNameValidator declarationValidator;
+  private final FullyQualifiedNameValidator declarationValidator;
 
-    public FunctionDeclarationValidator(FunctionDeclarationExpression function) {
-        super(function);
+  public FunctionDeclarationValidator(FunctionDeclarationExpression function) {
+    super(function);
 
-        this.declarationValidator = new FullyQualifiedNameValidator(function.declaration());
-    }
+    this.declarationValidator = new FullyQualifiedNameValidator(function.declaration());
+  }
 
-    public void validate() {
-        this.validateName();
-        this.validateParameters();
-        this.validateReturnValue();
-    }
+  public void validate() {
+    this.validateName();
+    this.validateParameters();
+    this.validateReturnValue();
+  }
 
-    private void validateReturnValue() {
+  private void validateReturnValue() {
 //        if (this.function().returnType() != null) {
 //            if (this.function().returnType() instanceof TupleDeclarationExpression) {
 //
 //            }
 //        }
-    }
+  }
 
-    private void validateParameters() {
-        for (TupleDeclarationExpression tuple : this.function().parameterSets()) {
-            validateParameterTuple(tuple);
+  private void validateParameters() {
+    for (TupleDeclarationExpression tuple : this.function().parameterSets()) {
+      validateParameterTuple(tuple);
+    }
+  }
+
+  private void validateParameterTuple(TupleDeclarationExpression tuple) {
+    for (VerbaExpression expression : tuple.items()) {
+      if (expression instanceof NamedObjectDeclarationExpression) {
+        NamedObjectDeclarationExpression varName = (NamedObjectDeclarationExpression) expression;
+
+        if (!varName.hasTypeConstraint()) {
+          this.addViolation(expression,
+            "The parameter '%s' must have a type constraint.",
+            varName.identifier().representation());
         }
+      } else {
+        this.addViolation(expression, "Expression %s is not a valid VarNameExpression", expression);
+      }
+    }
+  }
+
+  public void validateName() {
+    if (!declarationValidator.hasSingleMember()) {
+      this.addViolation(this.function().declaration(),
+        "Function '%s' is not a valid declaration name.", function().declaration().representation());
     }
 
-    private void validateParameterTuple(TupleDeclarationExpression tuple) {
-        for (VerbaExpression expression : tuple.items()) {
-            if (expression instanceof NamedObjectDeclarationExpression) {
-                NamedObjectDeclarationExpression varName = (NamedObjectDeclarationExpression) expression;
-
-                if (!varName.hasTypeConstraint()) {
-                    this.addViolation(expression,
-                        "The parameter '%s' must have a type constraint.",
-                        varName.identifier().representation());
-                }
-            } else {
-                this.addViolation(expression, "Expression %s is not a valid VarNameExpression", expression);
-            }
-        }
+    if (!declarationValidator.hasParameters()) {
+      this.addViolation(this.function().declaration(),
+        "Function '%s' must have parameterSets.", function().declaration().representation());
     }
+  }
 
-    public void validateName() {
-        if (!declarationValidator.hasSingleMember()) {
-            this.addViolation(this.function().declaration(),
-                "Function '%s' is not a valid declaration name.", function().declaration().representation());
-        }
-
-        if (!declarationValidator.hasParameters()) {
-            this.addViolation(this.function().declaration(),
-                "Function '%s' must have parameterSets.", function().declaration().representation());
-        }
-    }
-
-    public FunctionDeclarationExpression function() {
-        return super.target();
-    }
+  public FunctionDeclarationExpression function() {
+    return super.target();
+  }
 }

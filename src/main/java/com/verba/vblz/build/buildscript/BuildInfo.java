@@ -5,21 +5,31 @@ package com.verba.vblz.build.buildscript;
  */
 public class BuildInfo {
 
-    private final String author;
-    private final String name;
-    private final String version;
+  private final String author;
+  private final String name;
+  private final String version;
 
-    public BuildInfo(String author, String name, String version) {
+  public BuildInfo(String author, String name, String version) {
 
-        this.author = author;
-        this.name = name;
-        this.version = version;
-    }
+    this.author = author;
+    this.name = name;
+    this.version = version;
+  }
 
-    public String author() { return author; }
-    public String name() { return name; }
-    public String version() { return version; }
+  public String author() {
+    return author;
+  }
 
-    @Override
-    public String toString() { return String.format("%s:%s:%s", author, name, version); }
+  public String name() {
+    return name;
+  }
+
+  public String version() {
+    return version;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("%s:%s:%s", author, name, version);
+  }
 }

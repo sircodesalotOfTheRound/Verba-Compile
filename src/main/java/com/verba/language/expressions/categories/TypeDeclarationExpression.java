@@ -13,17 +13,17 @@ import com.verba.language.test.lexing.tokenization.Token;
 public interface TypeDeclarationExpression extends Token {
 
 
-    public static TypeDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
-        if (FullyQualifiedNameExpression.IsFullyQualifiedName(lexer)) {
-            return FullyQualifiedNameExpression.read(parent, lexer);
-        } else if (TupleDeclarationExpression.isTupleTypeDeclaration(lexer)) {
-            return TupleDeclarationExpression.read(parent, lexer);
-        }
-
-        throw new ParseException("Expected Type Declaration");
+  public static TypeDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
+    if (FullyQualifiedNameExpression.IsFullyQualifiedName(lexer)) {
+      return FullyQualifiedNameExpression.read(parent, lexer);
+    } else if (TupleDeclarationExpression.isTupleTypeDeclaration(lexer)) {
+      return TupleDeclarationExpression.read(parent, lexer);
     }
 
-    public abstract String representation();
+    throw new ParseException("Expected Type Declaration");
+  }
+
+  public abstract String representation();
 
 
 }

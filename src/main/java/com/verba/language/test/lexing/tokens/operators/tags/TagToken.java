@@ -8,31 +8,31 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-2-28.
  */
 public abstract class TagToken extends OperatorToken {
-    private String representation;
+  private String representation;
 
-    protected TagToken(String representation) {
-        super('t');
-        this.representation = representation;
-    }
+  protected TagToken(String representation) {
+    super('t');
+    this.representation = representation;
+  }
 
-    public String toString() {
-        return this.representation;
-    }
+  public String toString() {
+    return this.representation;
+  }
 
-    public static boolean isTagToken(Character firstToken, CodeStream stream) {
-        if (firstToken == '#' && stream.peek() == '[') return true;
-        else if (firstToken == '@' && stream.peek() == '[') return true;
+  public static boolean isTagToken(Character firstToken, CodeStream stream) {
+    if (firstToken == '#' && stream.peek() == '[') return true;
+    else if (firstToken == '@' && stream.peek() == '[') return true;
 
-        else return false;
-    }
+    else return false;
+  }
 
-    public static OperatorToken read(Character firstToken, CodeStream stream) {
-        if (firstToken == '#' && stream.peek() == '[') {
-            stream.read();
-            return new HashTagToken();
-        } else if (firstToken == '@' && stream.peek() == '[') {
-            stream.read();
-            return new AspectTagToken();
-        } else throw new ParseException("Expected Hashtag Token");
-    }
+  public static OperatorToken read(Character firstToken, CodeStream stream) {
+    if (firstToken == '#' && stream.peek() == '[') {
+      stream.read();
+      return new HashTagToken();
+    } else if (firstToken == '@' && stream.peek() == '[') {
+      stream.read();
+      return new AspectTagToken();
+    } else throw new ParseException("Expected Hashtag Token");
+  }
 }

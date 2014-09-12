@@ -9,21 +9,21 @@ import com.verba.language.expressions.members.MemberExpression;
  * Created by sircodesalot on 14-6-11.
  */
 public class VarNameOpEmitter extends OpEmitter {
-    private final NamedObjectDeclarationExpression declaration;
+  private final NamedObjectDeclarationExpression declaration;
 
-    public VarNameOpEmitter(int startingRegister, NamedObjectDeclarationExpression declaration) {
-        super(startingRegister);
+  public VarNameOpEmitter(int startingRegister, NamedObjectDeclarationExpression declaration) {
+    super(startingRegister);
 
-        this.declaration = declaration;
+    this.declaration = declaration;
 
-        this.isMethodCall(declaration.identifier().first());
-    }
+    this.isMethodCall(declaration.identifier().first());
+  }
 
-    public void isMethodCall(MemberExpression expression) {
-    }
+  public void isMethodCall(MemberExpression expression) {
+  }
 
-    @Override
-    public void emit(DataSegment segment) {
+  @Override
+  public void emit(DataSegment segment) {
 
-    }
+  }
 }

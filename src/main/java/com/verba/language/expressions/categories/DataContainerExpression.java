@@ -14,13 +14,13 @@ import com.verba.language.test.lexing.tokens.EnclosureToken;
  */
 public interface DataContainerExpression {
 
-    public QIterable<VerbaExpression> items();
+  public QIterable<VerbaExpression> items();
 
-    public static DataContainerExpression read(VerbaExpression parent, Lexer lexer) {
-        if (lexer.currentIs(EnclosureToken.class, "[")) return ArrayDeclarationExpression.read(parent, lexer);
-        else if (lexer.currentIs(EnclosureToken.class, "(")) return TupleDeclarationExpression.read(parent, lexer);
-        else if (lexer.currentIs(EnclosureToken.class, "{")) return JsonExpression.read(parent, lexer);
+  public static DataContainerExpression read(VerbaExpression parent, Lexer lexer) {
+    if (lexer.currentIs(EnclosureToken.class, "[")) return ArrayDeclarationExpression.read(parent, lexer);
+    else if (lexer.currentIs(EnclosureToken.class, "(")) return TupleDeclarationExpression.read(parent, lexer);
+    else if (lexer.currentIs(EnclosureToken.class, "{")) return JsonExpression.read(parent, lexer);
 
-        throw new ParseException("Expected container parsing.");
-    }
+    throw new ParseException("Expected container parsing.");
+  }
 }

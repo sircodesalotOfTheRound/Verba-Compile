@@ -15,81 +15,81 @@ import com.verba.language.test.validation.violations.ValidationViolation;
  * Created by sircodesalot on 14-5-3.
  */
 public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarationExpression> {
-    private final FullyQualifiedNameValidator declarationValidator;
+  private final FullyQualifiedNameValidator declarationValidator;
 
-    public ClassDeclarationValidator(ClassDeclarationExpression expression) {
-        super(expression);
+  public ClassDeclarationValidator(ClassDeclarationExpression expression) {
+    super(expression);
 
-        this.declarationValidator = new FullyQualifiedNameValidator(expression.declaration());
-    }
+    this.declarationValidator = new FullyQualifiedNameValidator(expression.declaration());
+  }
 
-    public void validate() {
-        this.validateName();
-        this.validateParameters();
-        this.validateBaseType();
-    }
+  public void validate() {
+    this.validateName();
+    this.validateParameters();
+    this.validateBaseType();
+  }
 
-    private void validateBaseType() {
-        if (this.classDeclaration().hasTraits()) {
-            if (this.classDeclaration().traits().any(base -> base instanceof TupleDeclarationExpression)) {
-                this.addViolation((VerbaExpression) this.classDeclaration().traits(), "Class base type cannot be tuple.");
-            }
+  private void validateBaseType() {
+    if (this.classDeclaration().hasTraits()) {
+      if (this.classDeclaration().traits().any(base -> base instanceof TupleDeclarationExpression)) {
+        this.addViolation((VerbaExpression) this.classDeclaration().traits(), "Class base type cannot be tuple.");
+      }
 
 
-            // Validate generic parameterSets for base type.
-            for (FullyQualifiedNameExpression fqn :
-                this.classDeclaration().traits().ofType(FullyQualifiedNameExpression.class)) {
-                FullyQualifiedNameValidator validator = new FullyQualifiedNameValidator(fqn);
-                QIterable<NamedObjectDeclarationExpression> genericParametersWithConstraint = validator
-                    .flattenedGenericParameterList()
-                    .where(NamedObjectDeclarationExpression::hasTypeConstraint);
+      // Validate generic parameterSets for base type.
+      for (FullyQualifiedNameExpression fqn :
+        this.classDeclaration().traits().ofType(FullyQualifiedNameExpression.class)) {
+        FullyQualifiedNameValidator validator = new FullyQualifiedNameValidator(fqn);
+        QIterable<NamedObjectDeclarationExpression> genericParametersWithConstraint = validator
+          .flattenedGenericParameterList()
+          .where(NamedObjectDeclarationExpression::hasTypeConstraint);
 
-                for (NamedObjectDeclarationExpression invlidParameter : genericParametersWithConstraint) {
-                    this.addViolation(invlidParameter, "Generic Parameters in base types cannot be constained.", invlidParameter);
-                }
-
-            }
-        }
-    }
-
-    public void validateName() {
-        if (!declarationValidator.hasSingleMember()) {
-            String representation = classDeclaration().declaration().representation();
-            this.addViolation(this.classDeclaration().declaration(),
-                "Class '%s' is not a valid declaration name.", representation);
+        for (NamedObjectDeclarationExpression invlidParameter : genericParametersWithConstraint) {
+          this.addViolation(invlidParameter, "Generic Parameters in base types cannot be constained.", invlidParameter);
         }
 
+      }
+    }
+  }
+
+  public void validateName() {
+    if (!declarationValidator.hasSingleMember()) {
+      String representation = classDeclaration().declaration().representation();
+      this.addViolation(this.classDeclaration().declaration(),
+        "Class '%s' is not a valid declaration name.", representation);
+    }
+
+
+  }
+
+  private void validateParameters() {
+    // Validate the number of parameterSets
+    if (declarationValidator.hasParameters()) {
+      if (this.classDeclaration().inlineParameters().count() > 1) {
+        this.addViolation(this.classDeclaration().inlineParameters().first(),
+          "Inline class declarations cannot have multiple sets of arguments.");
+      }
 
     }
 
-    private void validateParameters() {
-        // Validate the number of parameterSets
-        if (declarationValidator.hasParameters()) {
-            if (this.classDeclaration().inlineParameters().count() > 1) {
-                this.addViolation(this.classDeclaration().inlineParameters().first(),
-                    "Inline class declarations cannot have multiple sets of arguments.");
-            }
+    // Validate the types of parameterSets
+    QIterable<ValidationViolation> typeViolations = new TupleListDeclarationValidator(this.classDeclaration().inlineParameters())
+      .findArguments(parameter -> !(parameter instanceof NamedObjectDeclarationExpression))
+      .map(parameter -> new ValidationViolation(parameter, "Parameter %s must be a variable declaration", parameter));
 
-        }
+    // Validate that the parameterSets are constrained
 
-        // Validate the types of parameterSets
-        QIterable<ValidationViolation> typeViolations = new TupleListDeclarationValidator(this.classDeclaration().inlineParameters())
-            .findArguments(parameter -> !(parameter instanceof NamedObjectDeclarationExpression))
-            .map(parameter -> new ValidationViolation(parameter, "Parameter %s must be a variable declaration", parameter));
+    QIterable<ValidationViolation> missingConstraintViolations = declarationValidator
+      .flattenedParameterList()
+      .ofType(NamedObjectDeclarationExpression.class)
+      .where(parameter -> !parameter.hasTypeConstraint())
+      .map(parameter -> new ValidationViolation(parameter, "Parameter %s must have a type constraint", parameter));
 
-        // Validate that the parameterSets are constrained
+    super.addViolations(typeViolations);
+    super.addViolations(missingConstraintViolations);
+  }
 
-        QIterable<ValidationViolation> missingConstraintViolations = declarationValidator
-            .flattenedParameterList()
-            .ofType(NamedObjectDeclarationExpression.class)
-            .where(parameter -> !parameter.hasTypeConstraint())
-            .map(parameter -> new ValidationViolation(parameter, "Parameter %s must have a type constraint", parameter));
-
-        super.addViolations(typeViolations);
-        super.addViolations(missingConstraintViolations);
-    }
-
-    public ClassDeclarationExpression classDeclaration() {
-        return super.target();
-    }
+  public ClassDeclarationExpression classDeclaration() {
+    return super.target();
+  }
 }

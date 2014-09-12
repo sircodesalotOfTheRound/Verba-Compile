@@ -4,12 +4,12 @@ package com.verba.language.expressions.backtracking;
  * Created by sircodesalot on 14-2-20.
  */
 public class MismatchException extends RuntimeException {
-    private static final MismatchException instance = new MismatchException();
+  private static final MismatchException instance = new MismatchException();
 
-    private MismatchException() {
-    }
+  private MismatchException() {
+  }
 
-    public static MismatchException getInstance() {
-        return MismatchException.instance;
-    }
+  public static MismatchException getInstance() {
+    return MismatchException.instance;
+  }
 }

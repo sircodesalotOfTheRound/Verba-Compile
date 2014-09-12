@@ -9,23 +9,23 @@ import com.verba.language.symbols.table.entries.SymbolTableEntrySet;
  * used as just a simple way of storing named entries.
  */
 public class SimpleSymbolTable {
-    // The entry set table containing the entries. We associate it with 'null' table
-    // because we always want the entries to refer back to their actual parent table.
-    private final SymbolTableEntrySet table = new SymbolTableEntrySet(null);
+  // The entry set table containing the entries. We associate it with 'null' table
+  // because we always want the entries to refer back to their actual parent table.
+  private final SymbolTableEntrySet table = new SymbolTableEntrySet(null);
 
-    public void add(SymbolTableEntry entry) {
-        this.table.add(entry);
-    }
+  public void add(SymbolTableEntry entry) {
+    this.table.add(entry);
+  }
 
-    public QIterable<SymbolTableEntry> entries() {
-        return this.table.entries();
-    }
+  public QIterable<SymbolTableEntry> entries() {
+    return this.table.entries();
+  }
 
-    public QIterable<SymbolTableEntry> entryByName(String name) {
-        return this.entryByName(name);
-    }
+  public QIterable<SymbolTableEntry> entryByName(String name) {
+    return this.entryByName(name);
+  }
 
-    public boolean containsKey(String name) {
-        return this.table.containsKey(name);
-    }
+  public boolean containsKey(String name) {
+    return this.table.containsKey(name);
+  }
 }

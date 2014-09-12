@@ -5,12 +5,12 @@ package com.verba.language.test.lexing.tokens.operators.mathop;
  */
 public class DivideOpToken extends MathOpToken {
 
-    public DivideOpToken() {
-        super("/");
-    }
+  public DivideOpToken() {
+    super("/");
+  }
 
-    @Override
-    public int getPriorityLevel() {
-        return 2;
-    }
+  @Override
+  public int getPriorityLevel() {
+    return 2;
+  }
 }

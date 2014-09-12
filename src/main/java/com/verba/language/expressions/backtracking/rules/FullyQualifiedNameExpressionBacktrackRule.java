@@ -14,13 +14,13 @@ import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
  */
 public class FullyQualifiedNameExpressionBacktrackRule extends BacktrackRule {
 
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        return lexer.currentIs(IdentifierToken.class) && !lexer.currentIs(KeywordToken.class);
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    return lexer.currentIs(IdentifierToken.class) && !lexer.currentIs(KeywordToken.class);
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        return FullyQualifiedNameExpression.read(parent, lexer);
-    }
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    return FullyQualifiedNameExpression.read(parent, lexer);
+  }
 }

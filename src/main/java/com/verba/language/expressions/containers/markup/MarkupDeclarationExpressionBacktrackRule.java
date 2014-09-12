@@ -11,13 +11,13 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-5-22.
  */
 public class MarkupDeclarationExpressionBacktrackRule extends BacktrackRule {
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        return lexer.currentIs(OperatorToken.class, "<");
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    return lexer.currentIs(OperatorToken.class, "<");
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        return MarkupDeclarationExpression.read(parent, lexer);
-    }
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    return MarkupDeclarationExpression.read(parent, lexer);
+  }
 }

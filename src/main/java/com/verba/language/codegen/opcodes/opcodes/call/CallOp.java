@@ -8,23 +8,23 @@ import com.verba.language.codegen.opcodes.datasegments.OpCode;
  * Created by sircodesalot on 14-5-2.
  */
 public class CallOp implements OpCode {
-    private final String name;
-    private int startRegister;
+  private final String name;
+  private int startRegister;
 
-    public CallOp(int startRegister, String name) {
-        this.startRegister = startRegister;
-        this.name = name;
-    }
+  public CallOp(int startRegister, String name) {
+    this.startRegister = startRegister;
+    this.name = name;
+  }
 
-    @Override
-    public VMOp opcode() {
-        return VMOp.CALL;
-    }
+  @Override
+  public VMOp opcode() {
+    return VMOp.CALL;
+  }
 
-    @Override
-    public void render(DataSegment segment) {
-        segment.addOpCode(this.opcode());
-        segment.add8((byte) this.startRegister);
-        segment.addString(name);
-    }
+  @Override
+  public void render(DataSegment segment) {
+    segment.addOpCode(this.opcode());
+    segment.add8((byte) this.startRegister);
+    segment.addString(name);
+  }
 }

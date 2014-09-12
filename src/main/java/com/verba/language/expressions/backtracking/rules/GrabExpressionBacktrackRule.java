@@ -12,13 +12,13 @@ import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
  * Created by sircodesalot on 14-5-20.
  */
 public class GrabExpressionBacktrackRule extends BacktrackRule {
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        return lexer.currentIs(KeywordToken.class, "grab");
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    return lexer.currentIs(KeywordToken.class, "grab");
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        return GrabExpression.read(parent, lexer);
-    }
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    return GrabExpression.read(parent, lexer);
+  }
 }

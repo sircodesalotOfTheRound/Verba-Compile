@@ -12,36 +12,36 @@ import java.util.List;
  * Created by sircodesalot on 14-2-20.
  */
 public class BacktrackRuleSet<T> implements Iterable<BacktrackRule> {
-    private List<BacktrackRule> rules = new ArrayList<>();
+  private List<BacktrackRule> rules = new ArrayList<>();
 
-    public BacktrackRuleSet<T> addRule(BacktrackRule rule) {
-        this.rules.add(rule);
-        return this;
+  public BacktrackRuleSet<T> addRule(BacktrackRule rule) {
+    this.rules.add(rule);
+    return this;
+  }
+
+  public T resolve(VerbaExpression parent, Lexer lexer) {
+    LexList restOfLine = lexer.peekToEndOfLine();
+
+    for (BacktrackRule rule : this.rules) {
+      if (rule.attemptIf(parent, lexer, restOfLine)) {
+        T result = safeAttempt(rule, parent, lexer, restOfLine);
+        if (result != null) return result;
+      }
     }
 
-    public T resolve(VerbaExpression parent, Lexer lexer) {
-        LexList restOfLine = lexer.peekToEndOfLine();
+    return null;
+  }
 
-        for (BacktrackRule rule : this.rules) {
-            if (rule.attemptIf(parent, lexer, restOfLine)) {
-                T result = safeAttempt(rule, parent, lexer, restOfLine);
-                if (result != null) return result;
-            }
-        }
+  private T safeAttempt(BacktrackRule rule, VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    try {
+      return (T) rule.attempt(parent, lexer, restOfLine);
+    } catch (MismatchException ex) { /* Do nothing */}
 
-        return null;
-    }
+    return null;
+  }
 
-    private T safeAttempt(BacktrackRule rule, VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        try {
-            return (T) rule.attempt(parent, lexer, restOfLine);
-        } catch (MismatchException ex) { /* Do nothing */}
-
-        return null;
-    }
-
-    @Override
-    public Iterator<BacktrackRule> iterator() {
-        return this.rules.iterator();
-    }
+  @Override
+  public Iterator<BacktrackRule> iterator() {
+    return this.rules.iterator();
+  }
 }

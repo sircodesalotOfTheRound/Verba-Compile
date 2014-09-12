@@ -1,5 +1,6 @@
 package com.verba.language.expressions.blockheader.classes;
 
+import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
@@ -13,44 +14,49 @@ import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
  * Created by sircodesalot on 14-2-17.
  */
 public class MetaDeclarationExpression extends VerbaExpression implements NamedBlockExpression {
-    private final FullyQualifiedNameExpression identifier;
-    private final TupleDeclarationExpression parameterList;
-    private final BlockDeclarationExpression block;
-    private final GenericTypeListExpression genericTypeList;
+  private final FullyQualifiedNameExpression identifier;
+  private final TupleDeclarationExpression parameterList;
+  private final BlockDeclarationExpression block;
+  private final GenericTypeListExpression genericTypeList;
 
-    public MetaDeclarationExpression(VerbaExpression parent, Lexer lexer) {
-        super(parent, lexer);
+  public MetaDeclarationExpression(VerbaExpression parent, Lexer lexer) {
+    super(parent, lexer);
 
-        lexer.readCurrentAndAdvance(KeywordToken.class, "meta");
+    lexer.readCurrentAndAdvance(KeywordToken.class, "meta");
 
-        this.identifier = FullyQualifiedNameExpression.read(this, lexer);
-        this.genericTypeList = GenericTypeListExpression.read(this, lexer);
-        this.parameterList = TupleDeclarationExpression.read(this, lexer);
-        this.block = BlockDeclarationExpression.read(this, lexer);
-    }
+    this.identifier = FullyQualifiedNameExpression.read(this, lexer);
+    this.genericTypeList = GenericTypeListExpression.read(this, lexer);
+    this.parameterList = TupleDeclarationExpression.read(this, lexer);
+    this.block = BlockDeclarationExpression.read(this, lexer);
+  }
 
-    public static MetaDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
-        return new MetaDeclarationExpression(parent, lexer);
-    }
+  public static MetaDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
+    return new MetaDeclarationExpression(parent, lexer);
+  }
 
-    public FullyQualifiedNameExpression identifier() {
-        return this.identifier;
-    }
+  public FullyQualifiedNameExpression identifier() {
+    return this.identifier;
+  }
 
-    public TupleDeclarationExpression parameterList() {
-        return this.parameterList;
-    }
+  public TupleDeclarationExpression parameterList() {
+    return this.parameterList;
+  }
 
-    public BlockDeclarationExpression block() {
-        return this.block;
-    }
+  public BlockDeclarationExpression block() {
+    return this.block;
+  }
 
-    public GenericTypeListExpression genericParameters() {
-        return this.genericTypeList;
-    }
+  public GenericTypeListExpression genericParameters() {
+    return this.genericTypeList;
+  }
 
-    @Override
-    public String name() {
-        return this.identifier.members().first().memberName();
-    }
+  @Override
+  public String name() {
+    return this.identifier.members().first().memberName();
+  }
+
+  @Override
+  public void accept(AstVisitor visitor) {
+
+  }
 }

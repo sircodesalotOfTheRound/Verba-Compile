@@ -2,6 +2,7 @@ package com.verba.language.expressions.containers.markup;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
@@ -12,74 +13,79 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  */
 public class MarkupTagItemExpression extends VerbaExpression {
 
-    private VerbaExpression identifier;
-    private final QIterable<MarkupKeyValuePairExpression> items;
-    private boolean isClosingTag = false;
-    private boolean isSelfClosing = false;
+  private VerbaExpression identifier;
+  private final QIterable<MarkupKeyValuePairExpression> items;
+  private boolean isClosingTag = false;
+  private boolean isSelfClosing = false;
 
-    private MarkupTagItemExpression(VerbaExpression parent, Lexer lexer) {
-        super(parent, lexer);
+  private MarkupTagItemExpression(VerbaExpression parent, Lexer lexer) {
+    super(parent, lexer);
 
-        this.readOpening(lexer);
-        this.identifier = this.readIdentifier(lexer);
-        this.items = this.readItems(lexer);
-        this.readClosing(lexer);
+    this.readOpening(lexer);
+    this.identifier = this.readIdentifier(lexer);
+    this.items = this.readItems(lexer);
+    this.readClosing(lexer);
+  }
+
+  private void readOpening(Lexer lexer) {
+    if (lexer.currentIs(OperatorToken.class, "<")) {
+      lexer.readCurrentAndAdvance(OperatorToken.class, "<");
     }
 
-    private void readOpening(Lexer lexer) {
-        if (lexer.currentIs(OperatorToken.class, "<")) {
-            lexer.readCurrentAndAdvance(OperatorToken.class, "<");
-        }
+    if (lexer.currentIs(OperatorToken.class, "/")) {
+      lexer.readCurrentAndAdvance(OperatorToken.class, "/");
+      this.isClosingTag = true;
+    }
+  }
 
-        if (lexer.currentIs(OperatorToken.class, "/")) {
-            lexer.readCurrentAndAdvance(OperatorToken.class, "/");
-            this.isClosingTag = true;
-        }
+  private VerbaExpression readIdentifier(Lexer lexer) {
+    return VerbaExpression.read(this, lexer);
+  }
+
+  private QIterable<MarkupKeyValuePairExpression> readItems(Lexer lexer) {
+    QList<MarkupKeyValuePairExpression> values = new QList<>();
+    while (lexer.notEOF() && lexer.currentIs(IdentifierToken.class)) {
+      MarkupKeyValuePairExpression pairExpression = MarkupKeyValuePairExpression.read(this, lexer);
+      values.add(pairExpression);
     }
 
-    private VerbaExpression readIdentifier(Lexer lexer) {
-        return VerbaExpression.read(this, lexer);
+    return values;
+  }
+
+
+  private void readClosing(Lexer lexer) {
+    if (lexer.currentIs(OperatorToken.class, "/")) {
+      lexer.readCurrentAndAdvance(OperatorToken.class, "/");
+      this.isSelfClosing = true;
     }
 
-    private QIterable<MarkupKeyValuePairExpression> readItems(Lexer lexer) {
-        QList<MarkupKeyValuePairExpression> values = new QList<>();
-        while (lexer.notEOF() && lexer.currentIs(IdentifierToken.class)) {
-            MarkupKeyValuePairExpression pairExpression = MarkupKeyValuePairExpression.read(this, lexer);
-            values.add(pairExpression);
-        }
-
-        return values;
+    if (lexer.currentIs(OperatorToken.class, ">")) {
+      lexer.readCurrentAndAdvance(OperatorToken.class, ">");
     }
+  }
 
+  public QIterable<VerbaExpression> items() {
+    return this.items.cast(VerbaExpression.class);
+  }
 
-    private void readClosing(Lexer lexer) {
-        if (lexer.currentIs(OperatorToken.class, "/")) {
-            lexer.readCurrentAndAdvance(OperatorToken.class, "/");
-            this.isSelfClosing = true;
-        }
+  public VerbaExpression identifier() {
+    return this.identifier;
+  }
 
-        if (lexer.currentIs(OperatorToken.class, ">")) {
-            lexer.readCurrentAndAdvance(OperatorToken.class, ">");
-        }
-    }
+  public boolean isSelfClosing() {
+    return this.isSelfClosing;
+  }
 
-    public QIterable<VerbaExpression> items() {
-        return this.items.cast(VerbaExpression.class);
-    }
+  public boolean isClosingTag() {
+    return this.isClosingTag;
+  }
 
-    public VerbaExpression identifier() {
-        return this.identifier;
-    }
+  public static MarkupTagItemExpression read(VerbaExpression parent, Lexer lexer) {
+    return new MarkupTagItemExpression(parent, lexer);
+  }
 
-    public boolean isSelfClosing() {
-        return this.isSelfClosing;
-    }
+  @Override
+  public void accept(AstVisitor visitor) {
 
-    public boolean isClosingTag() {
-        return this.isClosingTag;
-    }
-
-    public static MarkupTagItemExpression read(VerbaExpression parent, Lexer lexer) {
-        return new MarkupTagItemExpression(parent, lexer);
-    }
+  }
 }

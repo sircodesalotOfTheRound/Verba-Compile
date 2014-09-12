@@ -13,16 +13,16 @@ import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
  */
 
 public class NamespaceDeclarationBacktrackRule extends BacktrackRule {
-    @Override
-    public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-        return restOfLine.startsWith(KeywordToken.class, "namespace");
-    }
+  @Override
+  public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
+    return restOfLine.startsWith(KeywordToken.class, "namespace");
+  }
 
-    @Override
-    public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-        if (restOfLine.startsWith(KeywordToken.class, "namespace"))
-            return NamespaceDeclarationExpression.read(parent, lexer);
+  @Override
+  public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
+    if (restOfLine.startsWith(KeywordToken.class, "namespace"))
+      return NamespaceDeclarationExpression.read(parent, lexer);
 
-        throw MismatchException.getInstance();
-    }
+    throw MismatchException.getInstance();
+  }
 }

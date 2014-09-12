@@ -7,39 +7,39 @@ import com.verba.language.test.lexing.tokenization.Token;
  * Created by sircodesalot on 14-5-20.
  */
 public class LineCommentToken implements Token {
-    private final String representation;
+  private final String representation;
 
-    public LineCommentToken(String representation) {
-        this.representation = representation;
+  public LineCommentToken(String representation) {
+    this.representation = representation;
+  }
+
+  @Override
+  public String toString() {
+    return this.representation;
+  }
+
+  public static boolean isLineCommentToken(CodeStream stream) {
+    boolean isComment = false;
+
+    stream.setUndoPosition();
+    if (stream.read() == '#') {
+      if (stream.hasNext() && (stream.read() != '[')) {
+        isComment = true;
+      }
     }
 
-    @Override
-    public String toString() {
-        return this.representation;
-    }
+    stream.rollbackToUndoPosition();
+    return isComment;
+  }
 
-    public static boolean isLineCommentToken(CodeStream stream) {
-        boolean isComment = false;
+  public static LineCommentToken read(CodeStream codeStream) {
+    StringBuilder representation = new StringBuilder();
+    int line = codeStream.line();
 
-        stream.setUndoPosition();
-        if (stream.read() == '#') {
-            if (stream.hasNext() && (stream.read() != '[')) {
-                isComment = true;
-            }
-        }
+    do {
+      representation.append(codeStream.read());
+    } while (codeStream.hasNext() && codeStream.line() == line);
 
-        stream.rollbackToUndoPosition();
-        return isComment;
-    }
-
-    public static LineCommentToken read(CodeStream codeStream) {
-        StringBuilder representation = new StringBuilder();
-        int line = codeStream.line();
-
-        do {
-            representation.append(codeStream.read());
-        } while (codeStream.hasNext() && codeStream.line() == line);
-
-        return new LineCommentToken(representation.toString());
-    }
+    return new LineCommentToken(representation.toString());
+  }
 }

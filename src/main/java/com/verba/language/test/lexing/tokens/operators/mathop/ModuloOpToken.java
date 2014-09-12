@@ -5,12 +5,12 @@ package com.verba.language.test.lexing.tokens.operators.mathop;
  */
 public class ModuloOpToken extends MathOpToken {
 
-    public ModuloOpToken() {
-        super("%");
-    }
+  public ModuloOpToken() {
+    super("%");
+  }
 
-    @Override
-    public int getPriorityLevel() {
-        return 2;
-    }
+  @Override
+  public int getPriorityLevel() {
+    return 2;
+  }
 }

@@ -12,42 +12,42 @@ import java.util.function.Supplier;
  */
 
 public class EnclosureToken implements Token {
-    public static final String OPEN_BRACE = "{";
-    public static final String CLOSE_BRACE = "}";
-    public static final String OPEN_PARENS = "(";
-    public static final String CLOSE_PARENS = ")";
+  public static final String OPEN_BRACE = "{";
+  public static final String CLOSE_BRACE = "}";
+  public static final String OPEN_PARENS = "(";
+  public static final String CLOSE_PARENS = ")";
 
-    private static final Set<Character> enclosureTokens = ((Supplier<Set<Character>>) () -> {
-        Character[] tokens = new Character[]{'{', '}', '(', ')', '[', ']', '"', '\''};
+  private static final Set<Character> enclosureTokens = ((Supplier<Set<Character>>) () -> {
+    Character[] tokens = new Character[]{'{', '}', '(', ')', '[', ']', '"', '\''};
 
-        Set<Character> tokenSet = new HashSet<Character>();
-        for (Character token : tokens) tokenSet.add(token);
+    Set<Character> tokenSet = new HashSet<Character>();
+    for (Character token : tokens) tokenSet.add(token);
 
-        return tokenSet;
-    }).get();
+    return tokenSet;
+  }).get();
 
-    private final String representation;
+  private final String representation;
 
-    public EnclosureToken(String representation) {
-        this.representation = representation;
-    }
+  public EnclosureToken(String representation) {
+    this.representation = representation;
+  }
 
-    public EnclosureToken(Character representation) {
-        this.representation = representation.toString();
-    }
+  public EnclosureToken(Character representation) {
+    this.representation = representation.toString();
+  }
 
-    @Override
-    public String toString() {
-        return this.representation;
-    }
+  @Override
+  public String toString() {
+    return this.representation;
+  }
 
-    public static boolean isEnclosureToken(Character text) {
-        return EnclosureToken.enclosureTokens.contains(text);
-    }
+  public static boolean isEnclosureToken(Character text) {
+    return EnclosureToken.enclosureTokens.contains(text);
+  }
 
-    public static Token read(CodeStream codeStream) {
-        return new EnclosureToken(codeStream.read());
-    }
+  public static Token read(CodeStream codeStream) {
+    return new EnclosureToken(codeStream.read());
+  }
 
 }
 

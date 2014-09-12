@@ -22,66 +22,66 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  * Created by sircodesalot on 14-5-25.
  */
 public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInfo, SymbolTypeMetadata, SymbolTableMetadata {
-    private final GlobalSymbolTable symbolTable;
-    private final ScopedSymbolTable scope;
+  private final GlobalSymbolTable symbolTable;
+  private final ScopedSymbolTable scope;
 
-    private TypeDeclarationExpression type;
+  private TypeDeclarationExpression type;
 
-    public FunctionReturnTypeResolutionMetadata(GlobalSymbolTable symbolTable, InvokableExpression expression) {
-        this.symbolTable = symbolTable;
-        this.scope = getScope(symbolTable, expression);
+  public FunctionReturnTypeResolutionMetadata(GlobalSymbolTable symbolTable, InvokableExpression expression) {
+    this.symbolTable = symbolTable;
+    this.scope = getScope(symbolTable, expression);
 
-        if (expression.hasTypeConstraint())
-            this.type = expression.typeDeclaration();
-        else
-            this.type = this.scanFunction(expression.block());
-    }
+    if (expression.hasTypeConstraint())
+      this.type = expression.typeDeclaration();
+    else
+      this.type = this.scanFunction(expression.block());
+  }
 
-    private ScopedSymbolTable getScope(GlobalSymbolTable symbolTable, InvokableExpression expression) {
-        SymbolTableEntry entry = symbolTable.getByInstance((VerbaExpression) expression);
-        NestedSymbolTableMetadata metadata = entry.metadata().ofType(NestedSymbolTableMetadata.class).single();
+  private ScopedSymbolTable getScope(GlobalSymbolTable symbolTable, InvokableExpression expression) {
+    SymbolTableEntry entry = symbolTable.getByInstance((VerbaExpression) expression);
+    NestedSymbolTableMetadata metadata = entry.metadata().ofType(NestedSymbolTableMetadata.class).single();
 
-        return metadata.symbolTable();
-    }
+    return metadata.symbolTable();
+  }
 
-    private TypeDeclarationExpression scanFunction(BlockDeclarationExpression block) {
-        for (VerbaExpression expression : block.expressions()) {
-            if (expression instanceof ReturnStatementExpression) {
-                ReturnStatementExpression returnStatement = (ReturnStatementExpression) expression;
+  private TypeDeclarationExpression scanFunction(BlockDeclarationExpression block) {
+    for (VerbaExpression expression : block.expressions()) {
+      if (expression instanceof ReturnStatementExpression) {
+        ReturnStatementExpression returnStatement = (ReturnStatementExpression) expression;
 
-                if (returnStatement.hasValue()) {
-                    VerbaExpression value = (VerbaExpression) returnStatement.value();
-                    if (VirtualMachineNativeTypes.isVirtualMachineType((VerbaExpression) returnStatement.value())) {
-                        return VirtualMachineNativeTypes.getTypeFromInstance((VerbaExpression) returnStatement.value());
+        if (returnStatement.hasValue()) {
+          VerbaExpression value = (VerbaExpression) returnStatement.value();
+          if (VirtualMachineNativeTypes.isVirtualMachineType((VerbaExpression) returnStatement.value())) {
+            return VirtualMachineNativeTypes.getTypeFromInstance((VerbaExpression) returnStatement.value());
 
-                    } else if (value instanceof NamedObjectDeclarationExpression) {
-                        return resolveFromVariableName(value);
-                    }
-                }
-            }
+          } else if (value instanceof NamedObjectDeclarationExpression) {
+            return resolveFromVariableName(value);
+          }
         }
-
-        return VirtualMachineNativeTypes.UNIT_EXPRESSION;
+      }
     }
 
-    // TODO: Named resolution needs to be abstracted out into a class.
-    public TypeDeclarationExpression resolveFromVariableName(VerbaExpression value) {
-        NamedObjectDeclarationExpression variable = (NamedObjectDeclarationExpression) value;
-        String localName = variable.name();
+    return VirtualMachineNativeTypes.UNIT_EXPRESSION;
+  }
 
-        if (this.scope.containsKey(localName)) {
-            SymbolTableEntry local = this.scope.get(localName).single();
-            VariableTypeResolver variableTypeResolver = new VariableTypeResolver(symbolTable);
-            VariableTypeResolutionMetadata resolution = variableTypeResolver.resolve((NamedDataDeclarationExpression) local.instance());
+  // TODO: Named resolution needs to be abstracted out into a class.
+  public TypeDeclarationExpression resolveFromVariableName(VerbaExpression value) {
+    NamedObjectDeclarationExpression variable = (NamedObjectDeclarationExpression) value;
+    String localName = variable.name();
 
-            return resolution.symbolType();
-        }
+    if (this.scope.containsKey(localName)) {
+      SymbolTableEntry local = this.scope.get(localName).single();
+      VariableTypeResolver variableTypeResolver = new VariableTypeResolver(symbolTable);
+      VariableTypeResolutionMetadata resolution = variableTypeResolver.resolve((NamedDataDeclarationExpression) local.instance());
 
-        return null;
+      return resolution.symbolType();
     }
 
-    @Override
-    public TypeDeclarationExpression symbolType() {
-        return this.type;
-    }
+    return null;
+  }
+
+  @Override
+  public TypeDeclarationExpression symbolType() {
+    return this.type;
+  }
 }

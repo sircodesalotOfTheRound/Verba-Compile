@@ -5,7 +5,7 @@ package com.verba.language.test.lexing.tokens.operators.tags;
  */
 public class HashTagToken extends TagToken {
 
-    protected HashTagToken() {
-        super("#[");
-    }
+  protected HashTagToken() {
+    super("#[");
+  }
 }

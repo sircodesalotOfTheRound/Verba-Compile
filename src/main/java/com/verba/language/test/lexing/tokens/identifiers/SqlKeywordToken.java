@@ -9,42 +9,42 @@ import java.util.function.Supplier;
  */
 
 public class SqlKeywordToken extends IdentifierToken {
-    private static final Set<String> sqlkeywords = ((Supplier<Set<String>>) () -> {
-        String[] sqlKeywords = new String[]{
-            "from", "select", "as", "delete",
-            "inner", "left", "right", "join", "on",
-            "where", "between", "is",
-            "execute",
-            "union", "all",
-            "insert", "into", "entries",
-            "update", "set",
-            "and", "or", "not",
-            "groupby", "having",
-            "orderby", "union", "descending", "ascending",
-            "like", "distinct", "null", "top",
-            "avg", "count", "first", "last", "min", "max", "sum",
-            "upper", "lower", "len", "round",
-            "case", "when", "then", "end",
-            "use"
-        };
+  private static final Set<String> sqlkeywords = ((Supplier<Set<String>>) () -> {
+    String[] sqlKeywords = new String[]{
+      "from", "select", "as", "delete",
+      "inner", "left", "right", "join", "on",
+      "where", "between", "is",
+      "execute",
+      "union", "all",
+      "insert", "into", "entries",
+      "update", "set",
+      "and", "or", "not",
+      "groupby", "having",
+      "orderby", "union", "descending", "ascending",
+      "like", "distinct", "null", "top",
+      "avg", "count", "first", "last", "min", "max", "sum",
+      "upper", "lower", "len", "round",
+      "case", "when", "then", "end",
+      "use"
+    };
 
-        Set<String> keywordSet = new HashSet<String>();
-        for (String sqlKeyword : sqlKeywords) keywordSet.add(sqlKeyword);
-        return keywordSet;
+    Set<String> keywordSet = new HashSet<String>();
+    for (String sqlKeyword : sqlKeywords) keywordSet.add(sqlKeyword);
+    return keywordSet;
 
-    }).get();
+  }).get();
 
-    public SqlKeywordToken(String representation) {
-        super(representation);
-    }
+  public SqlKeywordToken(String representation) {
+    super(representation);
+  }
 
-    @Override
-    public String toString() {
-        return this.representation;
-    }
+  @Override
+  public String toString() {
+    return this.representation;
+  }
 
-    public static boolean isKeyword(String text) {
-        return SqlKeywordToken.sqlkeywords.contains(text);
-    }
+  public static boolean isKeyword(String text) {
+    return SqlKeywordToken.sqlkeywords.contains(text);
+  }
 }
 
