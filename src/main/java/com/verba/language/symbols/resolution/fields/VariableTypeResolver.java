@@ -74,16 +74,25 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
     throw new CompilerException("Invalid literal type.");
   }
 
+  private TypeDeclarationExpression getTypeFromSymbolEntry(SymbolTableEntry entry) {
+    TypedExpression instance = (TypedExpression)entry.instance();
+
+    if (instance.hasTypeConstraint()) {
+      return instance.typeDeclaration();
+    } else {
+      // TODO: Change 'first' to 'single'
+      VariableTypeResolutionMetadata type = entry.metadata().ofType(VariableTypeResolutionMetadata.class).first();
+      return type.symbolType();
+    }
+  }
+
   // TODO: Make this more powerful. Currently only resolves items in the current scope.
   private VariableTypeResolutionMetadata resolveNamedExpression(SymbolTableEntry entry, AssignmentExpression assignment) {
     NamedExpression namedRValue = (NamedExpression) assignment.rvalue();
     ScopedSymbolTable scope = symbolTable.getByInstance((VerbaExpression) assignment).table();
 
-    SymbolTableEntry resolvedEntry = scope.get(namedRValue.name()).single();
+    SymbolTableEntry rValueSymbolEntry = scope.get(namedRValue.name()).single();
 
-    VerbaExpression instance = scope.get(namedRValue.name()).single().instance();
-    TypedExpression instanceAsTypedExpression = (TypedExpression) instance;
-
-    return new VariableTypeResolutionMetadata(entry, instanceAsTypedExpression.typeDeclaration());
+    return new VariableTypeResolutionMetadata(entry, getTypeFromSymbolEntry(rValueSymbolEntry));
   }
 }

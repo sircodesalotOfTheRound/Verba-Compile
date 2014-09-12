@@ -41,12 +41,21 @@ public class DerivedTypeResolution {
 
     SymbolTableEntry first = symbolTable.getByFqn("chainDerived.firstChain").single();
     SymbolTableEntry second = symbolTable.getByFqn("chainDerived.secondChain").single();
+    SymbolTableEntry third = symbolTable.getByFqn("chainDerived.thirdChain").single();
+    SymbolTableEntry fourth = symbolTable.getByFqn("chainDerived.fourthChain").single();
 
-    VariableTypeResolutionMetadata firstMeta = first.metadata().ofType(VariableTypeResolutionMetadata.class).single();
-    VariableTypeResolutionMetadata secondMeta = second.metadata().ofType(VariableTypeResolutionMetadata.class).single();
+
+    // Todo: change first to single.
+    VariableTypeResolutionMetadata firstMeta = first.metadata().ofType(VariableTypeResolutionMetadata.class).first();
+    VariableTypeResolutionMetadata secondMeta = second.metadata().ofType(VariableTypeResolutionMetadata.class).first();
+    VariableTypeResolutionMetadata thirdMeta = third.metadata().ofType(VariableTypeResolutionMetadata.class).first();
+    VariableTypeResolutionMetadata fourthMeta = fourth.metadata().ofType(VariableTypeResolutionMetadata.class).first();
 
     assert(firstMeta.symbolType().representation().equals("object"));
-  //  assert(secondMeta.symbolType().representation().equals("object"));
+    assert(secondMeta.symbolType().representation().equals("object"));
+
+    assert(thirdMeta.symbolType().representation().equals("uint64"));
+    assert(fourthMeta.symbolType().representation().equals("uint64"));
   }
 
 }

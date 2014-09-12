@@ -17,7 +17,10 @@ fn typesDerivedFromParameter(first : string, second : uint32) {
 }
 
 # Test chain derivation
-fn chainDerived(item : object) {
-  val firstChain = item
+fn chainDerived(lhs : object, rhs : uint64) {
+  val firstChain = lhs
   val secondChain = firstChain
+
+  val thirdChain = rhs
+  val fourthChain = thirdChain
 }
