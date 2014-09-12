@@ -19,21 +19,21 @@ import com.verba.language.symbols.table.tables.GlobalSymbolTable;
  * Resolves symbol table information about application symbols.
  */
 public class SymbolResolver {
+  private final GlobalSymbolTable symbolTable;
   private final PolymorphicResolver polymorphicResolver;
   private final VariableTypeResolver variableResolver;
   private final FunctionReturnTypeResolver functionResolver;
 
 
   public SymbolResolver(GlobalSymbolTable symbolTable) {
+    this.symbolTable = symbolTable;
     this.polymorphicResolver = new PolymorphicResolver(symbolTable);
     this.variableResolver = new VariableTypeResolver(symbolTable);
     this.functionResolver = new FunctionReturnTypeResolver(symbolTable);
-
-    this.resolveAll(symbolTable);
   }
 
-  private void resolveAll(GlobalSymbolTable symbolTable) {
-    QIterable<ResolvableTypeExpression> resolvableExpressions = symbolTable
+  public void resolveAll() {
+    QIterable<ResolvableTypeExpression> resolvableExpressions = this.symbolTable
       .entries()
       .map(SymbolTableEntry::instance)
       .ofType(ResolvableTypeExpression.class);
@@ -49,5 +49,9 @@ public class SymbolResolver {
 
   public void visit(MutaDeclarationStatement mutaDeclarationStatement) {
     this.variableResolver.resolve(mutaDeclarationStatement);
+  }
+
+  public static void resolveNames(GlobalSymbolTable globalSymbolTable) {
+    new SymbolResolver(globalSymbolTable).resolveAll();
   }
 }

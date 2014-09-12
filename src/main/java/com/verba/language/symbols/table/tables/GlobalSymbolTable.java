@@ -94,7 +94,7 @@ public class GlobalSymbolTable implements Serializable {
   }
 
   public void resolveSymbolNames() {
-    SymbolResolver resolver = new SymbolResolver(this);
+    SymbolResolver.resolveNames(this);
   }
 
   public SymbolTableEntry getByIndex(int index) {

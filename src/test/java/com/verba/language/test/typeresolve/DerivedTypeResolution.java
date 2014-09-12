@@ -20,10 +20,6 @@ public class DerivedTypeResolution {
   public void testTypesDerivedFromParameter() {
     StaticSpaceExpression codeFile = TestFileLoader.TYPE_RESOLUTION_TESTS;
 
-    FunctionDeclarationExpression typesDerivedFromParameter = codeFile.allSubExpressions()
-      .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("typesDerivedFromParameter"));
-
     GlobalSymbolTable symbolTable = codeFile.globalSymbolTable();
     symbolTable.resolveSymbolNames();
 
@@ -40,19 +36,14 @@ public class DerivedTypeResolution {
   @Test
   public void testChainDerived() {
     StaticSpaceExpression codeFile = TestFileLoader.TYPE_RESOLUTION_TESTS;
-
-    FunctionDeclarationExpression chainDerived = codeFile.allSubExpressions()
-      .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("chainDerived"));
-
     GlobalSymbolTable symbolTable = codeFile.globalSymbolTable();
     symbolTable.resolveSymbolNames();
 
     SymbolTableEntry first = symbolTable.getByFqn("chainDerived.firstChain").single();
     SymbolTableEntry second = symbolTable.getByFqn("chainDerived.secondChain").single();
 
-    VariableTypeResolutionMetadata firstMeta = first.metadata().ofType(VariableTypeResolutionMetadata.class).first();
-    VariableTypeResolutionMetadata secondMeta = second.metadata().ofType(VariableTypeResolutionMetadata.class).first();
+    VariableTypeResolutionMetadata firstMeta = first.metadata().ofType(VariableTypeResolutionMetadata.class).single();
+    VariableTypeResolutionMetadata secondMeta = second.metadata().ofType(VariableTypeResolutionMetadata.class).single();
 
     assert(firstMeta.symbolType().representation().equals("object"));
   //  assert(secondMeta.symbolType().representation().equals("object"));
