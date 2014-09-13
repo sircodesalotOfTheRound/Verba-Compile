@@ -123,7 +123,7 @@ public class ScopedSymbolTable implements Serializable {
     for (SymbolTableExpression subExpression : function.block().ofType(SymbolTableExpression.class)) {
       if (subExpression instanceof NamedBlockExpression) {
         NamedBlockExpression block = (NamedBlockExpression) subExpression;
-        this.addNested(block.name(), block.block());
+        this.addNested(block.name(), block);
 
       } else {
         subExpression.accept(this);

@@ -4,16 +4,19 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.LiteralExpression;
 import com.verba.language.expressions.categories.MarkupRvalueExpression;
+import com.verba.language.expressions.categories.NativeTypeExpression;
+import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.expressions.containers.tuple.TupleItemExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.info.LexInfo;
 import com.verba.language.test.lexing.tokens.NumericToken;
+import com.verba.virtualmachine.VirtualMachineNativeTypes;
 
 /**
  * Created by sircodesalot on 14-2-19.
  */
 public class NumericExpression extends VerbaExpression
-  implements LiteralExpression, TupleItemExpression, MarkupRvalueExpression {
+  implements LiteralExpression, TupleItemExpression, MarkupRvalueExpression, NativeTypeExpression {
   private LexInfo token;
 
   @Override
@@ -48,6 +51,10 @@ public class NumericExpression extends VerbaExpression
     return new NumericExpression(parent, lexer);
   }
 
+  @Override
+  public TypeDeclarationExpression nativeTypeDeclaration() {
+    return VirtualMachineNativeTypes.INT32_LITERAL;
+  }
 
   public boolean isPositive() {
     return (this.asLong() > 0);

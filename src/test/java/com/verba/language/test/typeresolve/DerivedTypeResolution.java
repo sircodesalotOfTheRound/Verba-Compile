@@ -44,8 +44,6 @@ public class DerivedTypeResolution {
     SymbolTableEntry third = symbolTable.getByFqn("chainDerived.thirdChain").single();
     SymbolTableEntry fourth = symbolTable.getByFqn("chainDerived.fourthChain").single();
 
-
-    // Todo: change first to single.
     VariableTypeResolutionMetadata firstMeta = first.metadata().ofType(VariableTypeResolutionMetadata.class).single();
     VariableTypeResolutionMetadata secondMeta = second.metadata().ofType(VariableTypeResolutionMetadata.class).single();
     VariableTypeResolutionMetadata thirdMeta = third.metadata().ofType(VariableTypeResolutionMetadata.class).single();
@@ -57,5 +55,25 @@ public class DerivedTypeResolution {
     assert(thirdMeta.symbolType().representation().equals("uint64"));
     assert(fourthMeta.symbolType().representation().equals("uint64"));
   }
+  @Test
+  public void testContainsClosure() {
+    StaticSpaceExpression codeFile = TestFileLoader.TYPE_RESOLUTION_TESTS;
+    GlobalSymbolTable symbolTable = codeFile.globalSymbolTable();
+    symbolTable.resolveSymbolNames();
 
+    SymbolTableEntry parameter = symbolTable.getByFqn("containsClosure.closureFunction.closedOverParameter").single();
+    SymbolTableEntry chainValue = symbolTable.getByFqn("containsClosure.closureFunction.closedOverChainValue").single();
+    SymbolTableEntry number = symbolTable.getByFqn("containsClosure.closureFunction.closedOverNumber").single();
+
+    VariableTypeResolutionMetadata parameterMeta = parameter.metadata()
+      .ofType(VariableTypeResolutionMetadata.class).single();
+    VariableTypeResolutionMetadata chainValueMeta = chainValue.metadata()
+      .ofType(VariableTypeResolutionMetadata.class).single();
+    VariableTypeResolutionMetadata numberMeta = number.metadata()
+      .ofType(VariableTypeResolutionMetadata.class).single();
+
+    assert(parameterMeta.symbolType().representation().equals("string"));
+    assert(chainValueMeta.symbolType().representation().equals("string"));
+    assert(numberMeta.symbolType().representation().equals("uint32"));
+  }
 }

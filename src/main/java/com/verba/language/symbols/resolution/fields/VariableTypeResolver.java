@@ -89,12 +89,23 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
     }
   }
 
-  // TODO: Make this more powerful. Currently only resolves items in the current scope.
+  private SymbolTableEntry findEntryRecursive(ScopedSymbolTable startingTable, String name) {
+    if (startingTable.containsKey(name)) {
+      return startingTable.get(name).single();
+    } else {
+      if (startingTable.hasParentTable()) {
+        return findEntryRecursive(startingTable.parent(), name);
+      } else {
+        return null;
+      }
+    }
+  }
+
   private VariableTypeResolutionMetadata resolveNamedExpression(SymbolTableEntry entry, AssignmentExpression assignment) {
     NamedExpression namedRValue = (NamedExpression) assignment.rvalue();
     ScopedSymbolTable scope = symbolTable.getByInstance((VerbaExpression) assignment).table();
 
-    SymbolTableEntry rValueSymbolEntry = scope.get(namedRValue.name()).single();
+    SymbolTableEntry rValueSymbolEntry = findEntryRecursive(scope, namedRValue.name());
 
     return new VariableTypeResolutionMetadata(entry, getTypeFromSymbolEntry(rValueSymbolEntry));
   }

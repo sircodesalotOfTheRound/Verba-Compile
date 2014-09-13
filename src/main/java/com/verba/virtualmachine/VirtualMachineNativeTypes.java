@@ -3,6 +3,7 @@ package com.verba.virtualmachine;
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.LiteralExpression;
+import com.verba.language.expressions.categories.NativeTypeExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
@@ -16,21 +17,21 @@ public final class VirtualMachineNativeTypes {
   public static final TypeDeclarationExpression STRING_LITERAL = new TypeDeclarationExpression() {
     @Override
     public String representation() {
-      return "VM.String";
+      return "string";
     }
   };
 
   public static final TypeDeclarationExpression INT32_LITERAL = new TypeDeclarationExpression() {
     @Override
     public String representation() {
-      return "VM.Int32";
+      return "uint32";
     }
   };
 
   public static final TypeDeclarationExpression UNIT_EXPRESSION = new TypeDeclarationExpression() {
     @Override
     public String representation() {
-      return "VM.Unit";
+      return "unit";
     }
   };
 
@@ -41,9 +42,10 @@ public final class VirtualMachineNativeTypes {
   }
 
   public static TypeDeclarationExpression getTypeFromInstance(VerbaExpression expression) {
-    if (expression instanceof QuoteExpression) return VirtualMachineNativeTypes.STRING_LITERAL;
-    else if (expression instanceof NumericExpression) return VirtualMachineNativeTypes.INT32_LITERAL;
+    if (!(expression instanceof NativeTypeExpression)) {
+      throw new CompilerException("%s is not a virtual machine native type", expression);
+    }
 
-    throw new CompilerException("%s is not a virtual machine native type", expression);
+    return ((NativeTypeExpression) expression).nativeTypeDeclaration();
   }
 }

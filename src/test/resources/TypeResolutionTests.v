@@ -19,8 +19,20 @@ fn typesDerivedFromParameter(first : string, second : uint32) {
 # Test chain derivation
 fn chainDerived(lhs : object, rhs : uint64) {
   val firstChain = lhs
-  val secondChain = firstChain
+  muta secondChain = firstChain
 
-  val thirdChain = rhs
+  muta thirdChain = rhs
   val fourthChain = thirdChain
+}
+
+# Test closed-over derivation
+fn containsClosure(parameter : string) {
+   val parameterChained = parameter
+   val number = 10
+
+   fn closureFunction() {
+     val closedOverParameter = parameter
+     val closedOverChainValue = parameterChained
+     val closedOverNumber = number
+   }
 }
