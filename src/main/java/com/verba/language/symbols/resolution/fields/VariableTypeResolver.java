@@ -81,7 +81,7 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
   private VariableTypeResolutionMetadata resolveNamedExpression(SymbolTableEntry entry, AssignmentExpression assignment) {
     NamedExpression namedRValue = (NamedExpression) assignment.rvalue();
     ScopedSymbolTable scope = symbolTable.getByInstance((VerbaExpression) assignment).table();
-    VariableNameSearch search = new VariableNameSearch(scope, namedRValue.name());
+    VariableNameSearch search = new VariableNameSearch(symbolTable, scope, namedRValue.name());
 
     return new VariableTypeResolutionMetadata(entry, search.resolvedType());
   }

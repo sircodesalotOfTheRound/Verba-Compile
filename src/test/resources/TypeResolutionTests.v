@@ -45,3 +45,10 @@ fn implicitStringReturnType() {
 fn implicitIntReturnType() {
    return 32
 }
+
+fn implicitVariableReturnType(str : string) {
+   val firstChain = str
+   val secondChain = firstChain
+
+   return secondChain
+}

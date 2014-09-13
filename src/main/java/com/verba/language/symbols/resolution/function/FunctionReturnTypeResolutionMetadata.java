@@ -9,6 +9,7 @@ import com.verba.language.expressions.statements.returns.ReturnStatementExpressi
 import com.verba.language.symbols.meta.NestedSymbolTableMetadata;
 import com.verba.language.symbols.meta.interfaces.SymbolTableMetadata;
 import com.verba.language.symbols.meta.interfaces.SymbolTypeMetadata;
+import com.verba.language.symbols.resolution.fields.VariableNameSearch;
 import com.verba.language.symbols.resolution.fields.VariableTypeResolutionMetadata;
 import com.verba.language.symbols.resolution.fields.VariableTypeResolver;
 import com.verba.language.symbols.resolution.interfaces.SymbolResolutionInfo;
@@ -16,6 +17,7 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
+import sun.jvm.hotspot.memory.SymbolTable;
 import sun.tools.tree.ReturnStatement;
 
 /**
@@ -44,9 +46,18 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
     return metadata.symbolTable();
   }
 
-  private TypeDeclarationExpression getTypeFromExpression(RValueExpression value) {
+  private TypeDeclarationExpression getTypeFromExpression(ReturnStatementExpression statement) {
+    RValueExpression value = statement.value();
+
     if (value instanceof NativeTypeExpression) {
       return ((NativeTypeExpression) value).nativeTypeDeclaration();
+    }
+
+    if (value instanceof NamedObjectDeclarationExpression) {
+      String variableName = ((NamedObjectDeclarationExpression) value).name();
+      VariableNameSearch search = new VariableNameSearch(symbolTable, scope, variableName);
+
+      return search.resolvedType();
     }
 
     // Todo: make this more robust
@@ -57,7 +68,7 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
     AstTreeFlattener scopeTree = new AstTreeFlattener(block);
     for (ReturnStatementExpression statement : scopeTree.ofType(ReturnStatementExpression.class)) {
       if (statement.hasValue()) {
-        return getTypeFromExpression(statement.value());
+        return getTypeFromExpression(statement);
       }
     }
 

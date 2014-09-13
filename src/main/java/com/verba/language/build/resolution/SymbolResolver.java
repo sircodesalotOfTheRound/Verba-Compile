@@ -33,6 +33,10 @@ public class SymbolResolver {
     this.functionResolver = new FunctionReturnTypeResolver(symbolTable);
   }
 
+  public void resolve(ResolvableTypeExpression expression) {
+    expression.accept(this);
+  }
+
   public void resolveAll() {
     QIterable<ResolvableTypeExpression> resolvableExpressions = this.symbolTable
       .entries()

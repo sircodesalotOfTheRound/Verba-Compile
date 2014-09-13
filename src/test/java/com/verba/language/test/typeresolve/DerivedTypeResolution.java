@@ -83,14 +83,18 @@ public class DerivedTypeResolution {
 
     SymbolTableEntry implicitStringReturnType = symbolTable.getByFqn("implicitStringReturnType").single();
     SymbolTableEntry implicitIntReturnType = symbolTable.getByFqn("implicitIntReturnType").single();
+    SymbolTableEntry implicitVariableReturnType = symbolTable.getByFqn("implicitVariableReturnType").single();
 
     FunctionReturnTypeResolutionMetadata implicitStringMeta
       = implicitStringReturnType.metadata().ofType(FunctionReturnTypeResolutionMetadata.class).single();
     FunctionReturnTypeResolutionMetadata implicitIntMeta
       = implicitIntReturnType.metadata().ofType(FunctionReturnTypeResolutionMetadata.class).single();
+    FunctionReturnTypeResolutionMetadata implicitVariableMeta
+      = implicitVariableReturnType.metadata().ofType(FunctionReturnTypeResolutionMetadata.class).single();
 
     assert (implicitStringMeta.symbolType().representation().equals("string"));
     assert (implicitIntMeta.symbolType().representation().equals("uint32"));
+    assert (implicitVariableMeta.symbolType().representation().equals("string"));
   }
 
 }

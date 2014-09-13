@@ -1,19 +1,24 @@
 package com.verba.language.symbols.resolution.fields;
 
+import com.verba.language.build.resolution.SymbolResolver;
+import com.verba.language.expressions.categories.ResolvableTypeExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.expressions.categories.TypedExpression;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
+import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 
 /**
  * Created by sircodesalot on 14/9/13.
  */
 public class VariableNameSearch {
+  private final GlobalSymbolTable symbolTable;
   private final ScopedSymbolTable startingScope;
   private final SymbolTableEntry resolvedEntry;
   private boolean isClosedOver;
 
-  public VariableNameSearch(ScopedSymbolTable startingScope, String name) {
+  public VariableNameSearch(GlobalSymbolTable symbolTable, ScopedSymbolTable startingScope, String name) {
+    this.symbolTable = symbolTable;
     this.startingScope = startingScope;
     this.resolvedEntry = findEntryRecursive(startingScope, name);
     this.isClosedOver = determineIsClosedOver();
@@ -45,8 +50,15 @@ public class VariableNameSearch {
     if (instance.hasTypeConstraint()) {
       return instance.typeDeclaration();
     } else {
-      VariableTypeResolutionMetadata type = entry.metadata().ofType(VariableTypeResolutionMetadata.class).single();
-      return type.symbolType();
+      if (entry.metadata().ofType(VariableTypeResolutionMetadata.class).any()) {
+        return entry.metadata().ofType(VariableTypeResolutionMetadata.class).single().symbolType();
+      } else {
+        // Re-resolve object
+        SymbolResolver resolver = new SymbolResolver(symbolTable);
+        resolver.resolve((ResolvableTypeExpression) entry.instance());
+
+        return entry.metadata().ofType(VariableTypeResolutionMetadata.class).single().symbolType();
+      }
     }
   }
 
