@@ -78,35 +78,11 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
     throw new CompilerException("Invalid literal type.");
   }
 
-  private TypeDeclarationExpression getTypeFromSymbolEntry(SymbolTableEntry entry) {
-    TypedExpression instance = (TypedExpression)entry.instance();
-
-    if (instance.hasTypeConstraint()) {
-      return instance.typeDeclaration();
-    } else {
-      VariableTypeResolutionMetadata type = entry.metadata().ofType(VariableTypeResolutionMetadata.class).single();
-      return type.symbolType();
-    }
-  }
-
-  private SymbolTableEntry findEntryRecursive(ScopedSymbolTable startingTable, String name) {
-    if (startingTable.containsKey(name)) {
-      return startingTable.get(name).single();
-    } else {
-      if (startingTable.hasParentTable()) {
-        return findEntryRecursive(startingTable.parent(), name);
-      } else {
-        return null;
-      }
-    }
-  }
-
   private VariableTypeResolutionMetadata resolveNamedExpression(SymbolTableEntry entry, AssignmentExpression assignment) {
     NamedExpression namedRValue = (NamedExpression) assignment.rvalue();
     ScopedSymbolTable scope = symbolTable.getByInstance((VerbaExpression) assignment).table();
+    VariableNameSearch search = new VariableNameSearch(scope, namedRValue.name());
 
-    SymbolTableEntry rValueSymbolEntry = findEntryRecursive(scope, namedRValue.name());
-
-    return new VariableTypeResolutionMetadata(entry, getTypeFromSymbolEntry(rValueSymbolEntry));
+    return new VariableTypeResolutionMetadata(entry, search.resolvedType());
   }
 }
