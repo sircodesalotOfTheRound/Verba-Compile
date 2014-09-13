@@ -36,3 +36,12 @@ fn containsClosure(parameter : string) {
      val closedOverNumber = number
    }
 }
+
+# Test functions with derived return type
+fn implicitStringReturnType() {
+   return "something"
+}
+
+fn implicitIntReturnType() {
+   return 32
+}

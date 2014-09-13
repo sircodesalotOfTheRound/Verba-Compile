@@ -39,6 +39,6 @@ public class ReturnStatementExpression extends VerbaExpression implements Statem
 
   @Override
   public void accept(AstVisitor visitor) {
-
+    visitor.visit(this);
   }
 }

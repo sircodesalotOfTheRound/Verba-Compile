@@ -16,6 +16,7 @@ import com.verba.language.expressions.blockheader.varname.NamedObjectDeclaration
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
+import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -103,6 +104,11 @@ public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<Ver
   public void visit(VerbaCodePage page) {
     add(page);
     this.visitAll(page.expressions());
+  }
+
+  @Override
+  public void visit(ReturnStatementExpression returnStatementExpression) {
+    add(returnStatementExpression);
   }
 
   public <T extends VerbaExpression> void visitAll(Iterable<T> expressions) {

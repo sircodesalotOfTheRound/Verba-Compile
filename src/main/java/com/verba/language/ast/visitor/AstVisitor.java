@@ -11,6 +11,7 @@ import com.verba.language.expressions.blockheader.varname.NamedObjectDeclaration
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
+import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 
 /**
  * Created by sircodesalot on 14/9/12.
@@ -37,4 +38,6 @@ public interface AstVisitor {
   void visit(TupleDeclarationExpression tupleDeclarationExpression);
 
   void visit(VerbaCodePage verbaCodePage);
+
+  void visit(ReturnStatementExpression returnStatementExpression);
 }

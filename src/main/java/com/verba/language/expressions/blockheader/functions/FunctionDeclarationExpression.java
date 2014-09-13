@@ -2,6 +2,7 @@ package com.verba.language.expressions.blockheader.functions;
 
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.build.resolution.SymbolResolver;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
@@ -19,7 +20,8 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
  * Created by sircodesalot on 14-2-17.
  */
 public class FunctionDeclarationExpression extends VerbaExpression
-  implements NamedBlockExpression, TypedExpression, InvokableExpression, GenericExpression, SymbolTableExpression {
+  implements NamedBlockExpression, TypedExpression, InvokableExpression,
+  GenericExpression, SymbolTableExpression, ResolvableTypeExpression {
 
   private final FullyQualifiedNameExpression identifier;
   private final BlockDeclarationExpression block;
@@ -97,5 +99,10 @@ public class FunctionDeclarationExpression extends VerbaExpression
   @Override
   public void accept(ScopedSymbolTable symbolTable) {
     symbolTable.visit(this);
+  }
+
+  @Override
+  public void accept(SymbolResolver resolver) {
+    resolver.visit(this);
   }
 }

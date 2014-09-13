@@ -29,7 +29,7 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
       return entry.metadata().ofType(VariableTypeResolutionMetadata.class).single();
     }
 
-    // If this item has an explicit type constrait, return that
+    // If this item has an explicit type constraint, return that
     // TODO: Make this verify that the type constraint is in fact correct.
     if (expression.hasTypeConstraint()) {
       VariableTypeResolutionMetadata metadata = new VariableTypeResolutionMetadata(entry, expression.typeDeclaration());

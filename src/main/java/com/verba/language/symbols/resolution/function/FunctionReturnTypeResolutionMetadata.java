@@ -1,11 +1,10 @@
 package com.verba.language.symbols.resolution.function;
 
+import com.verba.language.ast.AstTreeFlattener;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
-import com.verba.language.expressions.categories.InvokableExpression;
-import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
-import com.verba.language.expressions.categories.TypeDeclarationExpression;
+import com.verba.language.expressions.categories.*;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import com.verba.language.symbols.meta.NestedSymbolTableMetadata;
 import com.verba.language.symbols.meta.interfaces.SymbolTableMetadata;
@@ -17,6 +16,7 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
+import sun.tools.tree.ReturnStatement;
 
 /**
  * Created by sircodesalot on 14-5-25.
@@ -44,20 +44,20 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
     return metadata.symbolTable();
   }
 
+  private TypeDeclarationExpression getTypeFromExpression(RValueExpression value) {
+    if (value instanceof NativeTypeExpression) {
+      return ((NativeTypeExpression) value).nativeTypeDeclaration();
+    }
+
+    // Todo: make this more robust
+    return VirtualMachineNativeTypes.UNIT_EXPRESSION;
+  }
+
   private TypeDeclarationExpression scanFunction(BlockDeclarationExpression block) {
-    for (VerbaExpression expression : block.expressions()) {
-      if (expression instanceof ReturnStatementExpression) {
-        ReturnStatementExpression returnStatement = (ReturnStatementExpression) expression;
-
-        if (returnStatement.hasValue()) {
-          VerbaExpression value = (VerbaExpression) returnStatement.value();
-          if (VirtualMachineNativeTypes.isVirtualMachineType((VerbaExpression) returnStatement.value())) {
-            return VirtualMachineNativeTypes.getTypeFromInstance((VerbaExpression) returnStatement.value());
-
-          } else if (value instanceof NamedObjectDeclarationExpression) {
-            return resolveFromVariableName(value);
-          }
-        }
+    AstTreeFlattener scopeTree = new AstTreeFlattener(block);
+    for (ReturnStatementExpression statement : scopeTree.ofType(ReturnStatementExpression.class)) {
+      if (statement.hasValue()) {
+        return getTypeFromExpression(statement.value());
       }
     }
 

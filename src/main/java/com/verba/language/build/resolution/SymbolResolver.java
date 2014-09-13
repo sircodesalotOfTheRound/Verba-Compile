@@ -3,6 +3,7 @@ package com.verba.language.build.resolution;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
+import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.categories.InvokableExpression;
 import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
 import com.verba.language.expressions.categories.PolymorphicExpression;
@@ -44,14 +45,19 @@ public class SymbolResolver {
   }
 
   public void visit(ValDeclarationStatement valDeclarationStatement) {
-    this.variableResolver.resolve(valDeclarationStatement);
+    variableResolver.resolve(valDeclarationStatement);
   }
 
   public void visit(MutaDeclarationStatement mutaDeclarationStatement) {
-    this.variableResolver.resolve(mutaDeclarationStatement);
+    variableResolver.resolve(mutaDeclarationStatement);
+  }
+
+  public void visit(FunctionDeclarationExpression function) {
+    functionResolver.resolve(function);
   }
 
   public static void resolveNames(GlobalSymbolTable globalSymbolTable) {
     new SymbolResolver(globalSymbolTable).resolveAll();
   }
+
 }

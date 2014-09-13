@@ -1,11 +1,8 @@
 package com.verba.language.test.typeresolve;
 
-import com.sun.beans.TypeResolver;
 import com.verba.language.expressions.StaticSpaceExpression;
-import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
-import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
-import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.symbols.resolution.fields.VariableTypeResolutionMetadata;
+import com.verba.language.symbols.resolution.function.FunctionReturnTypeResolutionMetadata;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.test.tools.TestFileLoader;
@@ -55,6 +52,7 @@ public class DerivedTypeResolution {
     assert(thirdMeta.symbolType().representation().equals("uint64"));
     assert(fourthMeta.symbolType().representation().equals("uint64"));
   }
+
   @Test
   public void testContainsClosure() {
     StaticSpaceExpression codeFile = TestFileLoader.TYPE_RESOLUTION_TESTS;
@@ -76,4 +74,23 @@ public class DerivedTypeResolution {
     assert(chainValueMeta.symbolType().representation().equals("string"));
     assert(numberMeta.symbolType().representation().equals("uint32"));
   }
+
+  @Test
+  public void testDerivedTypeFromLiteral() {
+    StaticSpaceExpression codeFile = TestFileLoader.TYPE_RESOLUTION_TESTS;
+    GlobalSymbolTable symbolTable = codeFile.globalSymbolTable();
+    symbolTable.resolveSymbolNames();
+
+    SymbolTableEntry implicitStringReturnType = symbolTable.getByFqn("implicitStringReturnType").single();
+    SymbolTableEntry implicitIntReturnType = symbolTable.getByFqn("implicitIntReturnType").single();
+
+    FunctionReturnTypeResolutionMetadata implicitStringMeta
+      = implicitStringReturnType.metadata().ofType(FunctionReturnTypeResolutionMetadata.class).single();
+    FunctionReturnTypeResolutionMetadata implicitIntMeta
+      = implicitIntReturnType.metadata().ofType(FunctionReturnTypeResolutionMetadata.class).single();
+
+    assert (implicitStringMeta.symbolType().representation().equals("string"));
+    assert (implicitIntMeta.symbolType().representation().equals("uint32"));
+  }
+
 }
