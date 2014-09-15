@@ -11,6 +11,7 @@ import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
@@ -109,6 +110,11 @@ public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<Ver
   @Override
   public void visit(ReturnStatementExpression returnStatementExpression) {
     add(returnStatementExpression);
+  }
+
+  @Override
+  public void visit(SignatureDeclarationExpression signature) {
+    add(signature);
   }
 
   public <T extends VerbaExpression> void visitAll(Iterable<T> expressions) {

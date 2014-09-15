@@ -31,5 +31,4 @@ trait DynamicParameterInlineTrait(dynamicParameter)
 trait StaticParameterInlineTrait(str : string)
 
 # Plain Signature Tests
-# TODO: Unbreak this! (Symbol table needs rework).
-# signature emptyFunction() : String
+signature emptyFunction() : String

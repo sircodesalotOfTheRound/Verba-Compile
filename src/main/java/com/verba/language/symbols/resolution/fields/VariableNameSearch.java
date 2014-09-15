@@ -44,21 +44,22 @@ public class VariableNameSearch {
     return (startingScope != resolvedEntry.table());
   }
 
+  private void resolveEntry(SymbolTableEntry entry) {
+    SymbolResolver resolver = new SymbolResolver(symbolTable);
+    resolver.resolve((ResolvableTypeExpression) entry.instance());
+  }
+
   private TypeDeclarationExpression getTypeFromSymbolEntry(SymbolTableEntry entry) {
     TypedExpression instance = (TypedExpression)entry.instance();
 
     if (instance.hasTypeConstraint()) {
       return instance.typeDeclaration();
     } else {
-      if (entry.metadata().ofType(VariableTypeResolutionMetadata.class).any()) {
-        return entry.metadata().ofType(VariableTypeResolutionMetadata.class).single().symbolType();
-      } else {
-        // Re-resolve object
-        SymbolResolver resolver = new SymbolResolver(symbolTable);
-        resolver.resolve((ResolvableTypeExpression) entry.instance());
-
-        return entry.metadata().ofType(VariableTypeResolutionMetadata.class).single().symbolType();
+      if (!entry.metadata().ofType(VariableTypeResolutionMetadata.class).any()) {
+        resolveEntry(entry);
       }
+
+      return entry.metadata().ofType(VariableTypeResolutionMetadata.class).single().symbolType();
     }
   }
 

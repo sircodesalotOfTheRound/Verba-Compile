@@ -6,6 +6,7 @@ import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
@@ -40,4 +41,6 @@ public interface AstVisitor {
   void visit(VerbaCodePage verbaCodePage);
 
   void visit(ReturnStatementExpression returnStatementExpression);
+
+  void visit(SignatureDeclarationExpression signatureDeclarationExpression);
 }

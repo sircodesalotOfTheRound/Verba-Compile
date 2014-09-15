@@ -10,6 +10,7 @@ import com.verba.language.expressions.blockheader.NamedBlockExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
 import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
 import com.verba.language.expressions.blockheader.namespaces.NamespaceDeclarationExpression;
@@ -129,6 +130,10 @@ public class ScopedSymbolTable implements Serializable {
         subExpression.accept(this);
       }
     }
+  }
+
+  public void visit(SignatureDeclarationExpression signature) {
+    this.add(signature.name(), signature);
   }
 
   public void visit(GenericTypeListExpression genericParameters) {
@@ -277,4 +282,5 @@ public class ScopedSymbolTable implements Serializable {
 
     return resolvedNames;
   }
+
 }

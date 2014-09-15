@@ -38,7 +38,6 @@ public class StaticSpaceExpression extends VerbaExpression implements SymbolTabl
 
   public StaticSpaceExpression(SourceFilePathInfo path) {
     this(VerbaCodePage.fromFile(null, path.absolutePath()));
-
   }
 
   public QIterable<VerbaExpression> rootLevelExpressions() {
