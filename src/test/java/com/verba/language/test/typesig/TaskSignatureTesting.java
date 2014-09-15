@@ -17,7 +17,7 @@ public class TaskSignatureTesting {
 
     TaskDeclarationExpression emptyTask = singleFileTest.allSubExpressions()
       .ofType(TaskDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("emptyTask"));
+      .singleOrNull(function -> function.name().equals("empty_task"));
 
     assert (emptyTask != null);
     assert (!emptyTask.block().expressions().any());
@@ -32,7 +32,7 @@ public class TaskSignatureTesting {
 
     TaskDeclarationExpression singleDynamicArgumentTask = singleFileTest.allSubExpressions()
       .ofType(TaskDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("singleDynamicArgumentTask"));
+      .singleOrNull(function -> function.name().equals("single_dynamic_argument_task"));
 
     assert (singleDynamicArgumentTask != null);
     assert (!singleDynamicArgumentTask.block().expressions().any());
@@ -43,7 +43,7 @@ public class TaskSignatureTesting {
     VerbaExpression arg = singleDynamicArgumentTask.parameterSets().single().items().single();
     NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
 
-    assert (dynamicArgument.name().equals("dynamicArgument"));
+    assert (dynamicArgument.name().equals("dynamic_argument"));
     assert (!dynamicArgument.hasTypeConstraint());
   }
 
@@ -53,7 +53,7 @@ public class TaskSignatureTesting {
 
     TaskDeclarationExpression singleStaticTypedArgumentTask = singleFileTest.allSubExpressions()
       .ofType(TaskDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("singleStaticTypedArgumentTask"));
+      .singleOrNull(function -> function.name().equals("single_static_typed_argument_task"));
 
     assert (singleStaticTypedArgumentTask != null);
     assert (!singleStaticTypedArgumentTask.block().expressions().any());
@@ -64,7 +64,7 @@ public class TaskSignatureTesting {
     VerbaExpression arg = singleStaticTypedArgumentTask.parameterSets().single().items().single();
     NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
 
-    assert (dynamicArgument.name().equals("stringArgument"));
+    assert (dynamicArgument.name().equals("string_argument"));
     assert (dynamicArgument.hasTypeConstraint());
     assert (dynamicArgument.typeDeclaration().representation().equals("string"));
   }
@@ -76,7 +76,7 @@ public class TaskSignatureTesting {
 
     TaskDeclarationExpression mixedArgumentTask = singleFileTest.allSubExpressions()
       .ofType(TaskDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("mixedArgumentTask"));
+      .singleOrNull(function -> function.name().equals("mixed_argument_task"));
 
     assert (mixedArgumentTask != null);
     assert (!mixedArgumentTask.block().expressions().any());
@@ -90,7 +90,7 @@ public class TaskSignatureTesting {
       .items()
       .firstAs(NamedObjectDeclarationExpression.class);
 
-    assert (stringArg.name().equals("stringArg"));
+    assert (stringArg.name().equals("string_arg"));
     assert (stringArg.hasTypeConstraint());
     assert (stringArg.typeDeclaration().representation().equals("string"));
 
@@ -100,7 +100,7 @@ public class TaskSignatureTesting {
       .items()
       .get(1);
 
-    assert (intArg.name().equals("intArg"));
+    assert (intArg.name().equals("int_arg"));
     assert (intArg.hasTypeConstraint());
     assert (intArg.typeDeclaration().representation().equals("uint64"));
 
@@ -110,7 +110,7 @@ public class TaskSignatureTesting {
       .items()
       .lastAs(NamedObjectDeclarationExpression.class);
 
-    assert (dynamicArg.name().equals("dynamicArg"));
+    assert (dynamicArg.name().equals("dynamic_arg"));
     assert (!dynamicArg.hasTypeConstraint());
   }
 
@@ -120,7 +120,7 @@ public class TaskSignatureTesting {
 
     TaskDeclarationExpression explicitReturnTypeTask = singleFileTest.allSubExpressions()
       .ofType(TaskDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("explicitReturnTypeTask"));
+      .singleOrNull(function -> function.name().equals("explicit_return_type_task"));
 
     assert (explicitReturnTypeTask != null);
     assert (explicitReturnTypeTask.hasTypeConstraint());
@@ -137,7 +137,7 @@ public class TaskSignatureTesting {
 
     TaskDeclarationExpression genericTask = singleFileTest.allSubExpressions()
       .ofType(TaskDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("genericTask"));
+      .singleOrNull(function -> function.name().equals("generic_task"));
 
     assert (genericTask != null);
     assert (genericTask.hasGenericParameters());

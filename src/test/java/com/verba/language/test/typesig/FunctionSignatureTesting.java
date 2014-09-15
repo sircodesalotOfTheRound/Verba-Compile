@@ -20,7 +20,7 @@ public class FunctionSignatureTesting {
 
     FunctionDeclarationExpression emptyFunction = singleFileTest.allSubExpressions()
       .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("emptyFunction"));
+      .singleOrNull(function -> function.name().equals("empty_function"));
 
     assert (emptyFunction != null);
     assert (!emptyFunction.block().expressions().any());
@@ -35,7 +35,7 @@ public class FunctionSignatureTesting {
 
     FunctionDeclarationExpression singleDynamicArgumentFunction = singleFileTest.allSubExpressions()
       .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("singleDynamicArgumentFunction"));
+      .singleOrNull(function -> function.name().equals("single_dynamic_argument_function"));
 
     assert (singleDynamicArgumentFunction != null);
     assert (!singleDynamicArgumentFunction.block().expressions().any());
@@ -46,7 +46,7 @@ public class FunctionSignatureTesting {
     VerbaExpression arg = singleDynamicArgumentFunction.parameterSets().single().items().single();
     NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
 
-    assert (dynamicArgument.name().equals("dynamicArgument"));
+    assert (dynamicArgument.name().equals("dynamic_argument"));
     assert (!dynamicArgument.hasTypeConstraint());
   }
 
@@ -56,7 +56,7 @@ public class FunctionSignatureTesting {
 
     FunctionDeclarationExpression singleStaticTypedArgumentFunction = singleFileTest.allSubExpressions()
       .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("singleStaticTypedArgumentFunction"));
+      .singleOrNull(function -> function.name().equals("single_static_typed_argument_function"));
 
     assert (singleStaticTypedArgumentFunction != null);
     assert (!singleStaticTypedArgumentFunction.block().expressions().any());
@@ -67,7 +67,7 @@ public class FunctionSignatureTesting {
     VerbaExpression arg = singleStaticTypedArgumentFunction.parameterSets().single().items().single();
     NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
 
-    assert (dynamicArgument.name().equals("stringArgument"));
+    assert (dynamicArgument.name().equals("string_argument"));
     assert (dynamicArgument.hasTypeConstraint());
     assert (dynamicArgument.typeDeclaration().representation().equals("string"));
   }
@@ -79,7 +79,7 @@ public class FunctionSignatureTesting {
 
     FunctionDeclarationExpression mixedArgumentFunction = singleFileTest.allSubExpressions()
       .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("mixedArgumentFunction"));
+      .singleOrNull(function -> function.name().equals("mixed_argument_function"));
 
     assert (mixedArgumentFunction != null);
     assert (!mixedArgumentFunction.block().expressions().any());
@@ -93,7 +93,7 @@ public class FunctionSignatureTesting {
       .items()
       .firstAs(NamedObjectDeclarationExpression.class);
 
-    assert (stringArg.name().equals("stringArg"));
+    assert (stringArg.name().equals("string_arg"));
     assert (stringArg.hasTypeConstraint());
     assert (stringArg.typeDeclaration().representation().equals("string"));
 
@@ -103,7 +103,7 @@ public class FunctionSignatureTesting {
       .items()
       .get(1);
 
-    assert (intArg.name().equals("intArg"));
+    assert (intArg.name().equals("int_arg"));
     assert (intArg.hasTypeConstraint());
     assert (intArg.typeDeclaration().representation().equals("uint64"));
 
@@ -113,7 +113,7 @@ public class FunctionSignatureTesting {
       .items()
       .lastAs(NamedObjectDeclarationExpression.class);
 
-    assert (dynamicArg.name().equals("dynamicArg"));
+    assert (dynamicArg.name().equals("dynamic_arg"));
     assert (!dynamicArg.hasTypeConstraint());
   }
 
@@ -123,7 +123,7 @@ public class FunctionSignatureTesting {
 
     FunctionDeclarationExpression explicitReturnTypeFunction = singleFileTest.allSubExpressions()
       .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("explicitReturnTypeFunction"));
+      .singleOrNull(function -> function.name().equals("explicit_return_type_function"));
 
     assert (explicitReturnTypeFunction != null);
     assert (explicitReturnTypeFunction.hasTypeConstraint());
@@ -140,7 +140,7 @@ public class FunctionSignatureTesting {
 
     FunctionDeclarationExpression genericFunction = singleFileTest.allSubExpressions()
       .ofType(FunctionDeclarationExpression.class)
-      .singleOrNull(function -> function.name().equals("genericFunction"));
+      .singleOrNull(function -> function.name().equals("generic_function"));
 
     assert (genericFunction != null);
     assert (genericFunction.hasGenericParameters());
@@ -157,7 +157,7 @@ public class FunctionSignatureTesting {
   public void testTestSignature() {
     StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
 
-    SymbolTableEntry signatureEntry = singleFileTest.globalSymbolTable().getEntryListByFqn("testSignature").single();
+    SymbolTableEntry signatureEntry = singleFileTest.globalSymbolTable().getEntryListByFqn("test_signature").single();
     SignatureDeclarationExpression signature = signatureEntry.instanceAs(SignatureDeclarationExpression.class);
 
     assert (signature != null);
