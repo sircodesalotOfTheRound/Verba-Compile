@@ -17,8 +17,6 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
-import sun.jvm.hotspot.memory.SymbolTable;
-import sun.tools.tree.ReturnStatement;
 
 /**
  * Created by sircodesalot on 14-5-25.

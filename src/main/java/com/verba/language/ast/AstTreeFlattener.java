@@ -64,6 +64,8 @@ public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<Ver
     }
   }
 
+  // Todo: Should this also read statements as well? Probabaly?
+
   public void visit(ClassDeclarationExpression classDeclaration) {
     add(classDeclaration);
 

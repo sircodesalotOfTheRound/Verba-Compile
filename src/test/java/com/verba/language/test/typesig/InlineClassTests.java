@@ -2,7 +2,7 @@ package com.verba.language.test.typesig;
 
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
-import com.verba.language.test.tools.TestFileLoader;
+import com.verba.language.test.loader.TestFileLoader;
 import org.junit.Test;
 
 /**

@@ -18,9 +18,9 @@ public class CreateBuildEnvironmentTask implements Task {
       "                           \n" +
       "# The program entry point. \n" +
       "fn main() {                \n" +
-      "    print(\"hello world!\")\n" +
-      "}                          \n" +
-      "                           \n";
+      "  print(\"hello world!\")  \n" +
+      "}\n" +
+      "\n";
 
   public void perform() {
     createDir("code");

@@ -1,4 +1,4 @@
-package com.verba.language.expressions.rvalue.pemdas;
+package com.verba.language.expressions.rvalue.math;
 
 import com.javalinq.implementations.QList;
 import com.verba.language.expressions.VerbaExpression;
@@ -13,6 +13,9 @@ import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
 /**
  * Created by sircodesalot on 14-2-27.
  */
+
+// Deprecated. No longer neccesary since I'm using a register based machine.
+@Deprecated
 public class RpnMap {
   private static BacktrackRuleSet<RValueExpression> ruleset
     = new BacktrackRuleSet<RValueExpression>()

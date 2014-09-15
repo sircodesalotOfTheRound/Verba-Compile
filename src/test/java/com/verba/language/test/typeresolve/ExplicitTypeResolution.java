@@ -6,7 +6,7 @@ import com.verba.language.expressions.blockheader.functions.FunctionDeclarationE
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
-import com.verba.language.test.tools.TestFileLoader;
+import com.verba.language.test.loader.TestFileLoader;
 import org.junit.Test;
 
 /**

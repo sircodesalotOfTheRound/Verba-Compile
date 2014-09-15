@@ -39,6 +39,9 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
     .addRule(new ReturnStatementRule());
 
   private VerbaExpression parent;
+
+  // TODO: Make this log more than just the first character.
+  // Todo: Should really capture the entire expression range.
   private final LexInfo lexInfo;
 
   public VerbaExpression(VerbaExpression parent, Lexer lexer) {

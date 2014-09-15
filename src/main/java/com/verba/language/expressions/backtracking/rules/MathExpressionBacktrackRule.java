@@ -11,7 +11,7 @@ import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
 /**
  * Created by sircodesalot on 14-2-27.
  */
-public class RpnBacktrackRule extends BacktrackRule {
+public class MathExpressionBacktrackRule extends BacktrackRule {
   @Override
   public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
     // This will require shunting if the second item is a math token.

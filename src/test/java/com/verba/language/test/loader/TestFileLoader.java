@@ -1,4 +1,4 @@
-package com.verba.language.test.tools;
+package com.verba.language.test.loader;
 
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.StaticSpaceExpression;
@@ -12,4 +12,7 @@ public class TestFileLoader {
 
   public static final StaticSpaceExpression TYPE_RESOLUTION_TESTS =
     new StaticSpaceExpression(VerbaCodePage.fromResourceStream("/TypeResolutionTests.v"));
+
+  public static final StaticSpaceExpression STATEMENT_TESTS =
+    new StaticSpaceExpression(VerbaCodePage.fromResourceStream("/StatementTests.v"));
 }

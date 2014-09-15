@@ -1,6 +1,5 @@
 package com.verba.language.test.typesig;
 
-import com.javalinq.implementations.QList;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
@@ -8,7 +7,7 @@ import com.verba.language.expressions.blockheader.functions.SignatureDeclaration
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
-import com.verba.language.test.tools.TestFileLoader;
+import com.verba.language.test.loader.TestFileLoader;
 import org.junit.Test;
 
 /**

@@ -17,7 +17,7 @@ public class CreateNewProjectTask implements Task {
     Task buildScriptTask = new CreateBuildScriptTask(
       EnvironmentHelpers.getHostname(),
       EnvironmentHelpers.getOnlyCurrentFolderName(),
-      "1.0");
+      "1.0.0-0");
 
     Task directoryCreationTask = new CreateBuildEnvironmentTask();
 

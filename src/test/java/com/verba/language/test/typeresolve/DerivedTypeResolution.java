@@ -5,7 +5,7 @@ import com.verba.language.symbols.resolution.fields.VariableTypeResolutionMetada
 import com.verba.language.symbols.resolution.function.FunctionReturnTypeResolutionMetadata;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
-import com.verba.language.test.tools.TestFileLoader;
+import com.verba.language.test.loader.TestFileLoader;
 import org.junit.Test;
 
 /**
