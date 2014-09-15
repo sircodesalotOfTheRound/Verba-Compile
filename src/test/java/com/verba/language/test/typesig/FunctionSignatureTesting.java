@@ -1,9 +1,13 @@
 package com.verba.language.test.typesig;
 
+import com.javalinq.implementations.QList;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
+import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.test.tools.TestFileLoader;
 import org.junit.Test;
 
@@ -148,5 +152,27 @@ public class FunctionSignatureTesting {
     assert (!genericFunction.block().expressions().any());
     assert (genericFunction.parameterSets().count() == 1);
     assert (!genericFunction.parameterSets().single().hasItems());
+  }
+
+  @Test
+  public void testTestSignature() {
+    StaticSpaceExpression singleFileTest = TestFileLoader.TYPE_SIGNATURE_TESTS;
+
+    SymbolTableEntry signatureEntry = singleFileTest.globalSymbolTable().getEntryListByFqn("testSignature").single();
+    SignatureDeclarationExpression signature = signatureEntry.instanceAs(SignatureDeclarationExpression.class);
+
+    assert (signature != null);
+    assert (!signature.hasGenericParameters());
+    TupleDeclarationExpression parameters = signature.parameterSets().single();
+    NamedObjectDeclarationExpression first = parameters.items().firstAs(NamedObjectDeclarationExpression.class);
+    NamedObjectDeclarationExpression second = parameters.items().lastAs(NamedObjectDeclarationExpression.class);
+
+    assert(first.name().equals("lhs"));
+    assert(first.hasTypeConstraint());
+    assert(first.typeDeclaration().representation().equals("string"));
+
+    assert(second.name().equals("rhs"));
+    assert(second.hasTypeConstraint());
+    assert(second.typeDeclaration().representation().equals("object"));
   }
 }
