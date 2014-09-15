@@ -31,8 +31,9 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
 
     // If this item has an explicit type constraint, return that
     // TODO: Make this verify that the type constraint is in fact correct.
+    // TODO: Also verify whether or not the value is closed over.
     if (expression.hasTypeConstraint()) {
-      VariableTypeResolutionMetadata metadata = new VariableTypeResolutionMetadata(entry, expression.typeDeclaration());
+      VariableTypeResolutionMetadata metadata = new VariableTypeResolutionMetadata(entry, false, expression.typeDeclaration());
       entry.addMetadata(metadata);
 
       return metadata;
@@ -65,17 +66,7 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
   }
 
   private VariableTypeResolutionMetadata resolveLiteralExpression(AssignmentExpression assignment) {
-    LiteralExpression literalExpression = (LiteralExpression) assignment.rvalue();
-
-    if (literalExpression instanceof QuoteExpression)
-      return new VariableTypeResolutionMetadata(null, VirtualMachineNativeTypes.STRING_LITERAL);
-
-    else if (literalExpression instanceof NumericExpression)
-      return new VariableTypeResolutionMetadata(null, VirtualMachineNativeTypes.INT32_LITERAL);
-
-    // This should never happen. If it does, means that we don't have a specific type
-    // declared for this type of literal.
-    throw new CompilerException("Invalid literal type.");
+    return new VariableTypeResolutionMetadata(null, false, ((NativeTypeExpression)assignment.rvalue()).nativeTypeDeclaration());
   }
 
   private VariableTypeResolutionMetadata resolveNamedExpression(SymbolTableEntry entry, AssignmentExpression assignment) {
@@ -83,6 +74,6 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
     ScopedSymbolTable scope = symbolTable.getByInstance((VerbaExpression) assignment).table();
     VariableNameSearch search = new VariableNameSearch(symbolTable, scope, namedRValue.name());
 
-    return new VariableTypeResolutionMetadata(entry, search.resolvedType());
+    return new VariableTypeResolutionMetadata(entry, search.isClosedOver(), search.resolvedType());
   }
 }

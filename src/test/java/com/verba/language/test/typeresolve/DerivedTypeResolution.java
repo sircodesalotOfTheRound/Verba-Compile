@@ -59,10 +59,13 @@ public class DerivedTypeResolution {
     GlobalSymbolTable symbolTable = codeFile.globalSymbolTable();
     symbolTable.resolveSymbolNames();
 
+    SymbolTableEntry parameterChained = symbolTable.getByFqn("containsClosure.parameterChained").single();
     SymbolTableEntry parameter = symbolTable.getByFqn("containsClosure.closureFunction.closedOverParameter").single();
     SymbolTableEntry chainValue = symbolTable.getByFqn("containsClosure.closureFunction.closedOverChainValue").single();
     SymbolTableEntry number = symbolTable.getByFqn("containsClosure.closureFunction.closedOverNumber").single();
 
+    VariableTypeResolutionMetadata parameterChainedMeta = parameterChained.metadata()
+      .ofType(VariableTypeResolutionMetadata.class).single();
     VariableTypeResolutionMetadata parameterMeta = parameter.metadata()
       .ofType(VariableTypeResolutionMetadata.class).single();
     VariableTypeResolutionMetadata chainValueMeta = chainValue.metadata()
@@ -73,6 +76,11 @@ public class DerivedTypeResolution {
     assert(parameterMeta.symbolType().representation().equals("string"));
     assert(chainValueMeta.symbolType().representation().equals("string"));
     assert(numberMeta.symbolType().representation().equals("uint32"));
+
+    assert(!parameterChainedMeta.isClosedOver());
+    assert(parameterMeta.isClosedOver());
+    assert(chainValueMeta.isClosedOver());
+    assert(numberMeta.isClosedOver());
   }
 
   @Test

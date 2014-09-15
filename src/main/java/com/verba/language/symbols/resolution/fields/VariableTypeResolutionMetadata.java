@@ -12,15 +12,19 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
 public class VariableTypeResolutionMetadata implements SymbolTableMetadata, SymbolTypeMetadata, SymbolResolutionInfo {
   private final SymbolTableEntry entry;
   private final TypeDeclarationExpression type;
+  private final boolean isClosedOver;
 
-  public VariableTypeResolutionMetadata(SymbolTableEntry entry, TypeDeclarationExpression typeDeclarationExpression) {
+  public VariableTypeResolutionMetadata(SymbolTableEntry entry, boolean isClosedOver, TypeDeclarationExpression typeDeclarationExpression) {
     this.entry = entry;
+    this.isClosedOver = isClosedOver;
     this.type = typeDeclarationExpression;
   }
 
   public SymbolTableEntry symbolTableEntry() {
     return this.entry;
   }
+
+  public boolean isClosedOver() { return this.isClosedOver; }
 
   @Override
   public TypeDeclarationExpression symbolType() {
