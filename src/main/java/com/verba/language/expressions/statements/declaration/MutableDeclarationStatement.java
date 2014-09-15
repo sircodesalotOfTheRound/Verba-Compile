@@ -13,20 +13,20 @@ import com.verba.language.test.lexing.tokens.operators.assignment.AssignmentToke
 /**
  * Created by sircodesalot on 14-2-19.
  */
-public class MutaDeclarationStatement extends VerbaExpression
+public class MutableDeclarationStatement extends VerbaExpression
   implements NamedDataDeclarationExpression, AssignmentExpression, SymbolTableExpression, ResolvableTypeExpression {
 
   private NamedObjectDeclarationExpression identifier;
   private RValueExpression rvalue;
 
-  private MutaDeclarationStatement(VerbaExpression parent, Lexer lexer) {
+  private MutableDeclarationStatement(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
 
     this.readExpression(lexer);
   }
 
   private void readExpression(Lexer lexer) {
-    lexer.readCurrentAndAdvance(KeywordToken.class, "muta");
+    lexer.readCurrentAndAdvance(KeywordToken.class, "mut");
     this.identifier = NamedObjectDeclarationExpression.read(this, lexer);
 
     if (lexer.currentIs(AssignmentToken.class)) {
@@ -35,8 +35,8 @@ public class MutaDeclarationStatement extends VerbaExpression
     }
   }
 
-  public static MutaDeclarationStatement read(VerbaExpression parent, Lexer lexer) {
-    return new MutaDeclarationStatement(parent, lexer);
+  public static MutableDeclarationStatement read(VerbaExpression parent, Lexer lexer) {
+    return new MutableDeclarationStatement(parent, lexer);
   }
 
 

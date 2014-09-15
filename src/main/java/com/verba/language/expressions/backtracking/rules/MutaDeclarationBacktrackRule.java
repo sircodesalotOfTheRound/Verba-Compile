@@ -3,7 +3,7 @@ package com.verba.language.expressions.backtracking.rules;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRule;
 import com.verba.language.expressions.backtracking.MismatchException;
-import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
+import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.info.LexList;
 import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
@@ -14,12 +14,12 @@ import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
 public class MutaDeclarationBacktrackRule extends BacktrackRule {
   @Override
   public boolean attemptIf(VerbaExpression parent, Lexer lexer, LexList restOfLine) {
-    return restOfLine.startsWith(KeywordToken.class, "muta");
+    return restOfLine.startsWith(KeywordToken.class, "mut");
   }
 
   @Override
   public VerbaExpression attempt(VerbaExpression parent, Lexer lexer, LexList restOfLine) throws MismatchException {
-    if (restOfLine.startsWith(KeywordToken.class, "muta")) return MutaDeclarationStatement.read(parent, lexer);
+    if (restOfLine.startsWith(KeywordToken.class, "mut")) return MutableDeclarationStatement.read(parent, lexer);
 
     throw MismatchException.getInstance();
   }

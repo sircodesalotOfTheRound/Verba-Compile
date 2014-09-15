@@ -1,14 +1,9 @@
 package com.verba.language.build.resolution;
 
 import com.javalinq.interfaces.QIterable;
-import com.verba.language.exceptions.CompilerException;
-import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
-import com.verba.language.expressions.categories.InvokableExpression;
-import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
-import com.verba.language.expressions.categories.PolymorphicExpression;
 import com.verba.language.expressions.categories.ResolvableTypeExpression;
-import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
+import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.symbols.resolution.fields.VariableTypeResolver;
 import com.verba.language.symbols.resolution.function.FunctionReturnTypeResolver;
@@ -52,7 +47,7 @@ public class SymbolResolver {
     variableResolver.resolve(valDeclarationStatement);
   }
 
-  public void visit(MutaDeclarationStatement mutaDeclarationStatement) {
+  public void visit(MutableDeclarationStatement mutaDeclarationStatement) {
     variableResolver.resolve(mutaDeclarationStatement);
   }
 

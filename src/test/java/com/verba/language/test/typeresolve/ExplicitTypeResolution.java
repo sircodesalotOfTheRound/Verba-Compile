@@ -2,10 +2,9 @@ package com.verba.language.test.typeresolve;
 
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.StaticSpaceExpression;
-import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
-import com.verba.language.expressions.statements.declaration.MutaDeclarationStatement;
+import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.test.tools.TestFileLoader;
 import org.junit.Test;
@@ -58,7 +57,7 @@ public class ExplicitTypeResolution {
       .singleOrNull(function -> function.name().equals("explicitVariables"));
 
     ValDeclarationStatement first = explicitVariables.block().firstAs(ValDeclarationStatement.class);
-    MutaDeclarationStatement second = explicitVariables.block().lastAs(MutaDeclarationStatement.class);
+    MutableDeclarationStatement second = explicitVariables.block().lastAs(MutableDeclarationStatement.class);
 
     assert(first.name().equals("first"));
     assert(first.hasTypeConstraint());

@@ -13,7 +13,7 @@ public class KeywordToken extends IdentifierToken {
       "options", "option", "get", "set", "inline",
       "namespace", "class", "abstract", "extend", "sql", "native",
       "signature", "fn", "task", "template", "fork", "event", "proxy",
-      "val", "muta", "yield",
+      "val", "mut", "yield",
       "new", "inject",
       "return",
       "if", "then", "elseif", "else", "unless", "await",
