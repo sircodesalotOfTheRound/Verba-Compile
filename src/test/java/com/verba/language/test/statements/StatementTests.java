@@ -1,8 +1,11 @@
 package com.verba.language.test.statements;
 
+import com.javalinq.implementations.QList;
 import com.verba.language.expressions.StaticSpaceExpression;
-import com.verba.language.expressions.rvalue.math.BinaryMathExpression;
+import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.rvalue.math.MathExpression;
+import com.verba.language.expressions.rvalue.math.RpnMap;
+import com.verba.language.expressions.rvalue.simple.MathOpExpression;
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
@@ -21,11 +24,12 @@ public class StatementTests {
       ValDeclarationStatement statement = mathStatements.instanceAs(ValDeclarationStatement.class);
 
       MathExpression mathExpression = (MathExpression) statement.rvalue();
-      BinaryMathExpression binary = mathExpression.expressions().single();
+      RpnMap expressions = mathExpression.expressions();
 
-      assert(((NumericExpression)binary.lhs()).asInt() == 5);
-      assert(binary.operation().representation().equals("+"));
-      assert(((NumericExpression)binary.rhs()).asInt() == 7);
+      QList<VerbaExpression> polishNotation = expressions.getPolishNotation();
+      assert(polishNotation.firstAs(NumericExpression.class).asInt() == 5);
+      assert(polishNotation.getAs(1, NumericExpression.class).asInt() == 7);
+      assert(polishNotation.lastAs(MathOpExpression.class).operator().representation().equals("+"));
     }
 
 }

@@ -10,8 +10,6 @@ import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
  * Created by sircodesalot on 14-2-27.
  */
 
-// Don't think anything actually uses this code?
-@Deprecated
 public class MathOpExpression extends VerbaExpression {
   LexInfo operationToken;
 

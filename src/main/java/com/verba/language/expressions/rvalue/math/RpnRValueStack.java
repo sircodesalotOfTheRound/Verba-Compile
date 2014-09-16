@@ -8,7 +8,6 @@ import java.util.Stack;
  * Created by sircodesalot on 14-2-27.
  */
 
-@Deprecated
 public class RpnRValueStack {
   private Stack<MathOpExpression> stack = new Stack<MathOpExpression>();
 

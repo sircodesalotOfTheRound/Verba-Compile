@@ -15,7 +15,6 @@ import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
  */
 
 // Deprecated. No longer neccesary since I'm using a register based machine.
-@Deprecated
 public class RpnMap {
   private static BacktrackRuleSet<RValueExpression> ruleset
     = new BacktrackRuleSet<RValueExpression>()
@@ -33,9 +32,11 @@ public class RpnMap {
   public RpnMap(VerbaExpression parent, Lexer lexer) {
     this.parent = parent;
     this.lexer = lexer;
+
+    project();
   }
 
-  public void project() {
+  private void project() {
     int startLine = lexer.getCurrentLine();
 
     while (lexer.notEOF() && lexer.getCurrentLine() == startLine) {

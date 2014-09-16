@@ -14,15 +14,12 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class MathExpression extends VerbaExpression implements RValueExpression {
   // Should probabaly be a tree rather than a list.
-  private final QList<BinaryMathExpression> expressions = new QList<>();
+  private final RpnMap expressions;
 
   private MathExpression(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
 
-    while (lexer.notEOF() && isNextMathToken(lexer)) {
-      this.expressions.add(BinaryMathExpression.read(parent, lexer));
-    }
-
+    this.expressions = new RpnMap(parent, lexer);
   }
 
   private boolean isNextMathToken(Lexer lexer) {
@@ -42,7 +39,7 @@ public class MathExpression extends VerbaExpression implements RValueExpression 
     return new MathExpression(parent, lexer);
   }
 
-  public QIterable<BinaryMathExpression> expressions() {
+  public RpnMap expressions() {
     return this.expressions;
   }
 
