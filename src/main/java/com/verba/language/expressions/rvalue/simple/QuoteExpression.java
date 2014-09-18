@@ -3,6 +3,7 @@ package com.verba.language.expressions.rvalue.simple;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.LiteralExpression;
+import com.verba.language.expressions.categories.MathOperandExpression;
 import com.verba.language.expressions.categories.NativeTypeExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -13,7 +14,7 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
 /**
  * Created by sircodesalot on 14-2-19.
  */
-public class QuoteExpression extends VerbaExpression implements LiteralExpression, NativeTypeExpression {
+public class QuoteExpression extends VerbaExpression implements LiteralExpression, NativeTypeExpression, MathOperandExpression {
   private final LexInfo token;
 
   public QuoteExpression(VerbaExpression parent, Lexer lexer) {

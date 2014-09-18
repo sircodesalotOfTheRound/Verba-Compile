@@ -15,7 +15,7 @@ import java.io.Serializable;
 public abstract class VerbaExpression implements Serializable, AstVisitable {
   private static BacktrackRuleSet<VerbaExpression> rules
     = new BacktrackRuleSet<VerbaExpression>()
-    .addRule(new RpnBacktrackRule())
+    .addRule(new MathExpressionBacktrackRule())
     .addRule(new LiteralExpressionRule())
     .addRule(new FunctionDeclarationBacktrackRule())
     .addRule(new TaskDeclarationBacktrackRule())

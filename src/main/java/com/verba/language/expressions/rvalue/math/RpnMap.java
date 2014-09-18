@@ -4,6 +4,7 @@ import com.javalinq.implementations.QList;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.*;
+import com.verba.language.expressions.categories.MathOperandExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.rvalue.simple.MathOpExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -43,7 +44,7 @@ public class RpnMap {
       // If the next item is not a math op, then try to
       // resolve it as an RValue, else break.
       if (!lexer.currentIs(MathOpToken.class)) {
-        VerbaExpression expression = (VerbaExpression) ruleset.resolve(parent, lexer);
+        VerbaExpression expression = (VerbaExpression) MathOperandExpression.read(parent, lexer);
         if (expression == null) break;
         this.polishNotation.add(expression);
 

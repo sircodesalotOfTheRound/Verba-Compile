@@ -2,10 +2,7 @@ package com.verba.language.expressions.rvalue.simple;
 
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.categories.LiteralExpression;
-import com.verba.language.expressions.categories.MarkupRvalueExpression;
-import com.verba.language.expressions.categories.NativeTypeExpression;
-import com.verba.language.expressions.categories.TypeDeclarationExpression;
+import com.verba.language.expressions.categories.*;
 import com.verba.language.expressions.containers.tuple.TupleItemExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.info.LexInfo;
@@ -16,7 +13,9 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  * Created by sircodesalot on 14-2-19.
  */
 public class NumericExpression extends VerbaExpression
-  implements LiteralExpression, TupleItemExpression, MarkupRvalueExpression, NativeTypeExpression {
+  implements LiteralExpression, TupleItemExpression, MarkupRvalueExpression, NativeTypeExpression,
+  MathOperandExpression {
+
   private LexInfo token;
 
   @Override

@@ -1,22 +1,19 @@
 package com.verba.language.expressions.rvalue.math;
 
-import com.javalinq.implementations.QList;
-import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by sircodesalot on 14-2-27.
  */
-public class MathExpression extends VerbaExpression implements RValueExpression {
+public class RpnExpression extends VerbaExpression implements RValueExpression {
   // Should probabaly be a tree rather than a list.
   private final RpnMap expressions;
 
-  private MathExpression(VerbaExpression parent, Lexer lexer) {
+  private RpnExpression(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
 
     this.expressions = new RpnMap(parent, lexer);
@@ -35,8 +32,8 @@ public class MathExpression extends VerbaExpression implements RValueExpression 
     return isIt;
   }
 
-  public static MathExpression read(VerbaExpression parent, Lexer lexer) {
-    return new MathExpression(parent, lexer);
+  public static RpnExpression read(VerbaExpression parent, Lexer lexer) {
+    return new RpnExpression(parent, lexer);
   }
 
   public RpnMap expressions() {

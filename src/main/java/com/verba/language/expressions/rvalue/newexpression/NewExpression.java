@@ -3,6 +3,7 @@ package com.verba.language.expressions.rvalue.newexpression;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
+import com.verba.language.expressions.categories.MathOperandExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -13,7 +14,7 @@ import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
 /**
  * Created by sircodesalot on 14-2-24.
  */
-public class NewExpression extends VerbaExpression implements RValueExpression {
+public class NewExpression extends VerbaExpression implements RValueExpression, MathOperandExpression {
   private TypeDeclarationExpression expression;
 
   public NewExpression(VerbaExpression parent, Lexer lexer) {

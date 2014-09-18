@@ -17,7 +17,7 @@ public interface RValueExpression extends TupleItemExpression, Token {
   final static BacktrackRuleSet<RValueExpression> ruleset
     = new BacktrackRuleSet<RValueExpression>()
     .addRule(new MarkupDeclarationExpressionBacktrackRule())
-    .addRule(new RpnBacktrackRule())
+    .addRule(new MathExpressionBacktrackRule())
     .addRule(new LiteralExpressionRule())
     .addRule(new SetDeclarationExpressionBacktrackRule())
     .addRule(new NewExpressionBacktrackRule())
