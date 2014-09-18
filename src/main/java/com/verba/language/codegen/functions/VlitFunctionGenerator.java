@@ -8,7 +8,7 @@ import com.verba.language.codegen.opcodes.emit.OpEmitter;
 import com.verba.language.codegen.opcodes.emit.VLitEmitter;
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import com.verba.language.symbols.meta.decorators.FunctionSymbol;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
@@ -40,8 +40,8 @@ public class VlitFunctionGenerator implements VLitEmitter {
         emitter = new ReturnStatementOpEmitter((ReturnStatementExpression) expression);
 
         // VarName Declaration / Method Call
-      else if (expression instanceof NamedObjectDeclarationExpression)
-        emitter = new VarNameOpEmitter(startingRegister, (NamedObjectDeclarationExpression) expression);
+      else if (expression instanceof NamedValueExpression)
+        emitter = new VarNameOpEmitter(startingRegister, (NamedValueExpression) expression);
 
         // Otherwise exception
       else

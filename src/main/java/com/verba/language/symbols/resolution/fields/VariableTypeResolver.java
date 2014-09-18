@@ -1,20 +1,16 @@
 package com.verba.language.symbols.resolution.fields;
 
-import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.*;
-import com.verba.language.expressions.rvalue.simple.NumericExpression;
-import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.symbols.resolution.interfaces.SymbolResolver;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
-import com.verba.virtualmachine.VirtualMachineNativeTypes;
 
 /**
  * Created by sircodesalot on 14-5-22.
  */
-public class VariableTypeResolver implements SymbolResolver<NamedDataDeclarationExpression, VariableTypeResolutionMetadata> {
+public class VariableTypeResolver implements SymbolResolver<NamedAndTypedExpression, VariableTypeResolutionMetadata> {
   private final GlobalSymbolTable symbolTable;
 
   public VariableTypeResolver(GlobalSymbolTable symbolTable) {
@@ -22,7 +18,7 @@ public class VariableTypeResolver implements SymbolResolver<NamedDataDeclaration
   }
 
   @Override
-  public VariableTypeResolutionMetadata resolve(NamedDataDeclarationExpression expression) {
+  public VariableTypeResolutionMetadata resolve(NamedAndTypedExpression expression) {
     SymbolTableEntry entry = symbolTable.getByInstance((VerbaExpression) expression);
 
     if (entry.metadata().ofType(VariableTypeResolutionMetadata.class).any()) {

@@ -3,7 +3,7 @@ package com.verba.language.test.typesig;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.test.loader.TestFileLoader;
 import org.junit.Test;
 
@@ -41,7 +41,7 @@ public class TaskSignatureTesting {
     assert (singleDynamicArgumentTask.parameterSets().single().items().singleOrNull() != null);
 
     VerbaExpression arg = singleDynamicArgumentTask.parameterSets().single().items().single();
-    NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
+    NamedValueExpression dynamicArgument = (NamedValueExpression) arg;
 
     assert (dynamicArgument.name().equals("dynamic_argument"));
     assert (!dynamicArgument.hasTypeConstraint());
@@ -62,7 +62,7 @@ public class TaskSignatureTesting {
     assert (singleStaticTypedArgumentTask.parameterSets().single().items().singleOrNull() != null);
 
     VerbaExpression arg = singleStaticTypedArgumentTask.parameterSets().single().items().single();
-    NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
+    NamedValueExpression dynamicArgument = (NamedValueExpression) arg;
 
     assert (dynamicArgument.name().equals("string_argument"));
     assert (dynamicArgument.hasTypeConstraint());
@@ -84,17 +84,17 @@ public class TaskSignatureTesting {
     assert (mixedArgumentTask.parameterSets().count() == 1);
     assert (mixedArgumentTask.parameterSets().single().items().count() == 3);
 
-    NamedObjectDeclarationExpression stringArg = mixedArgumentTask
+    NamedValueExpression stringArg = mixedArgumentTask
       .parameterSets()
       .single()
       .items()
-      .firstAs(NamedObjectDeclarationExpression.class);
+      .firstAs(NamedValueExpression.class);
 
     assert (stringArg.name().equals("string_arg"));
     assert (stringArg.hasTypeConstraint());
     assert (stringArg.typeDeclaration().representation().equals("string"));
 
-    NamedObjectDeclarationExpression intArg = (NamedObjectDeclarationExpression) mixedArgumentTask
+    NamedValueExpression intArg = (NamedValueExpression) mixedArgumentTask
       .parameterSets()
       .single()
       .items()
@@ -104,11 +104,11 @@ public class TaskSignatureTesting {
     assert (intArg.hasTypeConstraint());
     assert (intArg.typeDeclaration().representation().equals("uint64"));
 
-    NamedObjectDeclarationExpression dynamicArg = mixedArgumentTask
+    NamedValueExpression dynamicArg = mixedArgumentTask
       .parameterSets()
       .single()
       .items()
-      .lastAs(NamedObjectDeclarationExpression.class);
+      .lastAs(NamedValueExpression.class);
 
     assert (dynamicArg.name().equals("dynamic_arg"));
     assert (!dynamicArg.hasTypeConstraint());

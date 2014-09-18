@@ -59,7 +59,7 @@ public class LexInfo implements Serializable {
     return this.type;
   }
 
-  public int getLength() {
+  public int length() {
     return this.representation().length();
   }
 

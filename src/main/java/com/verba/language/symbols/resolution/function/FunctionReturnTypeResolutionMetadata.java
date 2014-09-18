@@ -3,7 +3,7 @@ package com.verba.language.symbols.resolution.function;
 import com.verba.language.ast.AstTreeFlattener;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.categories.*;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import com.verba.language.symbols.meta.NestedSymbolTableMetadata;
@@ -51,8 +51,8 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
       return ((NativeTypeExpression) value).nativeTypeDeclaration();
     }
 
-    if (value instanceof NamedObjectDeclarationExpression) {
-      String variableName = ((NamedObjectDeclarationExpression) value).name();
+    if (value instanceof NamedValueExpression) {
+      String variableName = ((NamedValueExpression) value).name();
       VariableNameSearch search = new VariableNameSearch(symbolTable, scope, variableName);
 
       return search.resolvedType();
@@ -75,13 +75,13 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
 
   // TODO: Named resolution needs to be abstracted out into a class.
   public TypeDeclarationExpression resolveFromVariableName(VerbaExpression value) {
-    NamedObjectDeclarationExpression variable = (NamedObjectDeclarationExpression) value;
+    NamedValueExpression variable = (NamedValueExpression) value;
     String localName = variable.name();
 
     if (this.scope.containsKey(localName)) {
       SymbolTableEntry local = this.scope.get(localName).single();
       VariableTypeResolver variableTypeResolver = new VariableTypeResolver(symbolTable);
-      VariableTypeResolutionMetadata resolution = variableTypeResolver.resolve((NamedDataDeclarationExpression) local.instance());
+      VariableTypeResolutionMetadata resolution = variableTypeResolver.resolve((NamedAndTypedExpression) local.instance());
 
       return resolution.symbolType();
     }

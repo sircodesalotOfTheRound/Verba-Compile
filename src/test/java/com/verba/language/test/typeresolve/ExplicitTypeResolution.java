@@ -3,7 +3,7 @@ package com.verba.language.test.typeresolve;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.test.loader.TestFileLoader;
@@ -33,11 +33,11 @@ public class ExplicitTypeResolution {
       .ofType(FunctionDeclarationExpression.class)
       .singleOrNull(function -> function.name().equals("explicitParameterFunction"));
 
-    QIterable<NamedObjectDeclarationExpression> parameters = explicitParameterFunction
+    QIterable<NamedValueExpression> parameters = explicitParameterFunction
       .parameterSets()
       .first()
       .items()
-      .cast(NamedObjectDeclarationExpression.class);
+      .cast(NamedValueExpression.class);
 
     assert (parameters.first().name().equals("first"));
     assert (parameters.first().hasTypeConstraint());

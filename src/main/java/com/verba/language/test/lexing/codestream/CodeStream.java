@@ -25,4 +25,6 @@ public interface CodeStream {
   public void setUndoPosition();
 
   public void rollbackToUndoPosition();
+
+  public String text();
 }

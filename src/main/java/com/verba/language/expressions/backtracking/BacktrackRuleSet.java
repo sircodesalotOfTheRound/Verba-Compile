@@ -1,5 +1,6 @@
 package com.verba.language.expressions.backtracking;
 
+import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.info.LexList;
@@ -11,12 +12,19 @@ import java.util.List;
 /**
  * Created by sircodesalot on 14-2-20.
  */
-public class BacktrackRuleSet<T> implements Iterable<BacktrackRule> {
+public class BacktrackRuleSet<T> implements QIterable<BacktrackRule> {
   private List<BacktrackRule> rules = new ArrayList<>();
 
   public BacktrackRuleSet<T> addRule(BacktrackRule rule) {
     this.rules.add(rule);
     return this;
+  }
+
+  public BacktrackRuleSet () { }
+  public BacktrackRuleSet (Iterable<BacktrackRule> rules) {
+    for (BacktrackRule rule : rules) {
+      this.addRule(rule);
+    }
   }
 
   public T resolve(VerbaExpression parent, Lexer lexer) {

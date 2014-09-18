@@ -8,7 +8,7 @@ import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpres
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
@@ -24,7 +24,7 @@ public interface AstVisitor {
 
   void visit(StaticSpaceExpression staticSpaceExpression);
 
-  void visit(NamedObjectDeclarationExpression namedObjectDeclarationExpression);
+  void visit(NamedValueExpression namedObjectDeclarationExpression);
 
   void visit(ClassDeclarationExpression classDeclarationExpression);
 

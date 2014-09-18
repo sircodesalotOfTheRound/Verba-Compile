@@ -1,6 +1,7 @@
 package com.verba.language.expressions.rvalue.math;
 
 import com.javalinq.implementations.QList;
+import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.*;
@@ -17,14 +18,6 @@ import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
 
 // Deprecated. No longer neccesary since I'm using a register based machine.
 public class RpnMap {
-  private static BacktrackRuleSet<RValueExpression> ruleset
-    = new BacktrackRuleSet<RValueExpression>()
-    .addRule(new LiteralExpressionRule())
-    .addRule(new LambdaExpressionBacktrackRule())
-    .addRule(new NewExpressionBacktrackRule())
-    .addRule(new CastedRValueExpressionBacktrackRule())
-    .addRule(new RValueContainerExpressionBacktrackRule());
-
   private final RpnRValueStack stack = new RpnRValueStack();
   private QList<VerbaExpression> polishNotation = new QList<>();
   private final VerbaExpression parent;
@@ -91,7 +84,7 @@ public class RpnMap {
     }
   }
 
-  public QList<VerbaExpression> getPolishNotation() {
+  public QIterable<VerbaExpression> getPolishNotation() {
     return this.polishNotation;
   }
 }

@@ -4,7 +4,7 @@ import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.test.lexing.Lexer;
 import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 
@@ -14,8 +14,8 @@ import java.util.Iterator;
  * Created by sircodesalot on 14-2-17.
  */
 public class GenericTypeListExpression extends VerbaExpression
-  implements QIterable<NamedObjectDeclarationExpression> {
-  QList<NamedObjectDeclarationExpression> declarations = new QList<>();
+  implements QIterable<NamedValueExpression> {
+  QList<NamedValueExpression> declarations = new QList<>();
 
   public GenericTypeListExpression(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
@@ -29,7 +29,7 @@ public class GenericTypeListExpression extends VerbaExpression
     lexer.readCurrentAndAdvance(OperatorToken.class, "<");
 
     while (!lexer.currentIs(OperatorToken.class, ">")) {
-      declarations.add(NamedObjectDeclarationExpression.read(this, lexer));
+      declarations.add(NamedValueExpression.read(this, lexer));
 
       if (!lexer.currentIs(OperatorToken.class, ",")) break;
       else lexer.readCurrentAndAdvance(OperatorToken.class, ",");
@@ -47,18 +47,18 @@ public class GenericTypeListExpression extends VerbaExpression
   }
 
   public String representation() {
-    Iterable<String> items = this.declarations.map(NamedObjectDeclarationExpression::representation);
+    Iterable<String> items = this.declarations.map(NamedValueExpression::representation);
     String joinedItems = String.join(", ", items);
 
     return String.format("<%s>", joinedItems);
   }
 
-  public QList<NamedObjectDeclarationExpression> parameters() {
+  public QList<NamedValueExpression> parameters() {
     return this.declarations;
   }
 
   @Override
-  public Iterator<NamedObjectDeclarationExpression> iterator() {
+  public Iterator<NamedValueExpression> iterator() {
     return this.declarations.iterator();
   }
 

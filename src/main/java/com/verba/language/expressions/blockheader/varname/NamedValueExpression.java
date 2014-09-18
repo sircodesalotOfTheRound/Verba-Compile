@@ -2,10 +2,7 @@ package com.verba.language.expressions.blockheader.varname;
 
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.categories.MarkupRvalueExpression;
-import com.verba.language.expressions.categories.NamedDataDeclarationExpression;
-import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.expressions.categories.TypeDeclarationExpression;
+import com.verba.language.expressions.categories.*;
 import com.verba.language.expressions.containers.tuple.TupleItemExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.test.lexing.Lexer;
@@ -14,15 +11,15 @@ import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 /**
  * Created by sircodesalot on 14-2-17.
  */
-public class NamedObjectDeclarationExpression extends VerbaExpression
+public class NamedValueExpression extends VerbaExpression
   implements RValueExpression, TupleItemExpression, MarkupRvalueExpression,
-  NamedDataDeclarationExpression
+  NamedAndTypedExpression, MathOperandExpression
 
 {
   private final FullyQualifiedNameExpression identifier;
   private TypeDeclarationExpression type;
 
-  public NamedObjectDeclarationExpression(VerbaExpression parent, Lexer lexer) {
+  public NamedValueExpression(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
 
     this.identifier = FullyQualifiedNameExpression.read(this, lexer);
@@ -33,8 +30,8 @@ public class NamedObjectDeclarationExpression extends VerbaExpression
     }
   }
 
-  public static NamedObjectDeclarationExpression read(VerbaExpression parent, Lexer lexer) {
-    return new NamedObjectDeclarationExpression(parent, lexer);
+  public static NamedValueExpression read(VerbaExpression parent, Lexer lexer) {
+    return new NamedValueExpression(parent, lexer);
   }
 
   public String representation() {

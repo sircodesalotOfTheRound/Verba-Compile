@@ -2,7 +2,6 @@ package com.verba.language.ast;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
-import com.verba.language.ast.visitor.AstVisitable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.StaticSpaceExpression;
@@ -13,7 +12,7 @@ import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpres
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
@@ -55,7 +54,7 @@ public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<Ver
     this.visitAll(node.rootLevelExpressions());
   }
 
-  public void visit(NamedObjectDeclarationExpression node) {
+  public void visit(NamedValueExpression node) {
     add(node);
 
     if (node.hasTypeConstraint()) {

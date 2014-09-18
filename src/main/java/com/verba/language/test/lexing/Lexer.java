@@ -40,7 +40,7 @@ public interface Lexer extends Iterable<LexInfo> {
 
   public <T extends Token> LexInfo readCurrentAndAdvance(Class<T> type, String representation);
 
-  public LexInfo previous();
+  public LexInfo peekPrevious();
 
   public <T extends Token> boolean currentIs(Class<T> type, String representation);
 
@@ -80,6 +80,7 @@ public interface Lexer extends Iterable<LexInfo> {
 
   public <T extends Token> LexList peekUpTo(Class<T> type, String representation);
 
+  public String text();
 
   public void moveToFirst();
 

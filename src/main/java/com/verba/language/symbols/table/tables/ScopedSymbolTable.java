@@ -14,7 +14,7 @@ import com.verba.language.expressions.blockheader.functions.SignatureDeclaration
 import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
 import com.verba.language.expressions.blockheader.namespaces.NamespaceDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.categories.NamedExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
@@ -109,14 +109,14 @@ public class ScopedSymbolTable implements Serializable {
 
   public void visit(FunctionDeclarationExpression function) {
     // First add the parameterSets
-    QIterable<NamedObjectDeclarationExpression> parameters = function.parameterSets()
+    QIterable<NamedValueExpression> parameters = function.parameterSets()
       .flatten(TupleDeclarationExpression::items)
-      .cast(NamedObjectDeclarationExpression.class);
+      .cast(NamedValueExpression.class);
 
     this.visit(function.genericParameters());
 
     // Then add regular parameterSets
-    for (NamedObjectDeclarationExpression parameter : parameters) {
+    for (NamedValueExpression parameter : parameters) {
       this.add(parameter.identifier().representation(), parameter, new ParameterSymbolTableItem());
     }
 
@@ -138,7 +138,7 @@ public class ScopedSymbolTable implements Serializable {
 
   public void visit(GenericTypeListExpression genericParameters) {
     // Add generic parameterSets
-    for (NamedObjectDeclarationExpression genericParam : genericParameters) {
+    for (NamedValueExpression genericParam : genericParameters) {
       this.add(genericParam.identifier().representation(), genericParam, new GenericParameterSymbolTableItem());
     }
   }

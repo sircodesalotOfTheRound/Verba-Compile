@@ -20,8 +20,10 @@ public class VerbaMemoizingLexer implements Lexer {
   private int fileLength;
   private List<LexInfo> tokens;
   private Stack<Integer> undopoints;
+  private final CodeStream stream;
 
   public VerbaMemoizingLexer(String filename, CodeStream stream) {
+    this.stream = stream;
     this.filename = filename;
     this.tokens = buildList(stream, false, false);
     this.fileLength = stream.getFileLength();
@@ -29,6 +31,7 @@ public class VerbaMemoizingLexer implements Lexer {
   }
 
   public VerbaMemoizingLexer(String filename, CodeStream stream, boolean includeWhitespaces, boolean includeComments) {
+    this.stream = stream;
     this.filename = filename;
     this.tokens = buildList(stream, includeWhitespaces, includeComments);
     this.fileLength = stream.getFileLength();
@@ -79,8 +82,8 @@ public class VerbaMemoizingLexer implements Lexer {
     return this.tokens.get(this.index);
   }
 
-  public LexInfo previous() {
-    return this.tokens.get(--this.index);
+  public LexInfo peekPrevious() {
+    return this.tokens.get(this.index - 1);
   }
 
   public LexInfo readCurrentAndAdvance() {
@@ -269,6 +272,9 @@ public class VerbaMemoizingLexer implements Lexer {
 
     return result;
   }
+
+  @Override
+  public String text() { return stream.text(); }
 
   public <T extends Token> LexList readUpTo(Class<T>... symbols) {
     LexList resultSet = new LexList();

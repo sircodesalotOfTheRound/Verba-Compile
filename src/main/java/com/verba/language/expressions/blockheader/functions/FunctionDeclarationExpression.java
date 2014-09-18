@@ -39,6 +39,7 @@ public class FunctionDeclarationExpression extends VerbaExpression
     }
 
     this.block = BlockDeclarationExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   public static FunctionDeclarationExpression read(VerbaExpression parent, Lexer lexer) {

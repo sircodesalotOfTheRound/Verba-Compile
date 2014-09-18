@@ -74,6 +74,9 @@ public class StringBasedCodeStream implements CodeStream {
   }
 
   @Override
+  public String text() { return this.text; }
+
+  @Override
   public boolean hasNext() {
     return this.index < text.length();
   }

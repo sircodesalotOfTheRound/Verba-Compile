@@ -19,15 +19,15 @@ public class ValidationViolation {
   }
 
   public int line() {
-    return this.expression.lexInfo().line();
+    return this.expression.startingLexPoint().line();
   }
 
   public int column() {
-    return this.expression.lexInfo().column();
+    return this.expression.startingLexPoint().column();
   }
 
   public String filename() {
-    return this.expression.lexInfo().filename();
+    return this.expression.startingLexPoint().filename();
   }
 
 

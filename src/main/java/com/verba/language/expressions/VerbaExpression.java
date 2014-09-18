@@ -1,7 +1,6 @@
 package com.verba.language.expressions;
 
 import com.verba.language.ast.visitor.AstVisitable;
-import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.*;
 import com.verba.language.test.lexing.Lexer;
@@ -24,7 +23,7 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
     .addRule(new ValDeclarationBacktrackRule())
     .addRule(new MutaDeclarationBacktrackRule())
     .addRule(new IfStatementBacktrackRule())
-    .addRule(new VarNameExpressionBacktrackRule())
+    .addRule(new NamedValueExpressionBacktrackRule())
     .addRule(new GrabExpressionBacktrackRule())
     .addRule(new ForStatementBacktrackRule())
     .addRule(new WhileStatementBacktrackRule())
@@ -40,13 +39,14 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
 
   private VerbaExpression parent;
 
-  // TODO: Make this log more than just the first character.
-  // Todo: Should really capture the entire expression range.
-  private final LexInfo lexInfo;
+  private final Lexer lexer;
+  private final LexInfo startingLexPoint;
+  private LexInfo endingLexPoint;
 
   public VerbaExpression(VerbaExpression parent, Lexer lexer) {
     this.parent = parent;
-    this.lexInfo = (lexer != null && lexer.notEOF()) ? lexer.current() : null;
+    this.lexer = lexer;
+    this.startingLexPoint = (lexer != null && lexer.notEOF()) ? lexer.current() : null;
   }
 
   // Parent
@@ -63,21 +63,38 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
   }
 
   // Lex Info
-  public LexInfo lexInfo() {
-    return this.lexInfo;
+  public LexInfo startingLexPoint() {
+    return this.startingLexPoint;
   }
 
-  public int line() {
-    return this.lexInfo.line();
+  protected void closeLexingRegion() {
+    this.endingLexPoint = this.lexer.peekPrevious();
   }
 
-  public int column() {
-    return this.lexInfo.column();
+  public LexInfo endingLexPoint() {
+    return this.endingLexPoint;
   }
 
-  public int absolutePosition() {
-    return this.lexInfo.absolutePosition();
+  public String text() {
+    int startIndex = startingAbsolutePosition();
+    int endIndex = endingAbsolutePosition();
+
+    return lexer.text().substring(startIndex, endIndex);
   }
+
+  public int startingLine() {
+    return this.startingLexPoint.line();
+  }
+  public int startingColumn() {
+    return this.startingLexPoint.column();
+  }
+  public int startingAbsolutePosition() {
+    return this.startingLexPoint.absolutePosition();
+  }
+
+  public int endingLine() { return this.endingLexPoint.line(); }
+  public int endingColumn() { return this.endingLexPoint.column() + this.endingLexPoint.length(); }
+  public int endingAbsolutePosition() { return this.endingLexPoint.absolutePosition() + this.endingLexPoint.length(); }
 
   // Testing
   public <T> boolean is(Class<T> type) {

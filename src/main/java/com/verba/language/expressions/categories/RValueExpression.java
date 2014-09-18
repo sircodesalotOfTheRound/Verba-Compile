@@ -14,7 +14,7 @@ import com.verba.language.test.lexing.tokenization.Token;
 public interface RValueExpression extends TupleItemExpression, Token {
   // LambdaExpression must come before CastedRValueExpression
   // CastedRValueExpression must come before ContainerExpression!
-  final static BacktrackRuleSet<RValueExpression> ruleset
+  public final static BacktrackRuleSet<RValueExpression> ruleset
     = new BacktrackRuleSet<RValueExpression>()
     .addRule(new MarkupDeclarationExpressionBacktrackRule())
     .addRule(new MathExpressionBacktrackRule())
@@ -23,7 +23,7 @@ public interface RValueExpression extends TupleItemExpression, Token {
     .addRule(new NewExpressionBacktrackRule())
     .addRule(new LambdaExpressionBacktrackRule())
     .addRule(new CastedRValueExpressionBacktrackRule())
-    .addRule(new VarNameExpressionBacktrackRule());
+    .addRule(new NamedValueExpressionBacktrackRule());
 
   public static RValueExpression read(VerbaExpression parent, Lexer lexer) {
     return ruleset.resolve(parent, lexer);

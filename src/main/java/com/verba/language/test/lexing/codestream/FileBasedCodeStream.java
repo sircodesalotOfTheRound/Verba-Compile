@@ -10,14 +10,17 @@ import java.io.InputStream;
  * Created by sircodesalot on 14-2-16.
  */
 public class FileBasedCodeStream implements CodeStream {
-  private CodeStream codeStream;
+  private final String text;
+  private final CodeStream codeStream;
 
   public FileBasedCodeStream(String filename, InputStream stream) {
-    this.codeStream = new StringBasedCodeStream(filename, readToEnd(stream));
+    this.text = readToEnd(stream);
+    this.codeStream = new StringBasedCodeStream(filename, this.text);
   }
 
   public FileBasedCodeStream(String path) {
-    this.codeStream = new StringBasedCodeStream(path, readToEnd(path));
+    this.text = readToEnd(path);
+    this.codeStream = new StringBasedCodeStream(path, text);
   }
 
   private String readToEnd(InputStream stream) {
@@ -102,4 +105,7 @@ public class FileBasedCodeStream implements CodeStream {
   public void rollbackToUndoPosition() {
     this.codeStream.rollbackToUndoPosition();
   }
+
+  @Override
+  public String text() { return this.text; }
 }

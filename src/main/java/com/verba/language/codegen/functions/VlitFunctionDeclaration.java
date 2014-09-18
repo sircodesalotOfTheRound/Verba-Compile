@@ -3,7 +3,7 @@ package com.verba.language.codegen.functions;
 import com.verba.language.codegen.opcodes.callframes.CallFrame;
 import com.verba.language.codegen.opcodes.datasegments.DataSegment;
 import com.verba.language.codegen.opcodes.emit.VLitEmitter;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.symbols.meta.decorators.FunctionSymbol;
 
 /**
@@ -30,8 +30,8 @@ public class VlitFunctionDeclaration implements VLitEmitter {
 
   private void writeParameters(DataSegment segment) {
 
-    for (NamedObjectDeclarationExpression parameter : function.parameters()
-      .items().cast(NamedObjectDeclarationExpression.class)) {
+    for (NamedValueExpression parameter : function.parameters()
+      .items().cast(NamedValueExpression.class)) {
 
       segment.addString(parameter.identifier().representation());
       segment.addString(parameter.typeDeclaration().representation());

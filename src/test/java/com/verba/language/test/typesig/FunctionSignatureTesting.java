@@ -4,7 +4,7 @@ import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
-import com.verba.language.expressions.blockheader.varname.NamedObjectDeclarationExpression;
+import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.test.loader.TestFileLoader;
@@ -44,7 +44,7 @@ public class FunctionSignatureTesting {
     assert (singleDynamicArgumentFunction.parameterSets().single().items().singleOrNull() != null);
 
     VerbaExpression arg = singleDynamicArgumentFunction.parameterSets().single().items().single();
-    NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
+    NamedValueExpression dynamicArgument = (NamedValueExpression) arg;
 
     assert (dynamicArgument.name().equals("dynamic_argument"));
     assert (!dynamicArgument.hasTypeConstraint());
@@ -65,7 +65,7 @@ public class FunctionSignatureTesting {
     assert (singleStaticTypedArgumentFunction.parameterSets().single().items().singleOrNull() != null);
 
     VerbaExpression arg = singleStaticTypedArgumentFunction.parameterSets().single().items().single();
-    NamedObjectDeclarationExpression dynamicArgument = (NamedObjectDeclarationExpression) arg;
+    NamedValueExpression dynamicArgument = (NamedValueExpression) arg;
 
     assert (dynamicArgument.name().equals("string_argument"));
     assert (dynamicArgument.hasTypeConstraint());
@@ -87,17 +87,17 @@ public class FunctionSignatureTesting {
     assert (mixedArgumentFunction.parameterSets().count() == 1);
     assert (mixedArgumentFunction.parameterSets().single().items().count() == 3);
 
-    NamedObjectDeclarationExpression stringArg = mixedArgumentFunction
+    NamedValueExpression stringArg = mixedArgumentFunction
       .parameterSets()
       .single()
       .items()
-      .firstAs(NamedObjectDeclarationExpression.class);
+      .firstAs(NamedValueExpression.class);
 
     assert (stringArg.name().equals("string_arg"));
     assert (stringArg.hasTypeConstraint());
     assert (stringArg.typeDeclaration().representation().equals("string"));
 
-    NamedObjectDeclarationExpression intArg = (NamedObjectDeclarationExpression) mixedArgumentFunction
+    NamedValueExpression intArg = (NamedValueExpression) mixedArgumentFunction
       .parameterSets()
       .single()
       .items()
@@ -107,11 +107,11 @@ public class FunctionSignatureTesting {
     assert (intArg.hasTypeConstraint());
     assert (intArg.typeDeclaration().representation().equals("uint64"));
 
-    NamedObjectDeclarationExpression dynamicArg = mixedArgumentFunction
+    NamedValueExpression dynamicArg = mixedArgumentFunction
       .parameterSets()
       .single()
       .items()
-      .lastAs(NamedObjectDeclarationExpression.class);
+      .lastAs(NamedValueExpression.class);
 
     assert (dynamicArg.name().equals("dynamic_arg"));
     assert (!dynamicArg.hasTypeConstraint());
@@ -163,8 +163,8 @@ public class FunctionSignatureTesting {
     assert (signature != null);
     assert (!signature.hasGenericParameters());
     TupleDeclarationExpression parameters = signature.parameterSets().single();
-    NamedObjectDeclarationExpression first = parameters.items().firstAs(NamedObjectDeclarationExpression.class);
-    NamedObjectDeclarationExpression second = parameters.items().lastAs(NamedObjectDeclarationExpression.class);
+    NamedValueExpression first = parameters.items().firstAs(NamedValueExpression.class);
+    NamedValueExpression second = parameters.items().lastAs(NamedValueExpression.class);
 
     assert(first.name().equals("lhs"));
     assert(first.hasTypeConstraint());
