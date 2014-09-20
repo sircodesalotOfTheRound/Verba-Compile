@@ -5,11 +5,11 @@ import com.verba.language.expressions.backtracking.BacktrackRule;
 import com.verba.language.expressions.backtracking.MismatchException;
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
-import com.verba.language.test.lexing.info.LexList;
-import com.verba.language.test.lexing.tokens.NumericToken;
-import com.verba.language.test.lexing.tokens.QuoteToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.parsing.info.LexList;
+import com.verba.language.parsing.tokens.NumericToken;
+import com.verba.language.parsing.tokens.QuoteToken;
 
 /**
  * Created by sircodesalot on 14-2-22.

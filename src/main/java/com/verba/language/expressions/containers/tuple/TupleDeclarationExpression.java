@@ -5,10 +5,11 @@ import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.DataContainerExpression;
+import com.verba.language.expressions.categories.TupleItemExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -22,6 +23,7 @@ public class TupleDeclarationExpression extends VerbaExpression implements TypeD
   public TupleDeclarationExpression(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
     this.tokens = this.readContents(lexer);
+    this.closeLexingRegion();
   }
 
   private QList<VerbaExpression> readContents(Lexer lexer) {

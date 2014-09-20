@@ -1,7 +1,6 @@
 package com.verba.scratchpad;
 
 import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
-import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.parsing.VerbaMemoizingLexer;

@@ -3,9 +3,9 @@ package com.verba.language.expressions.rvalue.simple;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
-import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.parsing.tokens.identifiers.IdentifierToken;
 
 /**
  * Created by sircodesalot on 14-2-24.
@@ -17,6 +17,7 @@ public class IdentifierExpression extends VerbaExpression implements RValueExpre
     super(parent, lexer);
 
     this.identifier = lexer.readCurrentAndAdvance(IdentifierToken.class);
+    this.closeLexingRegion();
   }
 
   public static IdentifierExpression read(VerbaExpression parent, Lexer lexer) {

@@ -6,10 +6,10 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.rvalue.simple.IdentifierExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.QuoteToken;
-import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.QuoteToken;
+import com.verba.language.parsing.tokens.identifiers.IdentifierToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-2-24.
@@ -24,6 +24,7 @@ public class JsonExpressionPair extends VerbaExpression {
     this.lhs = this.readLhsItem(lexer);
     lexer.readCurrentAndAdvance(OperatorToken.class, ":");
     this.rhs = RValueExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   private VerbaExpression readLhsItem(Lexer lexer) {

@@ -3,9 +3,9 @@ package com.verba.language.expressions.access;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,7 +39,7 @@ public class AccessModifierExpression extends VerbaExpression {
       throw new CompilerException("Invalid access modifier");
 
     this.accessModifier = lexer.readCurrentAndAdvance(KeywordToken.class);
-
+    this.closeLexingRegion();
   }
 
   public static AccessModifierExpression read(VerbaExpression expression, Lexer lexer) {

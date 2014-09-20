@@ -4,9 +4,9 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRule;
 import com.verba.language.expressions.backtracking.MismatchException;
 import com.verba.language.expressions.tags.aspect.AspectTagExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexList;
-import com.verba.language.test.lexing.tokens.operators.tags.AspectTagToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexList;
+import com.verba.language.parsing.tokens.operators.tags.AspectTagToken;
 
 /**
  * Created by sircodesalot on 14-2-25.

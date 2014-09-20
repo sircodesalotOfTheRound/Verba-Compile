@@ -5,10 +5,10 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-2-25.
@@ -22,6 +22,7 @@ public class ForStatementExpression extends VerbaExpression {
     super(parent, lexer);
 
     this.readContent(lexer);
+    this.closeLexingRegion();
   }
 
   private void readContent(Lexer lexer) {

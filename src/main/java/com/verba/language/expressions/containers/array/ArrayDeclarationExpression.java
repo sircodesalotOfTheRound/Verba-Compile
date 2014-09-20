@@ -6,11 +6,11 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.DataContainerExpression;
 import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.NumericToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.NumericToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-2-24.
@@ -29,6 +29,7 @@ public class ArrayDeclarationExpression extends VerbaExpression implements RValu
       if (lexer.currentIs(OperatorToken.class, ",")) lexer.readCurrentAndAdvance();
     }
     lexer.readCurrentAndAdvance(EnclosureToken.class, "]");
+    this.closeLexingRegion();
   }
 
   private LexInfo readContents(Lexer lexer) {

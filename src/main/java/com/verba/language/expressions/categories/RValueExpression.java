@@ -3,10 +3,8 @@ package com.verba.language.expressions.categories;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.*;
-import com.verba.language.expressions.containers.markup.MarkupDeclarationExpressionBacktrackRule;
-import com.verba.language.expressions.containers.tuple.TupleItemExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokenization.Token;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokenization.Token;
 
 /**
  * Created by sircodesalot on 14-2-19.

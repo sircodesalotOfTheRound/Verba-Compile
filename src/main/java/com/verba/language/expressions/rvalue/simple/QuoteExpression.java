@@ -6,9 +6,9 @@ import com.verba.language.expressions.categories.LiteralExpression;
 import com.verba.language.expressions.categories.MathOperandExpression;
 import com.verba.language.expressions.categories.NativeTypeExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
-import com.verba.language.test.lexing.tokens.QuoteToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.parsing.tokens.QuoteToken;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
 
 /**
@@ -20,6 +20,7 @@ public class QuoteExpression extends VerbaExpression implements LiteralExpressio
   public QuoteExpression(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
     this.token = lexer.readCurrentAndAdvance(QuoteToken.class);
+    this.closeLexingRegion();
   }
 
   public static QuoteExpression read(VerbaExpression parent, Lexer lexer) {

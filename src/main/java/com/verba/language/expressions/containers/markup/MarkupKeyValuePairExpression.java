@@ -3,8 +3,8 @@ package com.verba.language.expressions.containers.markup;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.MarkupRvalueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-5-21.
@@ -19,6 +19,7 @@ public class MarkupKeyValuePairExpression extends VerbaExpression {
     this.key = VerbaExpression.read(this, lexer);
     lexer.readCurrentAndAdvance(OperatorToken.class, "=");
     this.value = MarkupRvalueExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   public static MarkupKeyValuePairExpression read(VerbaExpression parent, Lexer lexer) {

@@ -1,11 +1,12 @@
 package com.verba.language.expressions.statements.returns;
 
 import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.StatementExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 
 /**
  * Created by sircodesalot on 14-2-22.
@@ -23,6 +24,8 @@ public class ReturnStatementExpression extends VerbaExpression implements Statem
     if (lexer.current().line() == currentLine) {
       this.value = RValueExpression.read(this, lexer);
     }
+
+    this.closeLexingRegion();
   }
 
   public static ReturnStatementExpression read(VerbaExpression expression, Lexer lexer) {
@@ -40,5 +43,10 @@ public class ReturnStatementExpression extends VerbaExpression implements Statem
   @Override
   public void accept(AstVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public void accept(FunctionImageSegmentGenerator functionImageGenerator) {
+    functionImageGenerator.visit(this);
   }
 }

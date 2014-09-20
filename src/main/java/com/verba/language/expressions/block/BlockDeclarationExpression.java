@@ -6,9 +6,9 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
-import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 
 import java.util.Iterator;
 

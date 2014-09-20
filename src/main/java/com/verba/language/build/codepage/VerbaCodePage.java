@@ -6,11 +6,11 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
-import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.VerbaMemoizingLexer;
 import com.verba.language.parsing.codestream.CodeStream;
 import com.verba.language.parsing.codestream.FileBasedCodeStream;
+import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.InputStream;

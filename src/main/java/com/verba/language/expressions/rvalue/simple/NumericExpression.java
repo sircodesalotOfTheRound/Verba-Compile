@@ -3,10 +3,9 @@ package com.verba.language.expressions.rvalue.simple;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.*;
-import com.verba.language.expressions.containers.tuple.TupleItemExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
-import com.verba.language.test.lexing.tokens.NumericToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.parsing.tokens.NumericToken;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
 
 /**
@@ -44,6 +43,7 @@ public class NumericExpression extends VerbaExpression
     super(parent, lexer);
 
     this.token = lexer.readCurrentAndAdvance(NumericToken.class);
+    this.closeLexingRegion();
   }
 
   public static NumericExpression read(VerbaExpression parent, Lexer lexer) {

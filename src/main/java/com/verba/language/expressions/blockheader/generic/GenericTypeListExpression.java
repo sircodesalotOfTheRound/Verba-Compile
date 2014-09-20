@@ -5,8 +5,8 @@ import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 import java.util.Iterator;
 
@@ -23,6 +23,8 @@ public class GenericTypeListExpression extends VerbaExpression
     if (lexer.notEOF() && lexer.currentIs(OperatorToken.class, "<")) {
       this.readExpressions(lexer);
     }
+
+    this.closeLexingRegion();
   }
 
   private void readExpressions(Lexer lexer) {

@@ -4,9 +4,9 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.MetaTagExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.operators.tags.HashTagToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.operators.tags.HashTagToken;
 
 /**
  * Created by sircodesalot on 14-2-25.
@@ -20,6 +20,7 @@ public class HashTagExpression extends VerbaExpression implements MetaTagExpress
     lexer.readCurrentAndAdvance(HashTagToken.class);
     this.identifier = FullyQualifiedNameExpression.read(this, lexer);
     lexer.readCurrentAndAdvance(EnclosureToken.class, "]");
+    this.closeLexingRegion();
   }
 
   public static HashTagExpression read(VerbaExpression parent, Lexer lexer) {

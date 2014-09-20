@@ -4,9 +4,9 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 
 /**
  * Created by sircodesalot on 14-2-26.
@@ -24,6 +24,7 @@ public class IfStatementExpression extends VerbaExpression {
     lexer.readCurrentAndAdvance(EnclosureToken.class, ")");
 
     this.block = BlockDeclarationExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   public static IfStatementExpression read(VerbaExpression parent, Lexer lexer) {

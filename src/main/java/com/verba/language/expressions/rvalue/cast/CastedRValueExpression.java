@@ -4,8 +4,8 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
 
 /**
  * Created by sircodesalot on 14-2-27.
@@ -22,6 +22,7 @@ public class CastedRValueExpression extends VerbaExpression implements RValueExp
     lexer.readCurrentAndAdvance(EnclosureToken.class, ")");
 
     this.rvalue = RValueExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   public static CastedRValueExpression read(VerbaExpression parent, Lexer lexer) {

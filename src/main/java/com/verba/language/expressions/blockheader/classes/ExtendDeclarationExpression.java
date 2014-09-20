@@ -6,9 +6,9 @@ import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
 
 /**
  * Created by sircodesalot on 14-2-17.
@@ -26,6 +26,7 @@ public class ExtendDeclarationExpression extends VerbaExpression implements Name
     this.genericTypeList = GenericTypeListExpression.read(this, lexer);
 
     this.block = BlockDeclarationExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   public static ExtendDeclarationExpression read(VerbaExpression parent, Lexer lexer) {

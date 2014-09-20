@@ -6,10 +6,10 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.MathOperandExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.identifiers.IdentifierToken;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 
 /**
  * Created by sircodesalot on 14-2-24.
@@ -27,6 +27,8 @@ public class NewExpression extends VerbaExpression implements RValueExpression, 
       lexer.readCurrentAndAdvance(EnclosureToken.class, "(");
       lexer.readCurrentAndAdvance(EnclosureToken.class, ")");
     }
+
+    this.closeLexingRegion();
   }
 
   private TypeDeclarationExpression parseExpression(Lexer lexer) {

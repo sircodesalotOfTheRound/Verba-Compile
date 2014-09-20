@@ -4,7 +4,6 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.*;
-import com.verba.language.expressions.categories.TupleItemExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.tokens.operators.OperatorToken;

@@ -1,15 +1,16 @@
 package com.verba.language.expressions.statements.assignment;
 
 import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.StatementExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
-import com.verba.language.test.lexing.tokens.operators.assignment.AssignmentToken;
-import com.verba.language.test.lexing.tokens.operators.assignment.CompositeAssignmentToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.tokens.operators.assignment.AssignmentToken;
+import com.verba.language.parsing.tokens.operators.assignment.CompositeAssignmentToken;
 
 /**
  * Created by sircodesalot on 14-2-27.
@@ -31,6 +32,7 @@ public class AssignmentStatementExpression extends VerbaExpression implements St
     }
 
     this.rvalue = RValueExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   public static AssignmentStatementExpression read(VerbaExpression parent, Lexer lexer) {
@@ -52,5 +54,10 @@ public class AssignmentStatementExpression extends VerbaExpression implements St
   @Override
   public void accept(AstVisitor visitor) {
 
+  }
+
+  @Override
+  public void accept(FunctionImageSegmentGenerator functionImageGenerator) {
+   functionImageGenerator.visit(this);
   }
 }

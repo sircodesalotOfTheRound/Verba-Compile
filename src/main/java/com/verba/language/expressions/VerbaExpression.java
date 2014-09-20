@@ -3,8 +3,8 @@ package com.verba.language.expressions;
 import com.verba.language.ast.visitor.AstVisitable;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.*;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexInfo;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexInfo;
 
 import java.io.Serializable;
 

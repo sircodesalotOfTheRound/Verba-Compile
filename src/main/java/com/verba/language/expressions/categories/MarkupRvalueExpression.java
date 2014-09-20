@@ -4,7 +4,7 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.LiteralExpressionRule;
 import com.verba.language.expressions.backtracking.rules.NamedValueExpressionBacktrackRule;
-import com.verba.language.test.lexing.Lexer;
+import com.verba.language.parsing.Lexer;
 
 /**
  * Created by sircodesalot on 14-5-21.

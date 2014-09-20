@@ -9,10 +9,10 @@ import com.verba.language.expressions.categories.*;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.members.MemberExpression;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -34,6 +34,8 @@ public class SignatureDeclarationExpression extends VerbaExpression implements N
       lexer.readCurrentAndAdvance(OperatorToken.class, ":");
       this.returnType = TypeDeclarationExpression.read(this, lexer);
     }
+
+    this.closeLexingRegion();
   }
 
   public static SignatureDeclarationExpression read(VerbaExpression parent, Lexer lexer) {

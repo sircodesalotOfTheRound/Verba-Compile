@@ -5,9 +5,9 @@ import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.IdentifierToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 import java.util.Iterator;
 
@@ -29,6 +29,7 @@ public class FullyQualifiedNameExpression extends VerbaExpression
       fullyQualifiedName.add(MemberExpression.read(this, lexer));
     }
 
+    this.closeLexingRegion();
   }
 
   public static boolean IsFullyQualifiedName(Lexer lexer) {

@@ -5,8 +5,6 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.LiteralExpression;
 import com.verba.language.expressions.categories.NativeTypeExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
-import com.verba.language.expressions.rvalue.simple.NumericExpression;
-import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 
 /**
  * Created by sircodesalot on 14-5-28.

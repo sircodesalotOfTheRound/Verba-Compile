@@ -4,9 +4,9 @@ import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.IdentifierToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-5-21.
@@ -25,6 +25,8 @@ public class MarkupTagItemExpression extends VerbaExpression {
     this.identifier = this.readIdentifier(lexer);
     this.items = this.readItems(lexer);
     this.readClosing(lexer);
+
+    this.closeLexingRegion();
   }
 
   private void readOpening(Lexer lexer) {

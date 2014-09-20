@@ -2,8 +2,8 @@ package com.verba.language.expressions.categories;
 
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
-import com.verba.language.expressions.backtracking.rules.*;
-import com.verba.language.test.lexing.Lexer;
+import com.verba.language.expressions.backtracking.rules.MathExpressionBacktrackRule;
+import com.verba.language.parsing.Lexer;
 
 /**
  * Created by sircodesalot on 14/9/18.

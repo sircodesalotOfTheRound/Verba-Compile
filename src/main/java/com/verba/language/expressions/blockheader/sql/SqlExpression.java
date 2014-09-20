@@ -3,8 +3,8 @@ package com.verba.language.expressions.blockheader.sql;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 
 /**
  * Created by sircodesalot on 14-2-17.
@@ -17,6 +17,8 @@ public class SqlExpression extends VerbaExpression {
 
     lexer.readNext(KeywordToken.class, "sql");
     this.identifier = FullyQualifiedNameExpression.read(this, lexer);
+
+    this.closeLexingRegion();
   }
 
   public static VerbaExpression read(VerbaExpression parent, Lexer lexer) {

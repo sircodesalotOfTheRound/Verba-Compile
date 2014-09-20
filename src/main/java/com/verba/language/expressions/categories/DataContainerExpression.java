@@ -6,8 +6,8 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
 
 /**
  * Represents some sort of non-polymorphic container object (Array, Tuple, Json, Set).

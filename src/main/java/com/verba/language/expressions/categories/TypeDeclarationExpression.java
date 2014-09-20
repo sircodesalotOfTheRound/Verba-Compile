@@ -4,8 +4,8 @@ import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokenization.Token;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokenization.Token;
 
 /**
  * Created by sircodesalot on 14-2-25.
