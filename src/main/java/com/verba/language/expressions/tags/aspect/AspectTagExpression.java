@@ -6,11 +6,11 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.MetaTagExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.rvalue.newexpression.NewExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
-import com.verba.language.test.lexing.tokens.operators.tags.AspectTagToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.tokens.operators.tags.AspectTagToken;
 
 /**
  * Created by sircodesalot on 14-2-25.
@@ -36,6 +36,7 @@ public class AspectTagExpression extends VerbaExpression implements MetaTagExpre
 
     // Read the closing ']'
     lexer.readCurrentAndAdvance(EnclosureToken.class, "]");
+    this.closeLexingRegion();
   }
 
   private VerbaExpression readType(Lexer lexer) {

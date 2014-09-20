@@ -2,8 +2,8 @@ package com.verba.language.expressions.statements.meta;
 
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 
 /**
@@ -17,6 +17,8 @@ public class MetaStatementExpression extends VerbaExpression {
 
     lexer.readCurrentAndAdvance(OperatorToken.class, "@");
     this.statement = VerbaExpression.read(this, lexer);
+
+    this.closeLexingRegion();
   }
 
   public static MetaStatementExpression read(VerbaExpression parent, Lexer lexer) {

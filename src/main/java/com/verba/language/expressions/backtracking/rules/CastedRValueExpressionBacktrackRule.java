@@ -5,9 +5,9 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRule;
 import com.verba.language.expressions.backtracking.MismatchException;
 import com.verba.language.expressions.rvalue.cast.CastedRValueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexList;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexList;
+import com.verba.language.parsing.tokens.EnclosureToken;
 
 /**
  * Created by sircodesalot on 14-2-27.

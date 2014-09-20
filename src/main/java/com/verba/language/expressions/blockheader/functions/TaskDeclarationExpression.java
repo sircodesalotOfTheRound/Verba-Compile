@@ -11,9 +11,9 @@ import com.verba.language.expressions.containers.tuple.TupleDeclarationExpressio
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.members.MemberExpression;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-2-17.
@@ -37,6 +37,7 @@ public class TaskDeclarationExpression extends VerbaExpression
     }
 
     this.block = BlockDeclarationExpression.read(this, lexer);
+    this.closeLexingRegion();
   }
 
   public static TaskDeclarationExpression read(VerbaExpression parent, Lexer lexer) {

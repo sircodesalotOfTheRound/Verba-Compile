@@ -5,12 +5,12 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.backtracking.BacktrackRule;
 import com.verba.language.expressions.backtracking.MismatchException;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexList;
-import com.verba.language.test.lexing.info.TokenSignature;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.identifiers.IdentifierToken;
-import com.verba.language.test.lexing.tokens.operators.assignment.AssignmentToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexList;
+import com.verba.language.parsing.info.TokenSignature;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.identifiers.IdentifierToken;
+import com.verba.language.parsing.tokens.operators.assignment.AssignmentToken;
 
 /**
  * Created by sircodesalot on 14-2-27.

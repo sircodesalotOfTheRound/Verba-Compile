@@ -1,19 +1,20 @@
 package com.verba.language.expressions.blockheader.varname;
 
 import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.*;
-import com.verba.language.expressions.containers.tuple.TupleItemExpression;
+import com.verba.language.expressions.categories.TupleItemExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-2-17.
  */
 public class NamedValueExpression extends VerbaExpression
   implements RValueExpression, TupleItemExpression, MarkupRvalueExpression,
-  NamedAndTypedExpression, MathOperandExpression
+    NamedAndTypedExpression, MathOperandExpression, StatementExpression
 
 {
   private final FullyQualifiedNameExpression identifier;
@@ -28,6 +29,8 @@ public class NamedValueExpression extends VerbaExpression
       lexer.readCurrentAndAdvance(OperatorToken.class, ":");
       this.type = TypeDeclarationExpression.read(this, lexer);
     }
+
+    this.closeLexingRegion();
   }
 
   public static NamedValueExpression read(VerbaExpression parent, Lexer lexer) {
@@ -61,5 +64,10 @@ public class NamedValueExpression extends VerbaExpression
   @Override
   public void accept(AstVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public void accept(FunctionImageSegmentGenerator functionImageGenerator) {
+    functionImageGenerator.visit(this);
   }
 }

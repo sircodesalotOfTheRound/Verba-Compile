@@ -2,8 +2,8 @@ package com.verba.language.expressions.backtracking;
 
 import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexList;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexList;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;

@@ -6,9 +6,9 @@ import com.verba.language.expressions.backtracking.MismatchException;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.info.LexList;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.info.LexList;
+import com.verba.language.parsing.tokens.EnclosureToken;
 
 /**
  * Created by sircodesalot on 14-2-27.

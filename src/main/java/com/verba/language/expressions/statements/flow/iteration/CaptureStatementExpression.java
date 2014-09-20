@@ -4,9 +4,9 @@ import com.javalinq.implementations.QList;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-4-28.
@@ -18,6 +18,7 @@ public class CaptureStatementExpression extends VerbaExpression {
     super(parent, lexer);
 
     this.variables = this.consumeVariables(lexer);
+    this.closeLexingRegion();
   }
 
   private QList<FullyQualifiedNameExpression> consumeVariables(Lexer lexer) {

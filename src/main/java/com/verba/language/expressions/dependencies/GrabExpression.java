@@ -4,13 +4,14 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.QuoteToken;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.QuoteToken;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 
 /**
  * Created by sircodesalot on 14-5-20.
  */
+@Deprecated
 public class GrabExpression extends VerbaExpression {
   private final VerbaExpression resourceName;
 

@@ -6,9 +6,9 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.categories.*;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.identifiers.KeywordToken;
-import com.verba.language.test.lexing.tokens.operators.assignment.AssignmentToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.identifiers.KeywordToken;
+import com.verba.language.parsing.tokens.operators.assignment.AssignmentToken;
 
 /**
  * Created by sircodesalot on 14-2-19.
@@ -23,6 +23,7 @@ public class MutableDeclarationStatement extends VerbaExpression
     super(parent, lexer);
 
     this.readExpression(lexer);
+    this.closeLexingRegion();
   }
 
   private void readExpression(Lexer lexer) {

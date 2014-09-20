@@ -7,8 +7,8 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.generic.GenericTypeListExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.rvalue.simple.IdentifierExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
 
 /**
  * Created by sircodesalot on 14-2-25.
@@ -30,6 +30,8 @@ public class MemberExpression extends VerbaExpression {
         parameterLists.add(TupleDeclarationExpression.read(this, lexer));
       }
     } while (lexer.notEOF() && lexer.currentIs(EnclosureToken.class, "("));
+
+    this.closeLexingRegion();
   }
 
   public static MemberExpression read(VerbaExpression parent, Lexer lexer) {

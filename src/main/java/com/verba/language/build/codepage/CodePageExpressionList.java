@@ -5,7 +5,7 @@ import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
-import com.verba.language.test.lexing.Lexer;
+import com.verba.language.parsing.Lexer;
 
 import java.util.Iterator;
 

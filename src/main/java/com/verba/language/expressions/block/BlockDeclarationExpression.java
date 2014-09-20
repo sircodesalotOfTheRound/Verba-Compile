@@ -7,8 +7,8 @@ import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.EnclosureToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.EnclosureToken;
 
 import java.util.Iterator;
 
@@ -38,6 +38,8 @@ public class BlockDeclarationExpression extends VerbaExpression
     }
 
     lexer.readCurrentAndAdvance(EnclosureToken.class, EnclosureToken.CLOSE_BRACE);
+
+    this.closeLexingRegion();
   }
 
   public boolean hasItems() {

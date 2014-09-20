@@ -3,8 +3,8 @@ package com.verba.language.expressions.rvalue.math;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.operators.mathop.MathOpToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.operators.mathop.MathOpToken;
 
 /**
  * Created by sircodesalot on 14-2-27.
@@ -17,6 +17,7 @@ public class RpnExpression extends VerbaExpression implements RValueExpression {
     super(parent, lexer);
 
     this.expressions = new RpnMap(parent, lexer);
+    this.closeLexingRegion();
   }
 
   private boolean isNextMathToken(Lexer lexer) {

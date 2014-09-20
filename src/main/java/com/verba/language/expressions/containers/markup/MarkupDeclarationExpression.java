@@ -6,8 +6,8 @@ import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.MarkupTagExpression;
 import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.test.lexing.Lexer;
-import com.verba.language.test.lexing.tokens.operators.OperatorToken;
+import com.verba.language.parsing.Lexer;
+import com.verba.language.parsing.tokens.operators.OperatorToken;
 
 /**
  * Created by sircodesalot on 14-5-22.
@@ -21,6 +21,7 @@ public class MarkupDeclarationExpression extends VerbaExpression
     super(parent, lexer);
 
     this.tags = this.readAllTags(lexer);
+    this.closeLexingRegion();
   }
 
   private QIterable<VerbaExpression> readAllTags(Lexer lexer) {
