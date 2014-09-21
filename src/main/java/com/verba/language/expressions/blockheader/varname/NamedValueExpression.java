@@ -1,9 +1,11 @@
 package com.verba.language.expressions.blockheader.varname;
 
+import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.*;
+import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.tokens.operators.OperatorToken;
@@ -13,7 +15,7 @@ import com.verba.language.parsing.tokens.operators.OperatorToken;
  */
 public class NamedValueExpression extends VerbaExpression
   implements RValueExpression, TupleItemExpression, MarkupRvalueExpression,
-    NamedAndTypedExpression, MathOperandExpression, StatementExpression
+    NamedAndTypedExpression, MathOperandExpression, FunctionElementExpression
 
 {
   private final FullyQualifiedNameExpression identifier;
@@ -56,8 +58,14 @@ public class NamedValueExpression extends VerbaExpression
     return this.type;
   }
 
+  public QIterable<TupleDeclarationExpression> parameters() { return this.identifier.first().parameterLists(); }
+
   public FullyQualifiedNameExpression identifier() {
     return this.identifier;
+  }
+
+  public boolean hasParameters() {
+    return this.identifier.first().hasParameters();
   }
 
   @Override

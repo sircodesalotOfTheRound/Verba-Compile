@@ -25,5 +25,4 @@ public interface TypeDeclarationExpression extends Token {
 
   public abstract String representation();
 
-
 }

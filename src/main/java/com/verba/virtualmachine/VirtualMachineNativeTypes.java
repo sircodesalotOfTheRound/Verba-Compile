@@ -12,10 +12,10 @@ import com.verba.language.expressions.categories.TypeDeclarationExpression;
 public final class VirtualMachineNativeTypes {
   // TODO: These items should be declared on the symbol table.
   // String Literal type.
-  public static final TypeDeclarationExpression STRING_LITERAL = new TypeDeclarationExpression() {
+  public static final TypeDeclarationExpression UTF8 = new TypeDeclarationExpression() {
     @Override
     public String representation() {
-      return "string";
+      return "utf8";
     }
   };
 

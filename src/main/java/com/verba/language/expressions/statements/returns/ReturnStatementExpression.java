@@ -3,8 +3,8 @@ package com.verba.language.expressions.statements.returns;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
 import com.verba.language.expressions.VerbaExpression;
+import com.verba.language.expressions.categories.FunctionElementExpression;
 import com.verba.language.expressions.categories.RValueExpression;
-import com.verba.language.expressions.categories.StatementExpression;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.tokens.identifiers.KeywordToken;
 
@@ -12,7 +12,7 @@ import com.verba.language.parsing.tokens.identifiers.KeywordToken;
  * Created by sircodesalot on 14-2-22.
  */
 
-public class ReturnStatementExpression extends VerbaExpression implements StatementExpression {
+public class ReturnStatementExpression extends VerbaExpression implements FunctionElementExpression {
   private RValueExpression value;
 
   public ReturnStatementExpression(VerbaExpression parent, Lexer lexer) {

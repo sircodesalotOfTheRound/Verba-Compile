@@ -5,6 +5,7 @@ import com.verba.language.codegen.rendering.OpCodeRenderer;
 /**
  * Created by sircodesalot on 14/9/19.
  */
-public abstract class VerbajOpCode {
- public abstract void render(OpCodeRenderer renderer);
+public interface VerbajOpCode {
+  int opNumber();
+  void render(OpCodeRenderer renderer);
 }

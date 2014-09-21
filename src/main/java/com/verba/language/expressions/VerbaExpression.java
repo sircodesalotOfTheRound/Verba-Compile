@@ -75,7 +75,7 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
     return this.endingLexPoint;
   }
 
-  public String text() {
+  public String codeText() {
     int startIndex = startingAbsolutePosition();
     int endIndex = endingAbsolutePosition();
 

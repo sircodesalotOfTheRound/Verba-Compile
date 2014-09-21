@@ -1,11 +1,9 @@
 package com.verba.language.expressions.rvalue.simple;
 
 import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.categories.LiteralExpression;
-import com.verba.language.expressions.categories.MathOperandExpression;
-import com.verba.language.expressions.categories.NativeTypeExpression;
-import com.verba.language.expressions.categories.TypeDeclarationExpression;
+import com.verba.language.expressions.categories.*;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.info.LexInfo;
 import com.verba.language.parsing.tokens.QuoteToken;
@@ -14,7 +12,8 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
 /**
  * Created by sircodesalot on 14-2-19.
  */
-public class QuoteExpression extends VerbaExpression implements LiteralExpression, NativeTypeExpression, MathOperandExpression {
+public class QuoteExpression extends VerbaExpression implements LiteralExpression, NativeTypeExpression, MathOperandExpression,
+  FunctionElementExpression{
   private final LexInfo token;
 
   public QuoteExpression(VerbaExpression parent, Lexer lexer) {
@@ -42,6 +41,11 @@ public class QuoteExpression extends VerbaExpression implements LiteralExpressio
 
   @Override
   public TypeDeclarationExpression nativeTypeDeclaration() {
-    return VirtualMachineNativeTypes.STRING_LITERAL;
+    return VirtualMachineNativeTypes.UTF8;
+  }
+
+  @Override
+  public void accept(FunctionImageSegmentGenerator functionImageGenerator) {
+    functionImageGenerator.visit(this);
   }
 }
