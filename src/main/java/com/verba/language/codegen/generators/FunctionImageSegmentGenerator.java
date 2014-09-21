@@ -13,6 +13,7 @@ import com.verba.language.expressions.categories.FunctionElementExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
+import com.verba.language.facades.FunctionCallFacade;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -47,13 +48,11 @@ public class FunctionImageSegmentGenerator {
   }
 
   public void visit(NamedValueExpression namedValueExpression) {
-    for (FunctionElementExpression declaration : namedValueExpression
-      .parameters()
-      .first()
-      .items()
-      .cast(FunctionElementExpression.class))
-    {
-      declaration.accept(this);
+    if (FunctionCallFacade.isFunctionCall(namedValueExpression)) {
+      FunctionCallFacade call = new FunctionCallFacade(namedValueExpression);
+      for (FunctionElementExpression declaration : call.primaryParameters().cast(FunctionElementExpression.class)) {
+        declaration.accept(this);
+      }
     }
   }
 
