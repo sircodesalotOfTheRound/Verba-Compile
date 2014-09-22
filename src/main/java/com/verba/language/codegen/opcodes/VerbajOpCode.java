@@ -7,5 +7,6 @@ import com.verba.language.codegen.rendering.OpCodeRenderer;
  */
 public interface VerbajOpCode {
   int opNumber();
+  String opName();
   void render(OpCodeRenderer renderer);
 }

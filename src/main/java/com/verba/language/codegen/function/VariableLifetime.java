@@ -1,4 +1,4 @@
-package com.verba.language.graphs.function;
+package com.verba.language.codegen.function;
 
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
@@ -22,10 +22,20 @@ public class VariableLifetime {
   public int endingLineNumber() { return endingLineNumber; }
 
   public void updateEndingLineNumber(VerbaExpression expression) {
+    validateExpression(expression);
+
+    this.endingLineNumber = expression.endingLine();
+  }
+
+  private void validateExpression(VerbaExpression expression) {
     if (!this.expression.text().equals(expression.text())) {
       throw new CompilerException("Variables do not match");
     }
+  }
 
-    this.endingLineNumber = expression.endingLine();
+  public boolean isFirstInstance(VerbaExpression expression) {
+    validateExpression(expression);
+
+    return (expression.startingLine() == beginningLineNumber);
   }
 }

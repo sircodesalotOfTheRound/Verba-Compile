@@ -1,4 +1,4 @@
-package com.verba.language.graphs.function;
+package com.verba.language.codegen.function;
 
 import com.verba.language.ast.FunctionElementVisitor;
 import com.verba.language.expressions.VerbaExpression;
@@ -58,12 +58,17 @@ public class VariableLifetimeGraph implements FunctionElementVisitor {
     }
   }
 
-  public boolean containsVariable(String key) {
-    return this.lifetimes.containsLifetime(key);
+  public boolean containsVariable(VerbaExpression expression) {
+    return this.lifetimes.containsLifetime(expression);
   }
 
-  public VariableLifetime getVariableLifetime(String key) {
-    return this.lifetimes.getLifetime(key);
+  public VariableLifetime getVariableLifetime(VerbaExpression expression) {
+    return this.lifetimes.getLifetime(expression);
+  }
+
+  public boolean isFirstOccurance(VerbaExpression expression) {
+    VariableLifetime lifetime = this.lifetimes.getLifetime(expression);
+    return lifetime.isFirstInstance(expression);
   }
 
 }

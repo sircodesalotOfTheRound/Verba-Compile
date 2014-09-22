@@ -1,14 +1,15 @@
 package com.verba.language.codegen.rendering;
 
+import com.verba.language.codegen.opcodes.VerbajOpCode;
+
 /**
  * Created by sircodesalot on 14/9/19.
  */
 public interface OpCodeRenderer {
-  void writeOp(int value);
-  void writeInt8(int value);
-  void writeInt16(int value);
-  void writeInt32(int value);
-  void writeInt64(int value);
+  void writeInt8(String label, int value);
+  void writeInt16(String label, int value);
+  void writeInt32(String label, int value);
+  void writeInt64(String label, int value);
 
-  void writeString(String value);
+  void writeString(String label, String value);
 }

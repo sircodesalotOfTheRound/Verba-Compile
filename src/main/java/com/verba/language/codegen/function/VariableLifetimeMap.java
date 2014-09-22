@@ -1,4 +1,4 @@
-package com.verba.language.graphs.function;
+package com.verba.language.codegen.function;
 
 import com.verba.language.expressions.VerbaExpression;
 
@@ -24,11 +24,11 @@ public class VariableLifetimeMap {
     lifetimes.put(expression.text(), new VariableLifetime(expression));
   }
 
-  public boolean containsLifetime(String key) {
-    return this.lifetimes.containsKey(key);
+  public boolean containsLifetime(VerbaExpression expression) {
+    return this.lifetimes.containsKey(expression.text());
   }
 
-  public VariableLifetime getLifetime(String key) {
-    return lifetimes.get(key);
+  public VariableLifetime getLifetime(VerbaExpression expression) {
+    return lifetimes.get(expression.text());
   }
 }

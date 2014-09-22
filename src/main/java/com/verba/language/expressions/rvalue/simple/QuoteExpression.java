@@ -32,6 +32,11 @@ public class QuoteExpression extends VerbaExpression
     return token.representation();
   }
 
+  public String innerText() {
+    String rep = representation();
+    return rep.substring(1, rep.length() - 1);
+  }
+
   public LexInfo quotation() {
     return this.token;
   }

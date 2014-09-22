@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class VirtualVariableSet {
   private final VirtualVariable[] variablesByList;
-  private final Map<VerbaExpression, VirtualVariable> variablesByExpression = new HashMap<>();
+  private final Map<String, VirtualVariable> variablesByExpression = new HashMap<>();
   private final QSet<VirtualVariable> variablesBySet = new QSet<>();
   private final QSet<Integer> availableRegisters = new QSet<>();
 
@@ -36,13 +36,13 @@ public class VirtualVariableSet {
   }
 
   public VirtualVariable variableByExpression(VerbaExpression expression) {
-    return this.variablesByExpression.get(expression);
+    return this.variablesByExpression.get(expression.text());
   }
 
   public void add(VirtualVariable variable) {
     this.variablesByList[variable.variableNumber()] = variable;
 
-    this.variablesByExpression.put(variable.expression(), variable);
+    this.variablesByExpression.put(variable.expression().text(), variable);
     this.variablesBySet.add(variable);
   }
 

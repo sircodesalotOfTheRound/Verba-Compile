@@ -24,9 +24,13 @@ public class CallOpCode implements VerbajOpCode {
   public int opNumber() { return 0x43; }
 
   @Override
+  public String opName() {
+    return "Call";
+  }
+
+  @Override
   public void render(OpCodeRenderer renderer) {
-    renderer.writeOp(0xcc);
-    renderer.writeString(function);
+    renderer.writeString("function_name", function);
   }
 
   public String function() {

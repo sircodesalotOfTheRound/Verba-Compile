@@ -1,4 +1,4 @@
-package com.verba.language.graphs.function;
+package com.verba.language.codegen.function;
 
 /**
  * Created by sircodesalot on 14/9/21.

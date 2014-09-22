@@ -27,6 +27,8 @@ public class FunctionCallFacade {
     return expression.parameters().count() > 1;
   }
 
+  public String functionName() { return expression.name(); }
+
   public QIterable<VerbaExpression> primaryParameters() {
     return expression.identifier().members().first().parameterLists().first().items();
   }

@@ -20,9 +20,12 @@ public class LdStrOpCode implements VerbajOpCode {
   public int opNumber() { return 0xd1; }
 
   @Override
+  public String opName() { return "LdStr"; }
+
+  @Override
   public void render(OpCodeRenderer renderer) {
-    renderer.writeOp(0xcd);
-    renderer.writeInt16(text.length());
+    renderer.writeInt8("varnum", variable.variableNumber());
+    renderer.writeString("text", text);
   }
 
   public String text() { return this.text; }
