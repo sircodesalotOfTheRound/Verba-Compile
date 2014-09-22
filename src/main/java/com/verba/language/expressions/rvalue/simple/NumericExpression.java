@@ -13,7 +13,7 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  */
 public class NumericExpression extends VerbaExpression
   implements LiteralExpression, TupleItemExpression, MarkupRvalueExpression, NativeTypeExpression,
-  MathOperandExpression {
+  MathOperandExpression, RegisterAllocated {
 
   private LexInfo token;
 

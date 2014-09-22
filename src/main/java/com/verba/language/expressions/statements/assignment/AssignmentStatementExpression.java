@@ -1,7 +1,8 @@
 package com.verba.language.expressions.statements.assignment;
 
+import com.verba.language.ast.FunctionElementVisitor;
 import com.verba.language.ast.visitor.AstVisitor;
-import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
+import com.verba.language.codegen.generators.FunctionGraph;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.FunctionElementExpression;
 import com.verba.language.expressions.categories.RValueExpression;
@@ -57,7 +58,7 @@ public class AssignmentStatementExpression extends VerbaExpression implements Fu
   }
 
   @Override
-  public void accept(FunctionImageSegmentGenerator functionImageGenerator) {
-   functionImageGenerator.visit(this);
+  public void accept(FunctionElementVisitor visitor) {
+    visitor.visit(this);
   }
 }

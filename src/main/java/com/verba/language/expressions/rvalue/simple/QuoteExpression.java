@@ -1,7 +1,8 @@
 package com.verba.language.expressions.rvalue.simple;
 
+import com.verba.language.ast.FunctionElementVisitor;
 import com.verba.language.ast.visitor.AstVisitor;
-import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
+import com.verba.language.codegen.generators.FunctionGraph;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.*;
 import com.verba.language.parsing.Lexer;
@@ -12,8 +13,9 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
 /**
  * Created by sircodesalot on 14-2-19.
  */
-public class QuoteExpression extends VerbaExpression implements LiteralExpression, NativeTypeExpression, MathOperandExpression,
-  FunctionElementExpression{
+public class QuoteExpression extends VerbaExpression
+  implements LiteralExpression, NativeTypeExpression, MathOperandExpression,
+  FunctionElementExpression, RegisterAllocated {
   private final LexInfo token;
 
   public QuoteExpression(VerbaExpression parent, Lexer lexer) {
@@ -45,7 +47,7 @@ public class QuoteExpression extends VerbaExpression implements LiteralExpressio
   }
 
   @Override
-  public void accept(FunctionImageSegmentGenerator functionImageGenerator) {
-    functionImageGenerator.visit(this);
+  public void accept(FunctionElementVisitor visitor) {
+    visitor.visit(this);
   }
 }

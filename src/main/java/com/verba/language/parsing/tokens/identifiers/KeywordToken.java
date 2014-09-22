@@ -9,7 +9,7 @@ public class KeywordToken extends IdentifierToken {
     String[] basicKeywords = new String[]{
       "public", "private", "protected", "internal",
       "static", "operator", "override", "segment", "virtual", "injected",
-      "to", "in", "withns", "trait",
+      "to", "in", "withns", "trait", "interface",
       "options", "option", "get", "set", "inline",
       "namespace", "class", "abstract", "extend", "sql", "native",
       "signature", "fn", "task", "template", "fork", "event", "proxy",

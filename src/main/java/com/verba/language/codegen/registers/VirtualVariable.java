@@ -16,7 +16,7 @@ public class VirtualVariable {
     this.expression = expression;
     this.variableNumber = variableNumber;
     this.type = type;
-    this.text = expression.codeText();
+    this.text = expression.text();
   }
 
   public int variableNumber() { return this.variableNumber; }

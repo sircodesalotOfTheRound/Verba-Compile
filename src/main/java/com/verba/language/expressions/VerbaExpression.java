@@ -75,7 +75,7 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
     return this.endingLexPoint;
   }
 
-  public String codeText() {
+  public String text() {
     int startIndex = startingAbsolutePosition();
     int endIndex = endingAbsolutePosition();
 
@@ -107,5 +107,20 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
 
   public static VerbaExpression read(VerbaExpression parent, Lexer lexer) {
     return rules.resolve(parent, lexer);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof VerbaExpression)) {
+      return false;
+    }
+
+    if (this == obj) {
+      return true;
+    }
+
+    VerbaExpression rhs = (VerbaExpression)obj;
+    return startingAbsolutePosition() == rhs.startingAbsolutePosition()
+      && endingAbsolutePosition() == rhs.endingAbsolutePosition();
   }
 }

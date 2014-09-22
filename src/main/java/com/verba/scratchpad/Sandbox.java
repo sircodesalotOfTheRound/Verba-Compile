@@ -1,6 +1,6 @@
 package com.verba.scratchpad;
 
-import com.verba.language.codegen.generators.FunctionImageSegmentGenerator;
+import com.verba.language.codegen.generators.FunctionGraph;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.parsing.VerbaMemoizingLexer;
@@ -17,6 +17,6 @@ public class Sandbox {
 
     FunctionDeclarationExpression expression = (FunctionDeclarationExpression)VerbaExpression.read(null, lexer);
 
-    FunctionImageSegmentGenerator generator = new FunctionImageSegmentGenerator(expression);
+    FunctionGraph generator = new FunctionGraph(expression);
   }
 }
