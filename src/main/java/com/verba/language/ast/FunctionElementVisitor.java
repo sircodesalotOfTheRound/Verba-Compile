@@ -1,6 +1,7 @@
 package com.verba.language.ast;
 
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
+import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
@@ -16,4 +17,6 @@ public interface FunctionElementVisitor {
   void visit(AssignmentStatementExpression assignmentStatementExpression);
 
   void visit(QuoteExpression quoteExpression);
+
+  void visit(NumericExpression numericExpression);
 }

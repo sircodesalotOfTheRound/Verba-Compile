@@ -25,7 +25,7 @@ public class KeywordToken extends IdentifierToken {
       "def",
       "match", "case",
       "true", "false",
-      "sync",
+      "sync", "threadbound",
 
       // System types
       "byte", "numeric", "dynamic", "default",

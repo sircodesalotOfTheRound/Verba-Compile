@@ -6,6 +6,7 @@ import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.categories.FunctionElementExpression;
+import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
@@ -49,6 +50,11 @@ public class VariableLifetimeGraph implements FunctionElementVisitor {
     lifetimes.updateLifetime(quoteExpression);
   }
 
+  @Override
+  public void visit(NumericExpression numericExpression) {
+    lifetimes.updateLifetime(numericExpression);
+  }
+
   public void visit(NamedValueExpression namedValueExpression) {
     if (FunctionCallFacade.isFunctionCall(namedValueExpression)) {
       FunctionCallFacade call = new FunctionCallFacade(namedValueExpression);
@@ -69,6 +75,11 @@ public class VariableLifetimeGraph implements FunctionElementVisitor {
   public boolean isFirstOccurance(VerbaExpression expression) {
     VariableLifetime lifetime = this.lifetimes.getLifetime(expression);
     return lifetime.isFirstInstance(expression);
+  }
+
+  public boolean isLastOccurance(VerbaExpression expression) {
+    VariableLifetime lifetime = this.lifetimes.getLifetime(expression);
+    return lifetime.isLastOccurance(expression);
   }
 
 }

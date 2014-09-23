@@ -15,7 +15,8 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  */
 public class QuoteExpression extends VerbaExpression
   implements LiteralExpression, NativeTypeExpression, MathOperandExpression,
-  FunctionElementExpression, RegisterAllocated {
+  FunctionElementExpression {
+
   private final LexInfo token;
 
   public QuoteExpression(VerbaExpression parent, Lexer lexer) {

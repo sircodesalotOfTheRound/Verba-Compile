@@ -5,7 +5,9 @@ import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by sircodesalot on 14/9/20.
@@ -44,6 +46,7 @@ public class VirtualVariableSet {
 
     this.variablesByExpression.put(variable.expression().text(), variable);
     this.variablesBySet.add(variable);
+    this.availableRegisters.remove(variable.variableNumber());
   }
 
   public void expireVariable(int variableNumber) {

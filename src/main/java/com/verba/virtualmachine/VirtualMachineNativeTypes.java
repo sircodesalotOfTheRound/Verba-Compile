@@ -33,6 +33,13 @@ public final class VirtualMachineNativeTypes {
     }
   };
 
+  public static final TypeDeclarationExpression BOX_UINT64 = new TypeDeclarationExpression() {
+    @Override
+    public String representation() {
+      return "box<uint64>";
+    }
+  };
+
   public static boolean isVirtualMachineType(VerbaExpression expression) {
     if (expression instanceof LiteralExpression) return true;
 

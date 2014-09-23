@@ -100,9 +100,9 @@ public class DerivedTypeResolution {
     FunctionReturnTypeResolutionMetadata implicitVariableMeta
       = implicitVariableReturnType.metadata().ofType(FunctionReturnTypeResolutionMetadata.class).single();
 
-    assert (implicitStringMeta.symbolType().representation().equals("string"));
+    assert (implicitStringMeta.symbolType().representation().equals("utf8"));
     assert (implicitIntMeta.symbolType().representation().equals("uint32"));
-    assert (implicitVariableMeta.symbolType().representation().equals("string"));
+    assert (implicitVariableMeta.symbolType().representation().equals("utf8"));
   }
 
 }

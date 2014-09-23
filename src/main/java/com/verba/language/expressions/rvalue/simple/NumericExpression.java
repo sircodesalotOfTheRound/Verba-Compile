@@ -1,5 +1,6 @@
 package com.verba.language.expressions.rvalue.simple;
 
+import com.verba.language.ast.FunctionElementVisitor;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.*;
@@ -13,14 +14,9 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  */
 public class NumericExpression extends VerbaExpression
   implements LiteralExpression, TupleItemExpression, MarkupRvalueExpression, NativeTypeExpression,
-  MathOperandExpression, RegisterAllocated {
+  MathOperandExpression, FunctionElementExpression {
 
   private LexInfo token;
-
-  @Override
-  public void accept(AstVisitor visitor) {
-
-  }
 
   public enum Size {
     BYTE,
@@ -83,6 +79,18 @@ public class NumericExpression extends VerbaExpression
     return Double.parseDouble(this.token.representation());
   }
 
+  // Visitors
+  @Override
+  public void accept(FunctionElementVisitor visitor) {
+    visitor.visit(this);
+  }
+
+  // TODO: AstVisitor implemented on VerbaExpression is sorta meaningless (too abstract).
+  // TODO: Need to narrow it down to specific classes.
+  @Override
+  public void accept(AstVisitor visitor) {
+
+  }
 }
 
 

@@ -38,4 +38,10 @@ public class VariableLifetime {
 
     return (expression.startingLine() == beginningLineNumber);
   }
+
+  public boolean isLastOccurance(VerbaExpression expression) {
+    validateExpression(expression);
+
+    return (expression.endingLine() == endingLineNumber);
+  }
 }

@@ -17,7 +17,7 @@ public class StageArgOpCode implements VerbajOpCode {
   public int opNumber() { return 0x29; }
 
   @Override
-  public String opName() { return "StageArg"; }
+  public String opName() { return "StgArg"; }
 
   @Override
   public void render(OpCodeRenderer renderer) {
