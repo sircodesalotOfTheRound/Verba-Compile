@@ -63,7 +63,7 @@ public class FunctionGraph implements FunctionElementVisitor {
   public FunctionDeclarationExpression function() { return this.function; }
 
   public void visit(ReturnStatementExpression returnStatementExpression) {
-
+    opcodes.add(new RetOpCode());
   }
 
   public void visit(NamedValueExpression namedValueExpression) {
@@ -85,7 +85,8 @@ public class FunctionGraph implements FunctionElementVisitor {
         opcodes.add(new StageArgOpCode(variable));
 
         if (this.lifetimeGraph.isLastOccurance(expression)) {
-          this.variableSet.expireVariable(variable);
+          // TODO: This is broken.
+          //this.variableSet.expireVariable(variable);
         }
       }
 

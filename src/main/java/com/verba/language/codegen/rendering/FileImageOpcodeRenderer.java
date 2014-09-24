@@ -24,9 +24,8 @@ public class FileImageOpcodeRenderer implements OpCodeRenderer, AutoCloseable {
     this.opcodes = opcodes;
     try {
       this.stream = new FileOutputStream(path);
-    } catch (IOException ex) {
-      ex.printStackTrace();
 
+    } catch (IOException ex) {
       throw new CompilerException("Unable to open output file");
     }
   }
@@ -92,7 +91,6 @@ public class FileImageOpcodeRenderer implements OpCodeRenderer, AutoCloseable {
       writeInt32(null, value.length());
 
       for (byte letter : value.getBytes(Charset.forName("ISO-8859-1"))) {
-        System.out.println((int)letter);
         writeInt8(null, letter);
       }
   }
