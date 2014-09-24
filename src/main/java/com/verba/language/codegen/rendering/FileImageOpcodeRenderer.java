@@ -19,8 +19,10 @@ public class FileImageOpcodeRenderer implements OpCodeRenderer, AutoCloseable {
   private final FileOutputStream stream;
   private final Iterable<VerbajOpCode> opcodes;
   private final List<Byte> data = new ArrayList<>();
+  private final String name;
 
-  public FileImageOpcodeRenderer(Iterable<VerbajOpCode> opcodes, String path) {
+  public FileImageOpcodeRenderer(String imageName, String path, Iterable<VerbajOpCode> opcodes) {
+    this.name = imageName;
     this.opcodes = opcodes;
     try {
       this.stream = new FileOutputStream(path);
@@ -37,6 +39,8 @@ public class FileImageOpcodeRenderer implements OpCodeRenderer, AutoCloseable {
   }
 
   private List<Byte> renderOpCodes() {
+    writeString("name", this.name);
+
     for (VerbajOpCode opCode : opcodes) {
       writeInt8(null, opCode.opNumber());
       opCode.render(this);
@@ -90,10 +94,12 @@ public class FileImageOpcodeRenderer implements OpCodeRenderer, AutoCloseable {
   public void writeString(String label, String value) {
       writeInt32(null, value.length());
 
-      for (byte letter : value.getBytes(Charset.forName("ISO-8859-1"))) {
+      for (byte letter : value.getBytes()) {
         writeInt8(null, letter);
       }
   }
+
+  public String name() { return this.name; }
 
   @Override
   public void close() throws Exception {

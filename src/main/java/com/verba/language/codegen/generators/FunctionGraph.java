@@ -46,7 +46,9 @@ public class FunctionGraph implements FunctionElementVisitor {
     DebugOpCodeRenderer renderer = new DebugOpCodeRenderer(this.opcodes);
     renderer.display();
 
-    try (FileImageOpcodeRenderer imageRenderer = new FileImageOpcodeRenderer(this.opcodes, "/Users/sircodesalot/Desktop/image.vbaj")) {
+    try (FileImageOpcodeRenderer imageRenderer
+           = new FileImageOpcodeRenderer(function.name(), "/Users/sircodesalot/Desktop/image.vbaj", opcodes)) {
+
       imageRenderer.save();
     } catch (Exception e) {
       e.printStackTrace();
@@ -57,6 +59,14 @@ public class FunctionGraph implements FunctionElementVisitor {
     BlockDeclarationExpression block = function.block();
     for (FunctionElementExpression expression : block.expressions().cast(FunctionElementExpression.class)) {
       expression.accept(this);
+    }
+
+    ensureFunctionEndsWithReturn();
+  }
+
+  private void ensureFunctionEndsWithReturn() {
+    if (!(opcodes.last() instanceof RetOpCode)) {
+      opcodes.add(new RetOpCode());
     }
   }
 

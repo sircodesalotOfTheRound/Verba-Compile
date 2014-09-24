@@ -1,7 +1,6 @@
 fn main() {
-  print("This will appear ")
-  print("on the same line")
-  println("this will show up on a new line")
+  println("Print means to print without a return")
+  println("println means print with a return")
   println("this will also show up on a new line")
 }
 
