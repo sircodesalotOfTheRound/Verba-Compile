@@ -1,12 +1,26 @@
 fn main() {
-  println("Print means to print without a return")
-  println("println means print with a return")
-  println("this will also show up on a new line")
-
-  another()
+  println("this is from main")
+  second()
 }
 
-fn another() {
-  println("this is another function")
+fn second() {
+  println("this is from second")
+
+  third()
 }
 
+fn third() {
+  println("this is from third")
+  fourth()
+}
+
+fn fourth() {
+  println("this is from fourth")
+
+  stackOverflow()
+}
+
+fn stackOverflow() {
+  println("stack overflow!!!")
+  main()
+}

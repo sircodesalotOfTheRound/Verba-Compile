@@ -54,7 +54,7 @@ public class FunctionGraph implements FunctionElementVisitor {
 
   private void closeOutFunction() {
     // If function doesn't end with return, put one there.
-    if (!(opcodes.last() instanceof RetOpCode)) {
+    if (opcodes.any() && !(opcodes.last() instanceof RetOpCode)) {
       opcodes.add(new RetOpCode());
     }
 
