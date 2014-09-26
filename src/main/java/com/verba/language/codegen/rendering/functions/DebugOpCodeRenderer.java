@@ -1,12 +1,11 @@
-package com.verba.language.codegen.rendering;
+package com.verba.language.codegen.rendering.functions;
 
 import com.verba.language.codegen.opcodes.VerbajOpCode;
 
 /**
  * Created by sircodesalot on 14/9/19.
  */
-public class DebugOpCodeRenderer implements OpCodeRenderer {
-
+public class DebugOpCodeRenderer implements FunctionOpCodeRenderer {
   private final Iterable<VerbajOpCode> opcodes;
 
   public DebugOpCodeRenderer(Iterable<VerbajOpCode> opcodes) {

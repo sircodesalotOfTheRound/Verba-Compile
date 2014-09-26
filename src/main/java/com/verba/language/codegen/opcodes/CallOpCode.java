@@ -2,7 +2,7 @@ package com.verba.language.codegen.opcodes;
 
 import com.javalinq.implementations.QList;
 import com.verba.language.codegen.registers.VirtualVariable;
-import com.verba.language.codegen.rendering.OpCodeRenderer;
+import com.verba.language.codegen.rendering.functions.FunctionOpCodeRenderer;
 
 /**
  * Created by sircodesalot on 14/9/19.
@@ -29,7 +29,7 @@ public class CallOpCode implements VerbajOpCode {
   }
 
   @Override
-  public void render(OpCodeRenderer renderer) {
+  public void render(FunctionOpCodeRenderer renderer) {
     renderer.writeString("function_name", function);
   }
 

@@ -8,8 +8,8 @@ import com.verba.language.codegen.function.VariableLifetimeGraph;
 import com.verba.language.codegen.opcodes.*;
 import com.verba.language.codegen.registers.VirtualVariable;
 import com.verba.language.codegen.registers.VirtualVariableSet;
-import com.verba.language.codegen.rendering.DebugOpCodeRenderer;
-import com.verba.language.codegen.rendering.FileImageOpcodeRenderer;
+import com.verba.language.codegen.rendering.functions.MemoryStreamFunctionRenderer;
+import com.verba.language.codegen.rendering.images.ObjectImage;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
@@ -21,8 +21,6 @@ import com.verba.language.expressions.statements.assignment.AssignmentStatementE
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import com.verba.language.facades.FunctionCallFacade;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
-
-import java.io.FileNotFoundException;
 
 /**
  * Created by sircodesalot on 14/9/19.
@@ -43,16 +41,6 @@ public class FunctionGraph implements FunctionElementVisitor {
     System.out.println();
 
     buildImage(function);
-    DebugOpCodeRenderer renderer = new DebugOpCodeRenderer(this.opcodes);
-    renderer.display();
-
-    try (FileImageOpcodeRenderer imageRenderer
-           = new FileImageOpcodeRenderer(function.name(), "/Users/sircodesalot/Desktop/image.vbaj", opcodes)) {
-
-      imageRenderer.save();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   private void buildImage(FunctionDeclarationExpression function) {
@@ -61,13 +49,21 @@ public class FunctionGraph implements FunctionElementVisitor {
       expression.accept(this);
     }
 
-    ensureFunctionEndsWithReturn();
+    closeOutFunction();
   }
 
-  private void ensureFunctionEndsWithReturn() {
+  private void closeOutFunction() {
+    // If function doesn't end with return, put one there.
     if (!(opcodes.last() instanceof RetOpCode)) {
       opcodes.add(new RetOpCode());
     }
+
+    // Also close out the function.
+    opcodes.add(new EndFunctionOpCode());
+  }
+
+  public ObjectImage createImage() {
+    return new MemoryStreamFunctionRenderer(this);
   }
 
   public FunctionDeclarationExpression function() { return this.function; }
@@ -128,4 +124,8 @@ public class FunctionGraph implements FunctionElementVisitor {
       opcodes.add(new LdStrOpCode(variable, quoteExpression.innerText()));
     }
   }
+
+  public Iterable<VerbajOpCode> opcodes() { return this.opcodes; }
+
+  public String name() { return this.function.name(); }
 }

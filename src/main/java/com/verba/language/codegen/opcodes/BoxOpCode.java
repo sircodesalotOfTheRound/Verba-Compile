@@ -1,7 +1,7 @@
 package com.verba.language.codegen.opcodes;
 
 import com.verba.language.codegen.registers.VirtualVariable;
-import com.verba.language.codegen.rendering.OpCodeRenderer;
+import com.verba.language.codegen.rendering.functions.FunctionOpCodeRenderer;
 
 /**
  * Created by sircodesalot on 14/9/23.
@@ -22,7 +22,7 @@ public class BoxOpCode implements VerbajOpCode {
   public String opName() { return "Box"; }
 
   @Override
-  public void render(OpCodeRenderer renderer) {
+  public void render(FunctionOpCodeRenderer renderer) {
     renderer.writeInt8("source", source.variableNumber());
     renderer.writeInt8("destination", destination.variableNumber());
   }

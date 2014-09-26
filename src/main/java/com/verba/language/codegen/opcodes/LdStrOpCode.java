@@ -1,8 +1,7 @@
 package com.verba.language.codegen.opcodes;
 
 import com.verba.language.codegen.registers.VirtualVariable;
-import com.verba.language.codegen.registers.VirtualVariableSet;
-import com.verba.language.codegen.rendering.OpCodeRenderer;
+import com.verba.language.codegen.rendering.functions.FunctionOpCodeRenderer;
 
 /**
  * Created by sircodesalot on 14/9/20.
@@ -23,7 +22,7 @@ public class LdStrOpCode implements VerbajOpCode {
   public String opName() { return "LdStr"; }
 
   @Override
-  public void render(OpCodeRenderer renderer) {
+  public void render(FunctionOpCodeRenderer renderer) {
     renderer.writeInt8("varnum", variable.variableNumber());
     renderer.writeString("text", text);
   }

@@ -1,21 +1,17 @@
-package com.verba.language.codegen.rendering;
+package com.verba.language.codegen.rendering.functions;
 
-import com.javalinq.implementations.QList;
 import com.verba.language.codegen.opcodes.VerbajOpCode;
 import com.verba.language.exceptions.CompilerException;
 
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by sircodesalot on 14/9/23.
  */
-public class FileImageOpcodeRenderer implements OpCodeRenderer, AutoCloseable {
+public class FileImageOpcodeRenderer implements FunctionOpCodeRenderer, AutoCloseable {
   private final FileOutputStream stream;
   private final Iterable<VerbajOpCode> opcodes;
   private final List<Byte> data = new ArrayList<>();

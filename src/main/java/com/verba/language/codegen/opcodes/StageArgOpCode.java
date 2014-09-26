@@ -1,7 +1,7 @@
 package com.verba.language.codegen.opcodes;
 
 import com.verba.language.codegen.registers.VirtualVariable;
-import com.verba.language.codegen.rendering.OpCodeRenderer;
+import com.verba.language.codegen.rendering.functions.FunctionOpCodeRenderer;
 
 /**
  * Created by sircodesalot on 14/9/22.
@@ -20,7 +20,7 @@ public class StageArgOpCode implements VerbajOpCode {
   public String opName() { return "StgArg"; }
 
   @Override
-  public void render(OpCodeRenderer renderer) {
+  public void render(FunctionOpCodeRenderer renderer) {
     renderer.writeInt8("varnum", variableNumber);
   }
 }
