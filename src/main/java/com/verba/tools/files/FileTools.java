@@ -107,6 +107,7 @@ public class FileTools {
       serializer.close();
 
     } catch (Exception ex) {
+      ex.printStackTrace();
       throw new FileTools().new FileException(ex, "Unable to serialize object.");
     }
   }

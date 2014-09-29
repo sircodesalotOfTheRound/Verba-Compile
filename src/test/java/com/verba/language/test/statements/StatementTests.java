@@ -35,9 +35,5 @@ public class StatementTests {
 
       SymbolTableEntry simpleSubtraction = statementTests.globalSymbolTable().getByFqn("math_statements.simple_subtraction").single();
       ValDeclarationStatement subtractionStatement = simpleSubtraction.instanceAs(ValDeclarationStatement.class);
-
-      for (Object object : ((RpnExpression)subtractionStatement.rvalue()).expressions().getPolishNotation()) {
-        System.out.println(object);
-      }
     }
 }

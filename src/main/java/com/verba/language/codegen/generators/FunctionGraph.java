@@ -115,6 +115,11 @@ public class FunctionGraph implements FunctionElementVisitor {
     }
   }
 
+  @Override
+  public void visit(FunctionDeclarationExpression functionDeclarationExpression) {
+
+  }
+
   public void visit(QuoteExpression quoteExpression) {
     VariableLifetime variableLifetime = lifetimeGraph.getVariableLifetime(quoteExpression);
 

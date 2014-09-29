@@ -1,6 +1,12 @@
 fn main() {
+  fn another() {
+     print("this is from another or something")
+  }
+
   println("this is from main")
-  second()
+
+  # Need to fix fully qualified names.
+  another()
 }
 
 fn second() {
@@ -22,5 +28,6 @@ fn fourth() {
 
 fn stackOverflow() {
   println("stack overflow!!!")
+
   main()
 }

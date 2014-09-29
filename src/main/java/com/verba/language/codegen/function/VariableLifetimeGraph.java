@@ -55,6 +55,11 @@ public class VariableLifetimeGraph implements FunctionElementVisitor {
     lifetimes.updateLifetime(numericExpression);
   }
 
+  @Override
+  public void visit(FunctionDeclarationExpression functionDeclarationExpression) {
+
+  }
+
   public void visit(NamedValueExpression namedValueExpression) {
     if (FunctionCallFacade.isFunctionCall(namedValueExpression)) {
       FunctionCallFacade call = new FunctionCallFacade(namedValueExpression);

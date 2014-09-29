@@ -39,7 +39,7 @@ public abstract class VerbaExpression implements Serializable, AstVisitable {
 
   private VerbaExpression parent;
 
-  private final Lexer lexer;
+  private transient final Lexer lexer;
   private final LexInfo startingLexPoint;
   private LexInfo endingLexPoint;
 

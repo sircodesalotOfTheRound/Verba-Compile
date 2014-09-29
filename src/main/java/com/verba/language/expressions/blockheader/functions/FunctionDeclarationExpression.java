@@ -1,6 +1,7 @@
 package com.verba.language.expressions.blockheader.functions;
 
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.ast.FunctionElementVisitor;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.build.resolution.SymbolResolver;
 import com.verba.language.expressions.VerbaExpression;
@@ -21,7 +22,7 @@ import com.verba.language.symbols.table.tables.ScopedSymbolTable;
  */
 public class FunctionDeclarationExpression extends VerbaExpression
   implements NamedBlockExpression, TypedExpression, InvokableExpression,
-  GenericExpression, SymbolTableExpression, ResolvableTypeExpression {
+  GenericExpression, SymbolTableExpression, ResolvableTypeExpression, FunctionElementExpression {
 
   private final FullyQualifiedNameExpression identifier;
   private final BlockDeclarationExpression block;
@@ -105,5 +106,10 @@ public class FunctionDeclarationExpression extends VerbaExpression
   @Override
   public void accept(SymbolResolver resolver) {
     resolver.visit(this);
+  }
+
+  @Override
+  public void accept(FunctionElementVisitor visitor) {
+    visitor.visit(this);
   }
 }

@@ -9,12 +9,13 @@ import com.verba.language.parsing.tokenization.VerbaLexicalTokenizer;
 import com.verba.language.parsing.tokens.ignorable.LineCommentToken;
 import com.verba.language.parsing.tokens.ignorable.WhitespaceToken;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by sircodesalot on 14-2-20.
  */
-public class VerbaMemoizingLexer implements Lexer {
+public class VerbaMemoizingLexer implements Lexer, Serializable {
   private final String filename;
   private int index = 0;
   private int fileLength;

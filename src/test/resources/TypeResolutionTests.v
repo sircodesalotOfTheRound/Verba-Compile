@@ -46,7 +46,7 @@ fn implicitIntReturnType() {
    return 32
 }
 
-fn implicitVariableReturnType(str : string) {
+fn implicitVariableReturnType(str : utf8) {
    val firstChain = str
    val secondChain = firstChain
 
