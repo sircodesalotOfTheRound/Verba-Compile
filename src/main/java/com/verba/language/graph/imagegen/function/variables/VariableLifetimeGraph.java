@@ -1,8 +1,7 @@
-package com.verba.language.codegen.function;
+package com.verba.language.graph.imagegen.function.variables;
 
-import com.verba.language.ast.FunctionElementVisitor;
-import com.verba.language.ast.visitor.AstVisitable;
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitable;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
@@ -19,6 +18,7 @@ import com.verba.language.expressions.containers.tuple.TupleDeclarationExpressio
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
+import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import com.verba.language.facades.FunctionCallFacade;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -26,7 +26,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 /**
  * Created by sircodesalot on 14/9/21.
  */
-public class VariableLifetimeGraph implements AstVisitor {
+public class VariableLifetimeGraph implements SyntaxGraphVisitor {
   private final VariableLifetimeMap lifetimes = new VariableLifetimeMap();
   private final FunctionDeclarationExpression function;
 
@@ -38,7 +38,7 @@ public class VariableLifetimeGraph implements AstVisitor {
 
   private void buildGraph(FunctionDeclarationExpression function) {
     BlockDeclarationExpression block = function.block();
-    for (AstVisitable expression : block.expressions().cast(AstVisitable.class)) {
+    for (SyntaxGraphVisitable expression : block.expressions().cast(SyntaxGraphVisitable.class)) {
       expression.accept(this);
     }
   }
@@ -69,6 +69,11 @@ public class VariableLifetimeGraph implements AstVisitor {
   @Override
   public void visit(NumericExpression numericExpression) {
     lifetimes.updateLifetime(numericExpression);
+  }
+
+  @Override
+  public void visit(ValDeclarationStatement valDeclarationStatement) {
+    lifetimes.updateLifetime(valDeclarationStatement.nameAsExpression());
   }
 
   @Override
@@ -124,7 +129,7 @@ public class VariableLifetimeGraph implements AstVisitor {
   public void visit(NamedValueExpression namedValueExpression) {
     if (FunctionCallFacade.isFunctionCall(namedValueExpression)) {
       FunctionCallFacade call = new FunctionCallFacade(namedValueExpression);
-      for (AstVisitable declaration : call.primaryParameters().cast(AstVisitable.class)) {
+      for (SyntaxGraphVisitable declaration : call.primaryParameters().cast(SyntaxGraphVisitable.class)) {
         declaration.accept(this);
       }
     }

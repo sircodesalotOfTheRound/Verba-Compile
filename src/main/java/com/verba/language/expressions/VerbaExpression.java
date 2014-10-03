@@ -1,6 +1,6 @@
 package com.verba.language.expressions;
 
-import com.verba.language.ast.visitor.AstVisitable;
+import com.verba.language.graph.visitors.SyntaxGraphVisitable;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.*;
 import com.verba.language.parsing.Lexer;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * Created by sircodesalot on 14-2-19.
  */
-public abstract class VerbaExpression implements Serializable, AstVisitable {
+public abstract class VerbaExpression implements Serializable, SyntaxGraphVisitable {
   private static BacktrackRuleSet<VerbaExpression> rules
     = new BacktrackRuleSet<VerbaExpression>()
     .addRule(new MathExpressionBacktrackRule())

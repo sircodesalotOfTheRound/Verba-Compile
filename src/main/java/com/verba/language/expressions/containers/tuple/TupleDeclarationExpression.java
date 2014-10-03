@@ -2,7 +2,7 @@ package com.verba.language.expressions.containers.tuple;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.DataContainerExpression;
 import com.verba.language.expressions.categories.TupleItemExpression;
@@ -70,7 +70,7 @@ public class TupleDeclarationExpression extends VerbaExpression implements TypeD
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
     visitor.visit(this);
   }
 }

@@ -1,6 +1,6 @@
 package com.verba.language.expressions.tags.aspect;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.MetaTagExpression;
@@ -82,7 +82,7 @@ public class AspectTagExpression extends VerbaExpression implements MetaTagExpre
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

@@ -1,6 +1,6 @@
 package com.verba.language.expressions.access;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.parsing.Lexer;
@@ -51,7 +51,7 @@ public class AccessModifierExpression extends VerbaExpression {
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

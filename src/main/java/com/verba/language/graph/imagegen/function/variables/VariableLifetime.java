@@ -1,4 +1,4 @@
-package com.verba.language.codegen.function;
+package com.verba.language.graph.imagegen.function.variables;
 
 import com.verba.language.exceptions.CompilerException;
 import com.verba.language.expressions.VerbaExpression;
@@ -20,6 +20,7 @@ public class VariableLifetime {
   public VerbaExpression expression() { return expression; }
   public int beginningLineNumber() { return beginningLineNumber; }
   public int endingLineNumber() { return endingLineNumber; }
+  public boolean isTemporary() { return beginningLineNumber == endingLineNumber; }
 
   public void updateEndingLineNumber(VerbaExpression expression) {
     validateExpression(expression);

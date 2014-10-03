@@ -1,6 +1,6 @@
 package com.verba.language.symbols.resolution.fields;
 
-import com.verba.language.build.resolution.SymbolResolver;
+import com.verba.language.graph.statictyping.SymbolTypeResolver;
 import com.verba.language.expressions.categories.ResolvableTypeExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.expressions.categories.TypedExpression;
@@ -45,7 +45,7 @@ public class VariableNameSearch {
   }
 
   private void resolveEntry(SymbolTableEntry entry) {
-    SymbolResolver resolver = new SymbolResolver(symbolTable);
+    SymbolTypeResolver resolver = new SymbolTypeResolver(symbolTable);
     resolver.resolve((ResolvableTypeExpression) entry.instance());
   }
 

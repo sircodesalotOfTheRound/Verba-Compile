@@ -1,4 +1,4 @@
-package com.verba.language.ast.visitor;
+package com.verba.language.graph.visitors;
 
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.StaticSpaceExpression;
@@ -15,12 +15,13 @@ import com.verba.language.expressions.containers.tuple.TupleDeclarationExpressio
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
+import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 
 /**
  * Created by sircodesalot on 14/9/12.
  */
-public interface AstVisitor {
+public interface SyntaxGraphVisitor {
   void visit(BlockDeclarationExpression verbaExpressions);
 
   void visit(TraitDeclarationExpression traitDeclarationExpression);
@@ -52,4 +53,6 @@ public interface AstVisitor {
   void visit(AssignmentStatementExpression assignmentStatementExpression);
 
   void visit(NumericExpression expression);
+
+  void visit(ValDeclarationStatement valDeclarationStatement);
 }

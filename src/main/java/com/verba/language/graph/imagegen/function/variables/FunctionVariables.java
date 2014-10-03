@@ -1,4 +1,4 @@
-package com.verba.language.codegen.function;
+package com.verba.language.graph.imagegen.function.variables;
 
 /**
  * Created by sircodesalot on 14/9/21.

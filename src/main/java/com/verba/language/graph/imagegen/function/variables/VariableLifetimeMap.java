@@ -1,4 +1,4 @@
-package com.verba.language.codegen.function;
+package com.verba.language.graph.imagegen.function.variables;
 
 import com.verba.language.expressions.VerbaExpression;
 

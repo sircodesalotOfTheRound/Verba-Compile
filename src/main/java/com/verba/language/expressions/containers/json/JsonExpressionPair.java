@@ -1,6 +1,6 @@
 package com.verba.language.expressions.containers.json;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.exceptions.ParseException;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
@@ -52,7 +52,7 @@ public class JsonExpressionPair extends VerbaExpression {
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

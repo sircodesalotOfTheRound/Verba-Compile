@@ -1,6 +1,6 @@
 package com.verba.language.expressions.tags.hashtag;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.MetaTagExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
@@ -32,7 +32,7 @@ public class HashTagExpression extends VerbaExpression implements MetaTagExpress
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

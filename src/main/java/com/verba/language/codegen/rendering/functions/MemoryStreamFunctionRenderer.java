@@ -1,6 +1,6 @@
 package com.verba.language.codegen.rendering.functions;
 
-import com.verba.language.codegen.generators.FunctionGraph;
+import com.verba.language.graph.imagegen.function.FunctionGraph;
 import com.verba.language.codegen.opcodes.VerbajOpCode;
 import com.verba.language.codegen.rendering.images.ImageRenderer;
 import com.verba.language.codegen.rendering.images.ImageType;

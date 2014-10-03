@@ -2,10 +2,11 @@ package com.verba.language.expressions;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
-import com.verba.language.ast.AstTreeFlattener;
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.tools.SyntaxTreeFlattener;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.categories.SymbolTableExpression;
+import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
 import com.verba.vblz.build.objectfile.SourceFilePathInfo;
@@ -15,7 +16,7 @@ import com.verba.vblz.build.objectfile.SourceFilePathInfo;
  */
 public class StaticSpaceExpression extends VerbaExpression implements SymbolTableExpression {
   private GlobalSymbolTable symbolTable;
-  private AstTreeFlattener allSubExpressions;
+  private SyntaxTreeFlattener allSubExpressions;
   private final QList<VerbaExpression> rootExpressions = new QList<>();
 
   public StaticSpaceExpression(Iterable<VerbaExpression> rootExpressions) {
@@ -48,17 +49,25 @@ public class StaticSpaceExpression extends VerbaExpression implements SymbolTabl
     return this.symbolTable;
   }
 
-  public AstTreeFlattener allSubExpressions() {
+  public SyntaxTreeFlattener allSubExpressions() {
     return this.allSubExpressions;
   }
 
   public void update() {
     this.symbolTable = new GlobalSymbolTable(this);
-    this.allSubExpressions = new AstTreeFlattener(this);
+    this.allSubExpressions = new SyntaxTreeFlattener(this);
+  }
+
+  public void resolveSymbolNames() {
+    this.globalSymbolTable().resolveSymbolNames();
+  }
+
+  public SymbolTableEntry entryByInstance(VerbaExpression expression) {
+    return symbolTable.getByInstance(expression);
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
     visitor.visit(this);
   }
 

@@ -1,6 +1,6 @@
 package com.verba.language.expressions.rvalue.lambda;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
@@ -43,7 +43,7 @@ public class LambdaExpression extends VerbaExpression implements RValueExpressio
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

@@ -1,8 +1,6 @@
 package com.verba.language.expressions.statements.assignment;
 
-import com.verba.language.ast.FunctionElementVisitor;
-import com.verba.language.ast.visitor.AstVisitor;
-import com.verba.language.codegen.generators.FunctionGraph;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
@@ -52,7 +50,7 @@ public class AssignmentStatementExpression extends VerbaExpression {
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
     visitor.visit(this);
   }
 }

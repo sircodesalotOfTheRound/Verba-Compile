@@ -1,16 +1,18 @@
-package com.verba.language.codegen.generators;
+package com.verba.language.graph.imagegen.function;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
-import com.verba.language.ast.FunctionElementVisitor;
-import com.verba.language.ast.visitor.AstVisitable;
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.imagegen.function.nodes.QuoteNodeProcessor;
+import com.verba.language.graph.imagegen.function.nodes.ValNodeStatementProcessor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitable;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.build.codepage.VerbaCodePage;
-import com.verba.language.codegen.function.VariableLifetime;
-import com.verba.language.codegen.function.VariableLifetimeGraph;
+import com.verba.language.graph.imagegen.function.variables.VariableLifetime;
+import com.verba.language.graph.imagegen.function.variables.VariableLifetimeGraph;
 import com.verba.language.codegen.opcodes.*;
 import com.verba.language.codegen.registers.VirtualVariable;
 import com.verba.language.codegen.registers.VirtualVariableSet;
+import com.verba.language.codegen.rendering.functions.DebugOpCodeRenderer;
 import com.verba.language.codegen.rendering.functions.MemoryStreamFunctionRenderer;
 import com.verba.language.codegen.rendering.images.ObjectImage;
 import com.verba.language.expressions.StaticSpaceExpression;
@@ -28,6 +30,7 @@ import com.verba.language.expressions.containers.tuple.TupleDeclarationExpressio
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
+import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import com.verba.language.facades.FunctionCallFacade;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
@@ -36,27 +39,42 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 /**
  * Created by sircodesalot on 14/9/19.
  */
-public class FunctionGraph implements AstVisitor {
+public class FunctionGraph implements SyntaxGraphVisitor {
   private final VirtualVariableSet variableSet;
   private final FunctionDeclarationExpression function;
   private final VariableLifetimeGraph lifetimeGraph;
+  private final StaticSpaceExpression staticSpaceExpression;
   private QList<VerbajOpCode> opcodes = new QList<>();
 
+  private final FunctionContext context;
 
-  public FunctionGraph(FunctionDeclarationExpression function) {
+  // Node processors
+  private final ValNodeStatementProcessor valStatementProcessor;
+  private final QuoteNodeProcessor quoteNodeProcessor;
+
+  public FunctionGraph(FunctionDeclarationExpression function, StaticSpaceExpression staticSpaceExpression) {
     this.variableSet = new VirtualVariableSet(20);
     this.function = function;
     this.lifetimeGraph = new VariableLifetimeGraph(function);
+    this.staticSpaceExpression = staticSpaceExpression;
+    this.context = new FunctionContext(staticSpaceExpression, variableSet, lifetimeGraph, opcodes);
+
+    // Statement processors.
+    this.valStatementProcessor = new ValNodeStatementProcessor(context);
+    this.quoteNodeProcessor = new QuoteNodeProcessor(context);
 
     System.out.println(function.text());
     System.out.println();
 
     buildImage(function);
+
+    DebugOpCodeRenderer renderer = new DebugOpCodeRenderer(opcodes);
+    renderer.display();
   }
 
   private void buildImage(FunctionDeclarationExpression function) {
     BlockDeclarationExpression block = function.block();
-    for (AstVisitable expression : block.expressions().cast(AstVisitable.class)) {
+    for (SyntaxGraphVisitable expression : block.expressions().cast(SyntaxGraphVisitable.class)) {
       expression.accept(this);
     }
 
@@ -115,10 +133,10 @@ public class FunctionGraph implements AstVisitor {
   }
 
   private void visitMethodCall(FunctionCallFacade call) {
-      QIterable<AstVisitable> parametersAsFunctionElements
-        = call.primaryParameters().cast(AstVisitable.class);
+      QIterable<SyntaxGraphVisitable> parametersAsFunctionElements
+        = call.primaryParameters().cast(SyntaxGraphVisitable.class);
 
-      for (AstVisitable declaration : parametersAsFunctionElements) {
+      for (SyntaxGraphVisitable declaration : parametersAsFunctionElements) {
         declaration.accept(this);
       }
 
@@ -149,6 +167,11 @@ public class FunctionGraph implements AstVisitor {
       opcodes.add(new LdUint64OpCode(source, expression.asLong()));
       opcodes.add(new BoxOpCode(source, destination));
     }
+  }
+
+  @Override
+  public void visit(ValDeclarationStatement statement) {
+    valStatementProcessor.process(statement);
   }
 
   @Override
@@ -183,14 +206,8 @@ public class FunctionGraph implements AstVisitor {
     throw new NotImplementedException();
   }
 
-  public void visit(QuoteExpression quoteExpression) {
-    VariableLifetime variableLifetime = lifetimeGraph.getVariableLifetime(quoteExpression);
-
-    // If this is the first time seeing this variable, add it.
-    if (variableLifetime.isFirstInstance(quoteExpression)) {
-      VirtualVariable variable = variableSet.add(quoteExpression, VirtualMachineNativeTypes.UTF8);
-      opcodes.add(new LdStrOpCode(variable, quoteExpression.innerText()));
-    }
+  public void visit(QuoteExpression expression) {
+    quoteNodeProcessor.process(expression);
   }
 
   public Iterable<VerbajOpCode> opcodes() { return this.opcodes; }

@@ -1,6 +1,6 @@
 package com.verba.language.expressions.blockheader.classes;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.NamedBlockExpression;
@@ -59,7 +59,7 @@ public class MetaDeclarationExpression extends VerbaExpression implements NamedB
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
     throw new NotImplementedException();
   }
 

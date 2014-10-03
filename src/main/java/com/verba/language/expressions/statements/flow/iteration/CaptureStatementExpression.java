@@ -1,7 +1,7 @@
 package com.verba.language.expressions.statements.flow.iteration;
 
 import com.javalinq.implementations.QList;
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.parsing.Lexer;
@@ -40,7 +40,7 @@ public class CaptureStatementExpression extends VerbaExpression {
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

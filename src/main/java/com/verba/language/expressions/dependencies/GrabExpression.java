@@ -1,6 +1,6 @@
 package com.verba.language.expressions.dependencies;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
@@ -43,7 +43,7 @@ public class GrabExpression extends VerbaExpression {
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

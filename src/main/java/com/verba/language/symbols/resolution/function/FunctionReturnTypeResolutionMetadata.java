@@ -1,6 +1,6 @@
 package com.verba.language.symbols.resolution.function;
 
-import com.verba.language.ast.AstTreeFlattener;
+import com.verba.language.graph.tools.SyntaxTreeFlattener;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
@@ -63,7 +63,7 @@ public class FunctionReturnTypeResolutionMetadata implements SymbolResolutionInf
   }
 
   private TypeDeclarationExpression scanFunction(BlockDeclarationExpression block) {
-    AstTreeFlattener scopeTree = new AstTreeFlattener(block);
+    SyntaxTreeFlattener scopeTree = new SyntaxTreeFlattener(block);
     for (ReturnStatementExpression statement : scopeTree.ofType(ReturnStatementExpression.class)) {
       if (statement.hasValue()) {
         return getTypeFromExpression(statement);

@@ -1,8 +1,8 @@
-package com.verba.language.ast;
+package com.verba.language.graph.tools;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
@@ -19,6 +19,7 @@ import com.verba.language.expressions.containers.tuple.TupleDeclarationExpressio
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
+import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -28,10 +29,10 @@ import java.util.Iterator;
 /**
  * Flattens a tree of expressions into a QList.
  */
-public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<VerbaExpression> {
+public class SyntaxTreeFlattener implements SyntaxGraphVisitor, Serializable, QIterable<VerbaExpression> {
   private final QList<VerbaExpression> expressions = new QList<>();
 
-  public AstTreeFlattener(VerbaExpression root) {
+  public SyntaxTreeFlattener(VerbaExpression root) {
     root.accept(this);
   }
 
@@ -135,6 +136,11 @@ public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<Ver
   @Override
   public void visit(NumericExpression expression) {
     throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(ValDeclarationStatement valDeclarationStatement) {
+
   }
 
   public <T extends VerbaExpression> void visitAll(Iterable<T> expressions) {

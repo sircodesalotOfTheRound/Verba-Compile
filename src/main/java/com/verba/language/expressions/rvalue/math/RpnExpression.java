@@ -1,6 +1,6 @@
 package com.verba.language.expressions.rvalue.math;
 
-import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.parsing.Lexer;
@@ -42,7 +42,7 @@ public class RpnExpression extends VerbaExpression implements RValueExpression {
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 }

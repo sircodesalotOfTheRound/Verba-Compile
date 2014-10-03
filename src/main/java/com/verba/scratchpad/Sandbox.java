@@ -1,10 +1,8 @@
 package com.verba.scratchpad;
 
-import com.javalinq.interfaces.QIterable;
 import com.verba.language.build.codepage.VerbaCodePage;
-import com.verba.language.codegen.generators.FunctionGraph;
+import com.verba.language.graph.imagegen.function.FunctionGraph;
 import com.verba.language.codegen.rendering.FileStreamImageWriter;
-import com.verba.language.codegen.rendering.functions.MemoryStreamFunctionRenderer;
 import com.verba.language.codegen.rendering.images.ObjectImage;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
@@ -20,16 +18,15 @@ public class Sandbox {
 
     VerbaCodePage codePage = VerbaCodePage.fromFile(null, "SimpleSource.v");
     StaticSpaceExpression staticSpaceExpression = new StaticSpaceExpression(codePage);
+    staticSpaceExpression.resolveSymbolNames();
 
     Iterable<ObjectImage> images = staticSpaceExpression.allSubExpressions()
       .ofType(FunctionDeclarationExpression.class)
-      .map(FunctionGraph::new)
+      .map(function -> new FunctionGraph(function, staticSpaceExpression))
       .map(FunctionGraph::createImage);
 
     try (FileStreamImageWriter writer = new FileStreamImageWriter("/Users/sircodesalot/Desktop/program.vbaj")) {
       writer.save(images);
     }
-
-    System.out.println("saved images");
   }
 }

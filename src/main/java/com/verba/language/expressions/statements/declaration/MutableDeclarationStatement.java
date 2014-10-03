@@ -1,7 +1,7 @@
 package com.verba.language.expressions.statements.declaration;
 
-import com.verba.language.ast.visitor.AstVisitor;
-import com.verba.language.build.resolution.SymbolResolver;
+import com.verba.language.graph.statictyping.SymbolTypeResolver;
+import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.categories.*;
@@ -71,7 +71,7 @@ public class MutableDeclarationStatement extends VerbaExpression
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
+  public void accept(SyntaxGraphVisitor visitor) {
 
   }
 
@@ -81,7 +81,7 @@ public class MutableDeclarationStatement extends VerbaExpression
   }
 
   @Override
-  public void accept(SymbolResolver resolver) {
+  public void accept(SymbolTypeResolver resolver) {
     resolver.visit(this);
   }
 }
