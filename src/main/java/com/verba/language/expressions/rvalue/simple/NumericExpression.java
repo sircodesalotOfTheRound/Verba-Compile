@@ -14,7 +14,7 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  */
 public class NumericExpression extends VerbaExpression
   implements LiteralExpression, TupleItemExpression, MarkupRvalueExpression, NativeTypeExpression,
-  MathOperandExpression, FunctionElementExpression {
+  MathOperandExpression {
 
   private LexInfo token;
 
@@ -79,17 +79,10 @@ public class NumericExpression extends VerbaExpression
     return Double.parseDouble(this.token.representation());
   }
 
-  // Visitors
-  @Override
-  public void accept(FunctionElementVisitor visitor) {
-    visitor.visit(this);
-  }
 
-  // TODO: AstVisitor implemented on VerbaExpression is sorta meaningless (too abstract).
-  // TODO: Need to narrow it down to specific classes.
   @Override
   public void accept(AstVisitor visitor) {
-
+    visitor.visit(this);
   }
 }
 

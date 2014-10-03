@@ -16,8 +16,7 @@ import com.verba.language.parsing.tokens.operators.OperatorToken;
  */
 public class NamedValueExpression extends VerbaExpression
   implements RValueExpression, TupleItemExpression, MarkupRvalueExpression,
-    NamedAndTypedExpression, MathOperandExpression, FunctionElementExpression
-
+    NamedAndTypedExpression, MathOperandExpression
 {
   private final FullyQualifiedNameExpression identifier;
   private TypeDeclarationExpression type;
@@ -74,8 +73,4 @@ public class NamedValueExpression extends VerbaExpression
     visitor.visit(this);
   }
 
-  @Override
-  public void accept(FunctionElementVisitor elementVisitor) {
-    elementVisitor.visit(this);
-  }
 }

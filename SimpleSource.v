@@ -6,6 +6,7 @@ fn main() {
   println("this is from main")
 
   # Need to fix fully qualified names.
+  second()
   another()
 }
 
@@ -29,5 +30,4 @@ fn fourth() {
 fn stackOverflow() {
   println("stack overflow!!!")
 
-  main()
 }

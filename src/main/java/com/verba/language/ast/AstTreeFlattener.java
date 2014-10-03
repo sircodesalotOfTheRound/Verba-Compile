@@ -16,7 +16,11 @@ import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
+import com.verba.language.expressions.rvalue.simple.NumericExpression;
+import com.verba.language.expressions.rvalue.simple.QuoteExpression;
+import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -116,6 +120,21 @@ public class AstTreeFlattener implements AstVisitor, Serializable, QIterable<Ver
   @Override
   public void visit(SignatureDeclarationExpression signature) {
     add(signature);
+  }
+
+  @Override
+  public void visit(QuoteExpression quoteExpression) {
+   throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(AssignmentStatementExpression assignmentStatementExpression) {
+    throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(NumericExpression expression) {
+    throw new NotImplementedException();
   }
 
   public <T extends VerbaExpression> void visitAll(Iterable<T> expressions) {

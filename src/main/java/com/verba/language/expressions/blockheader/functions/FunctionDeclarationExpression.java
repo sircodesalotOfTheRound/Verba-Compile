@@ -22,7 +22,7 @@ import com.verba.language.symbols.table.tables.ScopedSymbolTable;
  */
 public class FunctionDeclarationExpression extends VerbaExpression
   implements NamedBlockExpression, TypedExpression, InvokableExpression,
-  GenericExpression, SymbolTableExpression, ResolvableTypeExpression, FunctionElementExpression {
+  GenericExpression, SymbolTableExpression, ResolvableTypeExpression {
 
   private final FullyQualifiedNameExpression identifier;
   private final BlockDeclarationExpression block;
@@ -108,8 +108,4 @@ public class FunctionDeclarationExpression extends VerbaExpression
     resolver.visit(this);
   }
 
-  @Override
-  public void accept(FunctionElementVisitor visitor) {
-    visitor.visit(this);
-  }
 }

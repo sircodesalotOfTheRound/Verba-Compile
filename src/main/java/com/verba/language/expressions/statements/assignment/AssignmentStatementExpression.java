@@ -4,7 +4,6 @@ import com.verba.language.ast.FunctionElementVisitor;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.codegen.generators.FunctionGraph;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.categories.FunctionElementExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.parsing.Lexer;
@@ -16,7 +15,7 @@ import com.verba.language.parsing.tokens.operators.assignment.CompositeAssignmen
 /**
  * Created by sircodesalot on 14-2-27.
  */
-public class AssignmentStatementExpression extends VerbaExpression implements FunctionElementExpression {
+public class AssignmentStatementExpression extends VerbaExpression {
   TypeDeclarationExpression lvalue;
   LexInfo operation;
   RValueExpression rvalue;
@@ -54,11 +53,6 @@ public class AssignmentStatementExpression extends VerbaExpression implements Fu
 
   @Override
   public void accept(AstVisitor visitor) {
-
-  }
-
-  @Override
-  public void accept(FunctionElementVisitor visitor) {
     visitor.visit(this);
   }
 }

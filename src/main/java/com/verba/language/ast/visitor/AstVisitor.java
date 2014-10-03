@@ -12,6 +12,9 @@ import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
 import com.verba.language.expressions.containers.json.JsonExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
+import com.verba.language.expressions.rvalue.simple.NumericExpression;
+import com.verba.language.expressions.rvalue.simple.QuoteExpression;
+import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 
 /**
@@ -43,4 +46,10 @@ public interface AstVisitor {
   void visit(ReturnStatementExpression returnStatementExpression);
 
   void visit(SignatureDeclarationExpression signatureDeclarationExpression);
+
+  void visit(QuoteExpression quoteExpression);
+
+  void visit(AssignmentStatementExpression assignmentStatementExpression);
+
+  void visit(NumericExpression expression);
 }

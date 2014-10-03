@@ -3,6 +3,9 @@ package com.verba.language.codegen.generators;
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.ast.FunctionElementVisitor;
+import com.verba.language.ast.visitor.AstVisitable;
+import com.verba.language.ast.visitor.AstVisitor;
+import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.codegen.function.VariableLifetime;
 import com.verba.language.codegen.function.VariableLifetimeGraph;
 import com.verba.language.codegen.opcodes.*;
@@ -10,22 +13,30 @@ import com.verba.language.codegen.registers.VirtualVariable;
 import com.verba.language.codegen.registers.VirtualVariableSet;
 import com.verba.language.codegen.rendering.functions.MemoryStreamFunctionRenderer;
 import com.verba.language.codegen.rendering.images.ObjectImage;
+import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.expressions.block.BlockDeclarationExpression;
+import com.verba.language.expressions.blockheader.classes.ClassDeclarationExpression;
+import com.verba.language.expressions.blockheader.classes.TraitDeclarationExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.expressions.blockheader.functions.SignatureDeclarationExpression;
+import com.verba.language.expressions.blockheader.functions.TaskDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
-import com.verba.language.expressions.categories.FunctionElementExpression;
+import com.verba.language.expressions.containers.array.ArrayDeclarationExpression;
+import com.verba.language.expressions.containers.json.JsonExpression;
+import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
 import com.verba.language.expressions.rvalue.simple.NumericExpression;
 import com.verba.language.expressions.rvalue.simple.QuoteExpression;
 import com.verba.language.expressions.statements.assignment.AssignmentStatementExpression;
 import com.verba.language.expressions.statements.returns.ReturnStatementExpression;
 import com.verba.language.facades.FunctionCallFacade;
 import com.verba.virtualmachine.VirtualMachineNativeTypes;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by sircodesalot on 14/9/19.
  */
-public class FunctionGraph implements FunctionElementVisitor {
+public class FunctionGraph implements AstVisitor {
   private final VirtualVariableSet variableSet;
   private final FunctionDeclarationExpression function;
   private final VariableLifetimeGraph lifetimeGraph;
@@ -45,7 +56,7 @@ public class FunctionGraph implements FunctionElementVisitor {
 
   private void buildImage(FunctionDeclarationExpression function) {
     BlockDeclarationExpression block = function.block();
-    for (FunctionElementExpression expression : block.expressions().cast(FunctionElementExpression.class)) {
+    for (AstVisitable expression : block.expressions().cast(AstVisitable.class)) {
       expression.accept(this);
     }
 
@@ -72,17 +83,42 @@ public class FunctionGraph implements FunctionElementVisitor {
     opcodes.add(new RetOpCode());
   }
 
+  @Override
+  public void visit(SignatureDeclarationExpression signatureDeclarationExpression) {
+    throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(BlockDeclarationExpression verbaExpressions) {
+    throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(TraitDeclarationExpression traitDeclarationExpression) {
+    throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(StaticSpaceExpression staticSpaceExpression) {
+    throw new NotImplementedException();
+  }
+
   public void visit(NamedValueExpression namedValueExpression) {
     if (FunctionCallFacade.isFunctionCall(namedValueExpression)) {
       visitMethodCall(new FunctionCallFacade(namedValueExpression));
     }
   }
 
-  private void visitMethodCall(FunctionCallFacade call) {
-      QIterable<FunctionElementExpression> parametersAsFunctionElements
-        = call.primaryParameters().cast(FunctionElementExpression.class);
+  @Override
+  public void visit(ClassDeclarationExpression classDeclarationExpression) {
+    throw new NotImplementedException();
+  }
 
-      for (FunctionElementExpression declaration : parametersAsFunctionElements) {
+  private void visitMethodCall(FunctionCallFacade call) {
+      QIterable<AstVisitable> parametersAsFunctionElements
+        = call.primaryParameters().cast(AstVisitable.class);
+
+      for (AstVisitable declaration : parametersAsFunctionElements) {
         declaration.accept(this);
       }
 
@@ -117,7 +153,34 @@ public class FunctionGraph implements FunctionElementVisitor {
 
   @Override
   public void visit(FunctionDeclarationExpression functionDeclarationExpression) {
+    // Todo: currently no op.
+  }
 
+  @Override
+  public void visit(TaskDeclarationExpression taskDeclarationExpression) {
+    throw new NotImplementedException();
+
+  }
+
+  @Override
+  public void visit(ArrayDeclarationExpression arrayDeclarationExpression) {
+    throw new NotImplementedException();
+
+  }
+
+  @Override
+  public void visit(JsonExpression jsonExpression) {
+    throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(TupleDeclarationExpression tupleDeclarationExpression) {
+    throw new NotImplementedException();
+  }
+
+  @Override
+  public void visit(VerbaCodePage verbaCodePage) {
+    throw new NotImplementedException();
   }
 
   public void visit(QuoteExpression quoteExpression) {

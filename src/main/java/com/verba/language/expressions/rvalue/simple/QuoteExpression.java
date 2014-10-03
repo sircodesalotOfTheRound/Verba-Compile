@@ -1,6 +1,7 @@
 package com.verba.language.expressions.rvalue.simple;
 
 import com.verba.language.ast.FunctionElementVisitor;
+import com.verba.language.ast.visitor.AstVisitable;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.codegen.generators.FunctionGraph;
 import com.verba.language.expressions.VerbaExpression;
@@ -14,8 +15,7 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  * Created by sircodesalot on 14-2-19.
  */
 public class QuoteExpression extends VerbaExpression
-  implements LiteralExpression, NativeTypeExpression, MathOperandExpression,
-  FunctionElementExpression {
+  implements LiteralExpression, NativeTypeExpression, MathOperandExpression {
 
   private final LexInfo token;
 
@@ -44,7 +44,7 @@ public class QuoteExpression extends VerbaExpression
 
   @Override
   public void accept(AstVisitor visitor) {
-
+    visitor.visit(this);
   }
 
   @Override
@@ -52,8 +52,4 @@ public class QuoteExpression extends VerbaExpression
     return VirtualMachineNativeTypes.UTF8;
   }
 
-  @Override
-  public void accept(FunctionElementVisitor visitor) {
-    visitor.visit(this);
-  }
 }

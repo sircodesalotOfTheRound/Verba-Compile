@@ -4,7 +4,6 @@ import com.verba.language.ast.FunctionElementVisitor;
 import com.verba.language.ast.visitor.AstVisitor;
 import com.verba.language.codegen.generators.FunctionGraph;
 import com.verba.language.expressions.VerbaExpression;
-import com.verba.language.expressions.categories.FunctionElementExpression;
 import com.verba.language.expressions.categories.RValueExpression;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.tokens.identifiers.KeywordToken;
@@ -13,7 +12,7 @@ import com.verba.language.parsing.tokens.identifiers.KeywordToken;
  * Created by sircodesalot on 14-2-22.
  */
 
-public class ReturnStatementExpression extends VerbaExpression implements FunctionElementExpression {
+public class ReturnStatementExpression extends VerbaExpression {
   private RValueExpression value;
 
   public ReturnStatementExpression(VerbaExpression parent, Lexer lexer) {
@@ -46,8 +45,4 @@ public class ReturnStatementExpression extends VerbaExpression implements Functi
     visitor.visit(this);
   }
 
-  @Override
-  public void accept(FunctionElementVisitor visitor) {
-    visitor.visit(this);
-  }
 }
