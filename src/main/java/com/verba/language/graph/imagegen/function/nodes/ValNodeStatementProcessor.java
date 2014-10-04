@@ -1,6 +1,7 @@
 package com.verba.language.graph.imagegen.function.nodes;
 
 import com.javalinq.implementations.QList;
+import com.verba.language.expressions.categories.TypeDeclarationExpression;
 import com.verba.language.graph.imagegen.function.FunctionContext;
 import com.verba.language.codegen.opcodes.LdStrOpCode;
 import com.verba.language.codegen.opcodes.VerbajOpCode;
@@ -17,25 +18,20 @@ import com.verba.language.symbols.table.entries.SymbolTableEntry;
  * Used to process val declaration statements found during the function graph processing.
  */
 public class ValNodeStatementProcessor {
-  private final StaticSpaceExpression staticSpaceExpression;
-  private final VirtualVariableSet variableSet;
-  private final QList<VerbajOpCode> opcodes;
+  private final FunctionContext context;
 
   public ValNodeStatementProcessor(FunctionContext context) {
-    this.staticSpaceExpression = context.staticSpaceExpression();
-    this.variableSet = context.variableSet();
-    this.opcodes = context.opcodes();
+    this.context = context;
   }
 
   public void process(ValDeclarationStatement statement) {
-    SymbolTableEntry symbolTableEntry = staticSpaceExpression.entryByInstance(statement);
-    SymbolTypeMetadata valDeclarationType = symbolTableEntry.metadata().ofType(SymbolTypeMetadata.class).single();
+    TypeDeclarationExpression objectType = context.getObjectType(statement);
 
     if (statement.rvalue() instanceof LiteralExpression) {
       QuoteExpression text = (QuoteExpression) statement.rvalue();
-      VirtualVariable variable = variableSet.add(statement.nameAsExpression(), valDeclarationType.symbolType());
+      VirtualVariable variable = context.addVariable(statement.nameAsExpression(), objectType);
 
-      opcodes.add(new LdStrOpCode(variable, text.innerText()));
+      context.addOpCode(new LdStrOpCode(variable, text.innerText()));
     }
   }
 }

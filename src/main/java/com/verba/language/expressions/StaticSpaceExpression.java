@@ -2,10 +2,13 @@ package com.verba.language.expressions;
 
 import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
+import com.verba.language.expressions.categories.TypeDeclarationExpression;
+import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.graph.tools.SyntaxTreeFlattener;
 import com.verba.language.graph.visitors.SyntaxGraphVisitor;
 import com.verba.language.build.codepage.VerbaCodePage;
 import com.verba.language.expressions.categories.SymbolTableExpression;
+import com.verba.language.symbols.meta.interfaces.SymbolTypeMetadata;
 import com.verba.language.symbols.table.entries.SymbolTableEntry;
 import com.verba.language.symbols.table.tables.GlobalSymbolTable;
 import com.verba.language.symbols.table.tables.ScopedSymbolTable;
@@ -74,5 +77,13 @@ public class StaticSpaceExpression extends VerbaExpression implements SymbolTabl
   @Override
   public void accept(ScopedSymbolTable symbolTable) {
     symbolTable.visit(this);
+  }
+
+  public TypeDeclarationExpression getObjectType(ValDeclarationStatement statement) {
+    return entryByInstance(statement)
+      .metadata()
+      .ofType(SymbolTypeMetadata.class)
+      .single()
+      .symbolType();
   }
 }

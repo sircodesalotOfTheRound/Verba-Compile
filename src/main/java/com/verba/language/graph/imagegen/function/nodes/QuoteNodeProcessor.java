@@ -16,25 +16,19 @@ import com.verba.virtualmachine.VirtualMachineNativeTypes;
  * Created by sircodesalot on 14/10/3.
  */
 public class QuoteNodeProcessor {
-  private final StaticSpaceExpression staticSpaceExpression;
-  private final VariableLifetimeGraph lifetimeGraph;
-  private final VirtualVariableSet variableSet;
-  private final QList<VerbajOpCode> opcodes;
+  private final FunctionContext context;
 
   public QuoteNodeProcessor(FunctionContext context) {
-    this.staticSpaceExpression = context.staticSpaceExpression();
-    this.lifetimeGraph = context.lifetimeGraph();
-    this.variableSet = context.variableSet();
-    this.opcodes = context.opcodes();
+    this.context = context;
   }
 
   public void process(QuoteExpression expression) {
-    VariableLifetime variableLifetime = lifetimeGraph.getVariableLifetime(expression);
+    VariableLifetime variableLifetime = context.getVariableLifetime(expression);
 
     // If this is the first time seeing this variable, add it.
     if (variableLifetime.isFirstInstance(expression)) {
-      VirtualVariable variable = variableSet.add(expression, VirtualMachineNativeTypes.UTF8);
-      opcodes.add(new LdStrOpCode(variable, expression.innerText()));
+      VirtualVariable variable = context.addVariable(expression, VirtualMachineNativeTypes.UTF8);
+      context.addOpCode(new LdStrOpCode(variable, expression.innerText()));
     }
   }
 }
