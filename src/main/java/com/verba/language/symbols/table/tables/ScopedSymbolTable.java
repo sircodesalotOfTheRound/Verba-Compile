@@ -18,7 +18,6 @@ import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
 import com.verba.language.expressions.categories.NamedExpression;
 import com.verba.language.expressions.categories.SymbolTableExpression;
 import com.verba.language.expressions.containers.tuple.TupleDeclarationExpression;
-import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.symbols.meta.GenericParameterSymbolTableItem;
 import com.verba.language.symbols.meta.NestedSymbolTableMetadata;
@@ -175,10 +174,6 @@ public class ScopedSymbolTable implements Serializable {
   }
 
   public void visit(ValDeclarationStatement statement) {
-    this.add(statement.name(), statement);
-  }
-
-  public void visit(MutableDeclarationStatement statement) {
     this.add(statement.name(), statement);
   }
 

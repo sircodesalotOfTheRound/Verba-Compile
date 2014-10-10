@@ -7,21 +7,21 @@ fn explicitParameterFunction(first : string, second : uint32) { }
 # Test function with explicitly typed variables
 fn explicitVariables() {
   val first : string = "A String here"
-  mut second : uint32 = 42
+  val mut second : uint32 = 42
 }
 
 # Test function with a variable types derived from parameters
 fn typesDerivedFromParameter(first : string, second : uint32) {
   val derivedFirst = first
-  mut derivedSecond = second
+  val mut derivedSecond = second
 }
 
 # Test chain derivation
 fn chainDerived(lhs : object, rhs : uint64) {
   val firstChain = lhs
-  mut secondChain = firstChain
+  val mut secondChain = firstChain
 
-  mut thirdChain = rhs
+  val mut thirdChain = rhs
   val fourthChain = thirdChain
 }
 

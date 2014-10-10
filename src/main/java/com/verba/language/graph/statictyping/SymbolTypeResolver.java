@@ -3,7 +3,6 @@ package com.verba.language.graph.statictyping;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.categories.ResolvableTypeExpression;
-import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.symbols.resolution.fields.VariableTypeResolver;
 import com.verba.language.symbols.resolution.function.FunctionReturnTypeResolver;
@@ -45,10 +44,6 @@ public class SymbolTypeResolver {
 
   public void visit(ValDeclarationStatement valDeclarationStatement) {
     variableResolver.resolve(valDeclarationStatement);
-  }
-
-  public void visit(MutableDeclarationStatement mutaDeclarationStatement) {
-    variableResolver.resolve(mutaDeclarationStatement);
   }
 
   public void visit(FunctionDeclarationExpression function) {

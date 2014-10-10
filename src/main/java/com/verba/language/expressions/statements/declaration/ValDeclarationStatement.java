@@ -18,6 +18,7 @@ public class ValDeclarationStatement extends VerbaExpression
 
   private NamedValueExpression identifier;
   private RValueExpression rvalue;
+  private boolean isMutable;
 
   private ValDeclarationStatement(VerbaExpression parent, Lexer lexer) {
     super(parent, lexer);
@@ -27,6 +28,14 @@ public class ValDeclarationStatement extends VerbaExpression
 
   private void readExpression(Lexer lexer) {
     lexer.readCurrentAndAdvance(KeywordToken.class, "val");
+
+    if (lexer.currentIs(KeywordToken.class, "mut")) {
+      lexer.readCurrentAndAdvance(KeywordToken.class, "mut");
+      this.isMutable = true;
+    } else {
+      this.isMutable = false;
+    }
+
     this.identifier = NamedValueExpression.read(this, lexer);
 
     lexer.readCurrentAndAdvance(OperatorToken.class, "=");
@@ -45,6 +54,8 @@ public class ValDeclarationStatement extends VerbaExpression
   }
 
   public VerbaExpression nameAsExpression() { return this.identifier.identifier().single(); }
+
+  public boolean isMutable() { return this.isMutable; }
 
   @Override
   public boolean hasTypeConstraint() {

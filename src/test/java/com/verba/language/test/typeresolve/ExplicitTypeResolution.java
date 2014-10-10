@@ -4,7 +4,6 @@ import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.StaticSpaceExpression;
 import com.verba.language.expressions.blockheader.functions.FunctionDeclarationExpression;
 import com.verba.language.expressions.blockheader.varname.NamedValueExpression;
-import com.verba.language.expressions.statements.declaration.MutableDeclarationStatement;
 import com.verba.language.expressions.statements.declaration.ValDeclarationStatement;
 import com.verba.language.test.loader.TestFileLoader;
 import org.junit.Test;
@@ -57,7 +56,7 @@ public class ExplicitTypeResolution {
       .singleOrNull(function -> function.name().equals("explicitVariables"));
 
     ValDeclarationStatement first = explicitVariables.block().firstAs(ValDeclarationStatement.class);
-    MutableDeclarationStatement second = explicitVariables.block().lastAs(MutableDeclarationStatement.class);
+    ValDeclarationStatement second = explicitVariables.block().lastAs(ValDeclarationStatement.class);
 
     assert(first.name().equals("first"));
     assert(first.hasTypeConstraint());
