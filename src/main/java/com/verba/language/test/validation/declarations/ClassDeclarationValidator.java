@@ -9,6 +9,7 @@ import com.verba.language.expressions.members.FullyQualifiedNameExpression;
 import com.verba.language.test.validation.ExpressionValidator;
 import com.verba.language.test.validation.TupleListDeclarationValidator;
 import com.verba.language.test.validation.fqn.FullyQualifiedNameValidator;
+import com.verba.language.test.validation.violations.ValidationError;
 import com.verba.language.test.validation.violations.ValidationViolation;
 
 /**
@@ -32,7 +33,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
   private void validateBaseType() {
     if (this.classDeclaration().hasTraits()) {
       if (this.classDeclaration().traits().any(base -> base instanceof TupleDeclarationExpression)) {
-        this.addViolation((VerbaExpression) this.classDeclaration().traits(), "Class base type cannot be tuple.");
+        this.addError((VerbaExpression) this.classDeclaration().traits(), "Class base type cannot be tuple.");
       }
 
 
@@ -45,7 +46,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
           .where(NamedValueExpression::hasTypeConstraint);
 
         for (NamedValueExpression invlidParameter : genericParametersWithConstraint) {
-          this.addViolation(invlidParameter, "Generic Parameters in base types cannot be constained.", invlidParameter);
+          this.addError(invlidParameter, "Generic Parameters in base types cannot be constained.", invlidParameter);
         }
 
       }
@@ -55,7 +56,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
   public void validateName() {
     if (!declarationValidator.hasSingleMember()) {
       String representation = classDeclaration().declaration().representation();
-      this.addViolation(this.classDeclaration().declaration(),
+      this.addError(this.classDeclaration().declaration(),
         "Class '%s' is not a valid declaration name.", representation);
     }
 
@@ -66,7 +67,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
     // Validate the number of parameterSets
     if (declarationValidator.hasParameters()) {
       if (this.classDeclaration().inlineParameters().count() > 1) {
-        this.addViolation(this.classDeclaration().inlineParameters().first(),
+        this.addError(this.classDeclaration().inlineParameters().first(),
           "Inline class declarations cannot have multiple sets of arguments.");
       }
 
@@ -75,7 +76,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
     // Validate the types of parameterSets
     QIterable<ValidationViolation> typeViolations = new TupleListDeclarationValidator(this.classDeclaration().inlineParameters())
       .findArguments(parameter -> !(parameter instanceof NamedValueExpression))
-      .map(parameter -> new ValidationViolation(parameter, "Parameter %s must be a variable declaration", parameter));
+      .map(parameter -> new ValidationError(parameter, "Parameter %s must be a variable declaration", parameter));
 
     // Validate that the parameterSets are constrained
 
@@ -83,7 +84,7 @@ public class ClassDeclarationValidator extends ExpressionValidator<ClassDeclarat
       .flattenedParameterList()
       .ofType(NamedValueExpression.class)
       .where(parameter -> !parameter.hasTypeConstraint())
-      .map(parameter -> new ValidationViolation(parameter, "Parameter %s must have a type constraint", parameter));
+      .map(parameter -> new ValidationError(parameter, "Parameter %s must have a type constraint", parameter));
 
     super.addViolations(typeViolations);
     super.addViolations(missingConstraintViolations);

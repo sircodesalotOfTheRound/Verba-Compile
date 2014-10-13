@@ -5,7 +5,7 @@ import com.verba.language.expressions.VerbaExpression;
 /**
  * Created by sircodesalot on 14-5-3.
  */
-public class ValidationViolation {
+public abstract class ValidationViolation {
   private final String message;
   private final VerbaExpression expression;
 

@@ -4,13 +4,14 @@ import com.javalinq.implementations.QList;
 import com.javalinq.interfaces.QIterable;
 import com.verba.language.expressions.VerbaExpression;
 import com.verba.language.test.validation.violations.ValidationViolation;
+import com.verba.language.test.validation.violations.ValidationViolationList;
 
 /**
  * Created by sircodesalot on 14-5-3.
  */
 public abstract class ExpressionValidator<T> {
   private final T target;
-  private final QList<ValidationViolation> violations = new QList<>();
+  private final ValidationViolationList violations = new ValidationViolationList();
 
   public ExpressionValidator(T target) {
     this.target = target;
@@ -26,8 +27,12 @@ public abstract class ExpressionValidator<T> {
     this.violations.add(violation);
   }
 
-  protected void addViolation(VerbaExpression expression, String format, Object... args) {
-    this.violations.add(new ValidationViolation(expression, format, args));
+  protected void addError(VerbaExpression expression, String format, Object... args) {
+    this.violations.addError(expression, format, args);
+  }
+
+  protected void addWarning(VerbaExpression expression, String format, Object... args) {
+    this.violations.addWarning(expression, format, args);
   }
 
   public QIterable<ValidationViolation> violations() {

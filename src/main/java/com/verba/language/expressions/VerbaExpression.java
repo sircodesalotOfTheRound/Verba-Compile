@@ -1,10 +1,15 @@
 package com.verba.language.expressions;
 
+import com.javalinq.interfaces.QIterable;
 import com.verba.language.graph.visitors.SyntaxGraphVisitable;
 import com.verba.language.expressions.backtracking.BacktrackRuleSet;
 import com.verba.language.expressions.backtracking.rules.*;
 import com.verba.language.parsing.Lexer;
 import com.verba.language.parsing.info.LexInfo;
+import com.verba.language.test.validation.violations.ValidationError;
+import com.verba.language.test.validation.violations.ValidationViolation;
+import com.verba.language.test.validation.violations.ValidationViolationList;
+import com.verba.language.test.validation.violations.ValidationWarning;
 
 import java.io.Serializable;
 
@@ -41,6 +46,7 @@ public abstract class VerbaExpression implements Serializable, SyntaxGraphVisita
   private transient final Lexer lexer;
   private final LexInfo startingLexPoint;
   private LexInfo endingLexPoint;
+  private ValidationViolationList violations;
 
   public VerbaExpression(VerbaExpression parent, Lexer lexer) {
     this.parent = parent;
@@ -107,6 +113,18 @@ public abstract class VerbaExpression implements Serializable, SyntaxGraphVisita
   public static VerbaExpression read(VerbaExpression parent, Lexer lexer) {
     return rules.resolve(parent, lexer);
   }
+
+  public void addErrorViolation(VerbaExpression expression, String format, Object... args) {
+    this.violations.addError(expression, format, args);
+  }
+
+  public void addWarningViolation(VerbaExpression expression, String format, Object... args) {
+    this.violations.addWarning(expression, format, args);
+  }
+
+  public QIterable<ValidationViolation> violations() { return this.violations; }
+  public QIterable<ValidationError> errors() { return this.violations.ofType(ValidationError.class); }
+  public QIterable<ValidationWarning> warnings() { return this.violations.ofType(ValidationWarning.class); }
 
   @Override
   public boolean equals(Object obj) {

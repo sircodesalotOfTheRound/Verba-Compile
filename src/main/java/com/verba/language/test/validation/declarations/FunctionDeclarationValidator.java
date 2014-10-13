@@ -45,24 +45,24 @@ public class FunctionDeclarationValidator extends ExpressionValidator<FunctionDe
         NamedValueExpression varName = (NamedValueExpression) expression;
 
         if (!varName.hasTypeConstraint()) {
-          this.addViolation(expression,
+          this.addError(expression,
             "The parameter '%s' must have a type constraint.",
             varName.identifier().representation());
         }
       } else {
-        this.addViolation(expression, "Expression %s is not a valid VarNameExpression", expression);
+        this.addError(expression, "Expression %s is not a valid VarNameExpression", expression);
       }
     }
   }
 
   public void validateName() {
     if (!declarationValidator.hasSingleMember()) {
-      this.addViolation(this.function().declaration(),
+      this.addError(this.function().declaration(),
         "Function '%s' is not a valid declaration name.", function().declaration().representation());
     }
 
     if (!declarationValidator.hasParameters()) {
-      this.addViolation(this.function().declaration(),
+      this.addError(this.function().declaration(),
         "Function '%s' must have parameterSets.", function().declaration().representation());
     }
   }

@@ -27,8 +27,13 @@ public class ValidationViolationList implements QIterable<ValidationViolation> {
     this.violations.add(violations);
   }
 
-  public void add(VerbaExpression expression, String format, Object... args) {
-    ValidationViolation violation = new ValidationViolation(expression, format, args);
+  public void addError(VerbaExpression expression, String format, Object... args) {
+    ValidationViolation violation = new ValidationError(expression, format, args);
+    this.add(violation);
+  }
+
+  public void addWarning(VerbaExpression expression, String format, Object... args) {
+    ValidationViolation violation = new ValidationError(expression, format, args);
     this.add(violation);
   }
 

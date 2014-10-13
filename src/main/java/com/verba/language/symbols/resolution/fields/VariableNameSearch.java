@@ -68,8 +68,6 @@ public class VariableNameSearch {
   public SymbolTableEntry resolvedEntry() { return resolvedEntry; }
   public TypeDeclarationExpression resolvedType() { return getTypeFromSymbolEntry(resolvedEntry); }
 
-
-
 }
 
 

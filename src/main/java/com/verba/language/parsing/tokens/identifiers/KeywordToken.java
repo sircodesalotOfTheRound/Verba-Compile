@@ -36,7 +36,7 @@ public class KeywordToken extends IdentifierToken {
       "char", "utc", "currency",
       "utf8", "utf16", "utf32", "utf8be", "utf16be", "utf32be",
       "unit", "object",
-      "sensitive"
+      "json", "sensitive"
     };
 
     Set<String> keywordSet = new HashSet<String>();
