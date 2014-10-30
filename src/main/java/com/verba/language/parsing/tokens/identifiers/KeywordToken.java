@@ -23,7 +23,7 @@ public class KeywordToken extends IdentifierToken {
       "throw", "try", "catch", "finally",
       "this", "base",
       "none", "some", "is", "isnt",
-      "def",
+      "def", "resolve",
       "match", "case",
       "true", "false",
       "sync", "threadlocal",
