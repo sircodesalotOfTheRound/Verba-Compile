@@ -1,32 +1,32 @@
 package com.verba.language.codegen.opcodes;
 
 import com.verba.language.codegen.registers.VirtualVariable;
-import com.verba.language.codegen.rendering.OpCodeRenderer;
+import com.verba.language.codegen.rendering.functions.FunctionOpCodeRenderer;
 
 /**
  * Created by sircodesalot on 14/9/20.
  */
-public class Lduint64OpCode implements VerbajOpCode {
+public class LdUint64OpCode implements VerbajOpCode {
   private final VirtualVariable variable;
-  private final String text;
+  private final long value;
 
-  public Lduint64OpCode(VirtualVariable variable, String text) {
+  public LdUint64OpCode(VirtualVariable variable, long value) {
     this.variable = variable;
-    this.text = text;
+    this.value = value;
   }
 
   @Override
-  public int opNumber() { return 0xd1; }
+  public int opNumber() { return 0xd3; }
 
   @Override
-  public String opName() { return "LdStr"; }
+  public String opName() { return "LdUi64"; }
 
   @Override
-  public void render(OpCodeRenderer renderer) {
-    renderer.writeInt8("varnum", variable.variableNumber());
-    renderer.writeString("text", text);
+  public void render(FunctionOpCodeRenderer renderer) {
+    renderer.writeInt8("variableNumber", variable.variableNumber());
+    renderer.writeInt64("value", value);
   }
 
-  public String text() { return this.text; }
+  public long value() { return value; }
   public VirtualVariable variable() { return this.variable; }
 }

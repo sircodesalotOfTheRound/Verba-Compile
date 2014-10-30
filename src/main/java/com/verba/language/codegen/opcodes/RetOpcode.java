@@ -1,6 +1,6 @@
 package com.verba.language.codegen.opcodes;
 
-import com.verba.language.codegen.rendering.OpCodeRenderer;
+import com.verba.language.codegen.rendering.functions.FunctionOpCodeRenderer;
 
 /**
  * Created by sircodesalot on 14/9/19.
@@ -13,5 +13,5 @@ public class RetOpCode implements VerbajOpCode {
   public String opName() { return "Ret"; }
 
   @Override
-  public void render(OpCodeRenderer renderer) { /* The op will automatically be written*/ }
+  public void render(FunctionOpCodeRenderer renderer) { /* The op will automatically be written*/ }
 }
