@@ -15,4 +15,5 @@ public class RetOpCode implements VerbajOpCode {
 
   @Override
   public void render(FunctionOpCodeRenderer renderer) { /* The op will automatically be written*/ }
+
 }

@@ -10,6 +10,7 @@ public class LdUint64OpCode implements VerbajOpCode {
   private final VirtualVariable variable;
   private final long value;
 
+
   public LdUint64OpCode(VirtualVariable variable, long value) {
     this.variable = variable;
     this.value = value;
