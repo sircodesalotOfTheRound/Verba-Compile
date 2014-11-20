@@ -1,17 +1,25 @@
 fn main() {
-  val item = "Something"
-  val second = "Something else"
+
+    fn internal_function() {
+      val variable = "This is called from the internal function"
+
+      println(variable)
+    }
+
+  val inferred = "This is an inferred variable"
+  val explicit : String = "This is an explicitly named variable"
 
   # Call the second function
-  second()
+  internal_function()
 
-  println(second)
-  println("Something in quotes")
-  println(item)
+  # Call to external function
+  external_function()
+
+  println(inferred)
+  println("This is printing a literal")
+  println(explicit)
 }
 
-fn second() {
-  val variable = "Moar stuff"
-
-  println(variable)
+fn external_function() {
+   println("hello from an external function")
 }
