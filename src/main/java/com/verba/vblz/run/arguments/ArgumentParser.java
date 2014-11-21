@@ -1,4 +1,4 @@
-package com.verba.vblz.run.argparse;
+package com.verba.vblz.run.arguments;
 
 import com.verba.tools.tasks.Task;
 import com.verba.vblz.build.BuildProjectTask;

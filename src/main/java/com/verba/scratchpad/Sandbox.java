@@ -1,9 +1,9 @@
 package com.verba.scratchpad;
 
 
-import com.verba.language.emit.codepage.VerbaCodePage;
-import com.verba.language.emit.rendering.FileStreamImageWriter;
-import com.verba.language.emit.rendering.images.ObjectImage;
+import com.verba.language.build.codepage.VerbaCodePage;
+import com.verba.language.build.rendering.FileStreamImageWriter;
+import com.verba.language.build.rendering.images.ObjectImage;
 import com.verba.language.graph.imagegen.function.FunctionGraph;
 import com.verba.language.parsing.expressions.StaticSpaceExpression;
 import com.verba.language.parsing.expressions.blockheader.functions.FunctionDeclarationExpression;

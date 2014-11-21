@@ -1,6 +1,6 @@
 package com.verba.vblz.run;
 
-import com.verba.vblz.run.argparse.ArgumentParser;
+import com.verba.vblz.run.arguments.ProgramLauncher;
 
 import java.io.Serializable;
 
@@ -10,8 +10,8 @@ import java.io.Serializable;
 public class Program implements Serializable {
 
   public static void main(String[] args) throws Exception {
-    ArgumentParser parser = new ArgumentParser(args);
-    parser.runApplication();
+    ProgramLauncher launcher = new ProgramLauncher(args);
+    launcher.run();
   }
 
 }
