@@ -26,7 +26,7 @@ public class ArgumentSet {
   }
 
   public void displayHelp() {
-    QIterable<String> helpMessages = this.runners
+    QIterable<String> helpMessages = ArgumentSet.runners
       .map(runner -> String.format("    %-30s - %s", runner.name(), runner.description()));
 
     System.out.println("vblz: ");
