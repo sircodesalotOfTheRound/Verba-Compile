@@ -1,12 +1,10 @@
 package com.verba.scratchpad;
 
 
-import com.verba.language.build.codepage.VerbaCodePage;
-import com.verba.language.build.rendering.FileStreamImageWriter;
-import com.verba.language.build.rendering.images.ObjectImage;
-import com.verba.language.graph.imagegen.function.FunctionGraph;
-import com.verba.language.parsing.expressions.StaticSpaceExpression;
-import com.verba.language.parsing.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.emit.images.interfaces.ObjectImage;
+import com.verba.language.parse.expressions.StaticSpaceExpression;
+import com.verba.language.parse.expressions.blockheader.functions.FunctionDeclarationExpression;
+import com.verba.language.parse.expressions.codepage.VerbaCodePage;
 
 /**
  * Created by sircodesalot on 14-2-16.
@@ -19,15 +17,6 @@ public class Sandbox {
 
     VerbaCodePage codePage = VerbaCodePage.fromFile(null, "SimpleSource.v");
     StaticSpaceExpression staticSpaceExpression = new StaticSpaceExpression(codePage);
-    staticSpaceExpression.resolveSymbolNames();
 
-    Iterable<ObjectImage> images = staticSpaceExpression.allSubExpressions()
-      .ofType(FunctionDeclarationExpression.class)
-      .map(function -> new FunctionGraph(function, staticSpaceExpression))
-      .map(FunctionGraph::createImage);
-
-    try (FileStreamImageWriter writer = new FileStreamImageWriter("/Users/sircodesalot/Desktop/program.vbaj")) {
-      writer.save(images);
-    }
   }
 }

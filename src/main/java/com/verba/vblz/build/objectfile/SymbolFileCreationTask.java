@@ -1,10 +1,11 @@
 package com.verba.vblz.build.objectfile;
 
-import com.verba.language.parsing.expressions.StaticSpaceExpression;
-import com.verba.language.parsing.expressions.VerbaExpression;
+import com.verba.language.parse.expressions.StaticSpaceExpression;
+import com.verba.language.parse.expressions.VerbaExpression;
 import com.verba.tools.display.ConsoleTools;
 import com.verba.tools.files.FileTools;
 import com.verba.tools.tasks.Task;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 
@@ -19,7 +20,8 @@ public class SymbolFileCreationTask implements Task {
   }
 
   private VerbaExpression compileFile() {
-    return new StaticSpaceExpression(sourceFile);
+    throw new NotImplementedException();
+    //return new StaticSpaceExpression(sourceFile);
   }
 
   private void emitToSymbolFile() throws IOException {
